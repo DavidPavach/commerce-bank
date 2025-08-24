@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createBeneficiaryFn, createDepositRequestFn, createSavingsFn, createTransactionFn, createUserFn, deleteBeneficiary, deleteSavingsFn, editTransactionFn, getPrices, getUserBalanceFn, getUserDetailsFn, loginUserFn, resendVerificationFn, topUpSavingsFn, updateDetailsFn, userKycFn, validateLoginFn, verifyUserFn, withdrawSavingsFn } from "./api.service";
 
 //Utils, Store and Types
-import { setAdminTokens, setTokens } from "@/lib/token";
+import { setTokens } from "@/lib/token";
 import { useUserStore } from "@/stores/userStore";
 import { CreateTransaction } from "@/types";
 
