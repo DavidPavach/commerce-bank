@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    font-family: 'Host Grotesk', sans-serif;
+    font-optical-sizing: auto;
+}
+
+.outfit {
+    font-family: 'Outfit', sans-serif;
+    font-optical-sizing: auto;
+}
