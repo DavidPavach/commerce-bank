@@ -48,7 +48,6 @@ const PinPage = ({ transaction, onClose }: { transaction: Transaction, onClose: 
     const [pin, setPin] = useState<string[]>(["", "", "", "", "", ""]);
     const [activePin, setActivePin] = useState<number>(0);
     const pinRefs = useRef<(HTMLInputElement | null)[]>([]);
-    const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
     //As Component Mounts, refetch user data to be upto date
     useEffect(() => {
@@ -106,7 +105,6 @@ const PinPage = ({ transaction, onClose }: { transaction: Transaction, onClose: 
         if (currentPin === "done") return toast.info("Your transfer has been successfully initiated. Please wait while we process it.")
         if (currentPin !== fullPin) return toast.error(`Incorrect ${transaction.level} pin, kindly try again.`)
 
-        setIsSubmitting(true);
         toast("Initiating Transfer...", { isCloseBtn: true });
         editTransaction.mutate({ transactionId: transaction._id, level: getLevel(transaction.level) }, {
             onSuccess: () => {
@@ -142,7 +140,7 @@ const PinPage = ({ transaction, onClose }: { transaction: Transaction, onClose: 
                             </div>
                         ))}
                     </div>
-                    <Button onClick={handleUpdate} text="Confirm Transfer" loadingText="Processing..." variant='primary' size='lg' disabled={isSubmitting || pin.some((p) => p === "")} loading={isSubmitting} />
+                    <Button onClick={handleUpdate} text="Confirm Transfer" loadingText="Processing..." variant='primary' size='lg' disabled={editTransaction.isPending || pin.some((p) => p === "")} loading={editTransaction.isPending} />
                     <div className="flex justify-between items-center mt-8 text-neutral-400 hover:text-white text-sm">
                         <button type="button" onClick={closeModal}>Cancel</button>
                     </div>

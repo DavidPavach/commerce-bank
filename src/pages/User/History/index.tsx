@@ -25,9 +25,9 @@ const Index = () => {
     const totalPages: number = data?.data?.pagination?.pages || 1;
 
     //Function
-    const updatePage = (newPage: string) => {
-        if (newPage !== page && parseInt(newPage) > 1 && parseInt(newPage) <= totalPages) {
-            setSearchParams({ page: newPage });
+    const updatePage = (newPage: number) => {
+        if (newPage !== parseInt(page) && newPage <= totalPages) {
+            setSearchParams({ page: newPage.toString() });
         }
     };
 
@@ -51,7 +51,7 @@ const Index = () => {
                 <p className="text-neutral-400">View and manage all your account transactions</p>
             </div>
             <TransactionTable transactions={transactions} />
-            {totalPages > 1 && <PaginationControls currentPage={parseInt(page)} totalPages={totalPages} onPageChange={() => updatePage}  />}
+            {totalPages > 1 && <PaginationControls currentPage={parseInt(page)} totalPages={totalPages} onPageChange={updatePage}  />}
         </main>
     );
 

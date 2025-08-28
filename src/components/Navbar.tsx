@@ -63,7 +63,7 @@ const Navbar = () => {
                         <BellIcon />
                     </div>
                     <Avatar className="bg-neutral-100 p-2 border border-neutral-200 size-10 md:size-12 xl:size-14">
-                        <AvatarImage src={user?.profilePicture || "/user.svg"} alt={user?.fullName} />
+                        <AvatarImage src={user?.profilePicture} alt={user?.fullName} className="rounded-[50%]" />
                         <AvatarFallback className="bg-primary/20 text-primary text-sm md:text-base xl:text-lg">
                             {user?.fullName.substring(0, 2).toUpperCase()}
                         </AvatarFallback>

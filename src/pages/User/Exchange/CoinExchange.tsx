@@ -56,7 +56,7 @@ const CoinExchange = ({ prices }: { prices: Prices }) => {
                                     if (!data || !meta) return null;
 
                                     return (
-                                        <button key={index} onClick={() => setSelectedCoin({ coin, data })} className="flex justify-between items-center space-x-3 hover:bg-neutral-50 px-4 py-3 w-full text-left transition-colors">
+                                        <button key={index} onClick={() => setSelectedCoin({ coin, data })} className="grid grid-cols-3 hover:bg-neutral-50 px-4 py-3 w-full text-left transition-colors">
                                             <div className="flex items-center">
                                                 <img src={meta.logo} alt={`${coin} logo`} className="size-8 md:size-12 xl:size-14" />
                                                 <div>
@@ -64,12 +64,12 @@ const CoinExchange = ({ prices }: { prices: Prices }) => {
                                                     <p className="-mt-1 text-[11px] text-neutral-500 md:text-xs xl:text-sm capitalize">{coin}</p>
                                                 </div>
                                             </div>
-                                            <p className={`text-[11px] md:text-xs xl:text-sm px-2 py-1 rounded-full w-fit font-semibold ${data.usd_24h_change >= 0 ? "bg-green-100 text-green-600" : "bg-red-100 text-red-600"}`}>
+                                            <p className={`text-[11px] md:text-xs xl:text-sm px-2 py-1 rounded-full m-auto h-fit font-semibold ${data.usd_24h_change >= 0 ? "bg-green-100 text-green-600" : "bg-red-100 text-red-600"}`}>
                                                 {data.usd_24h_change >= 0 ? "+" : ""}
                                                 {data.usd_24h_change.toFixed(2)}%
                                             </p>
                                             <div>
-                                                <p className="font-semibold text-lightBlack">{formatCurrency(data.usd)}</p>
+                                                <p className="font-semibold text-lightBlack text-right">{formatCurrency(data.usd)}</p>
                                                 <p className="flex justify-end">
                                                     {data.usd_24h_change >= 0 ? (
                                                         <TrendingUp className="size-4 md:size-5 xl:size-6 text-green-600" />

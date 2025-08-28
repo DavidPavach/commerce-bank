@@ -27,7 +27,6 @@ const SavingsForm = ({ onClose }: { onClose: () => void; }) => {
         endDate: '',
     });
     const [errors, setErrors] = useState<Partial<SavingsFormData>>({});
-    const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
     //Functions
     const handleChange = (field: keyof SavingsFormData, value: string) => {
@@ -88,7 +87,6 @@ const SavingsForm = ({ onClose }: { onClose: () => void; }) => {
     const handleSavings = () => {
 
         if (!validateForm()) return toast.error("Kindly correct all errors before proceeding")
-        setIsSubmitting(true);
         toast("Creating Savings Goal...", { isCloseBtn: true });
 
         const transformedData = {
@@ -100,12 +98,10 @@ const SavingsForm = ({ onClose }: { onClose: () => void; }) => {
             onSuccess: () => {
                 toast.success(`Successful 🎉, You're building a stronger financial future, one save at a time.`);
                 resetForm();
-                setIsSubmitting(false);
                 onClose();
             },
             onError: () => {
                 toast.error(`Failed to add new savings goal, please try again later.`);
-                setIsSubmitting(false);
             },
         });
     }
@@ -160,7 +156,7 @@ const SavingsForm = ({ onClose }: { onClose: () => void; }) => {
                         </div>
                     </div>
                     <div className="mt-4">
-                        <Button onClick={handleSavings} text="Create Savings Goal" loadingText="Processing..." variant='primary' size='lg' disabled={isSubmitting} loading={isSubmitting} />
+                        <Button onClick={handleSavings} text="Create Savings Goal" loadingText="Processing..." variant='primary' size='lg' disabled={createSavings.isPending} loading={createSavings.isPending} />
                     </div>
                 </div>
             </motion.div>

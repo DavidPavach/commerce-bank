@@ -7,7 +7,7 @@ type PaginationControlsProps = {
 }
 
 export default function PaginationControls({ currentPage, totalPages, onPageChange }: PaginationControlsProps) {
-    
+
     const pageRange = () => {
         const range = [];
         for (let i = 1; i <= totalPages; i++) {
@@ -26,19 +26,17 @@ export default function PaginationControls({ currentPage, totalPages, onPageChan
                                 e.preventDefault();
                                 onPageChange(currentPage - 1);
                             }}
-                            className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
-                        />
+                            className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"} />
                     </PaginationItem>
 
                     {pageRange().map((pageNumber) => (
-                        <PaginationItem key={pageNumber}>
+                        <PaginationItem key={pageNumber} className="cursor-pointer">
                             <PaginationLink
                                 isActive={pageNumber === currentPage}
                                 onClick={(e) => {
                                     e.preventDefault();
                                     onPageChange(pageNumber);
-                                }}
-                            >
+                                }}>
                                 {pageNumber}
                             </PaginationLink>
                         </PaginationItem>
@@ -50,8 +48,7 @@ export default function PaginationControls({ currentPage, totalPages, onPageChan
                                 e.preventDefault();
                                 onPageChange(currentPage + 1);
                             }}
-                            className={currentPage === totalPages ? "pointer-events-none opacity-50" : ""}
-                        />
+                            className={currentPage === totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"} />
                     </PaginationItem>
                 </PaginationContent>
             </Pagination>

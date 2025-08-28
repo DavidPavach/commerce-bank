@@ -17,7 +17,6 @@ const TopUpForm = ({ onClose, savings }: { onClose: () => void, savings: Savings
 
     const { balance } = useUserStore();
     const [amount, setAmount] = useState<string>('');
-    const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
     //Constants
     const quickAmounts = [500, 1000, 2500, 5000, 10000];
@@ -33,17 +32,14 @@ const TopUpForm = ({ onClose, savings }: { onClose: () => void, savings: Savings
         if (Number(amount) < 0 || Number(amount) === 0) return toast.error("Top-up amount must be greater than zero");
         if (Number(amount) < 100) return toast.error("Top - up amount must be greater than $100 USD");
 
-        setIsSubmitting(true);
         toast("Topping up savings...", { isCloseBtn: true });
         topUpSavings.mutate({ savingsId: savings._id, amount: Number(amount) }, {
             onSuccess: () => {
                 toast.success(`Successful 🎉, You're building a stronger financial future, one save at a time.`);
-                setIsSubmitting(false);
                 onClose();
             },
             onError: () => {
                 toast.error(`Top-up transaction could not be completed, please try again later.`);
-                setIsSubmitting(false);
             },
         });
     }
@@ -98,7 +94,7 @@ const TopUpForm = ({ onClose, savings }: { onClose: () => void, savings: Savings
                         <Input type="number" placeholder="$100.00" label="Amount" id="amount" value={amount} min={100} pattern="[0-9]*" title="Please enter a positive number" required={true} onChange={(e) => { setAmount(e.target.value) }} />
                     </div>
                     <div className="mt-4">
-                        <Button onClick={handleTopUp} text="Confirm Top-Up" loadingText="Processing..." variant='primary' size='lg' disabled={isSubmitting || (balance !== null && Number(amount) > (balance))} loading={isSubmitting} />
+                        <Button onClick={handleTopUp} text="Confirm Top-Up" loadingText="Processing..." variant='primary' size='lg' disabled={topUpSavings.isPending || (balance !== null && Number(amount) > (balance))} loading={topUpSavings.isPending} />
                     </div>
                 </div>
             </motion.div>

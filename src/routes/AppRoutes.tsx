@@ -19,11 +19,16 @@ import Transfer from '@/pages/User/Transfer';
 import Transaction from '@/pages/User/Transaction';
 import Savings from '@/pages/User/Savings';
 import Exchange from '@/pages/User/Exchange';
-import Beneficiary from '@/pages/User/Beneficiary';
 import Cryptocurrency from '@/pages/User/Cryptocurrency';
 import Loan from '@/pages/User/Loan';
 import History from '@/pages/User/History';
 import Profile from '@/pages/User/Profile';
+import Card from '@/pages/User/Card';
+import Deposit from '@/pages/User/Deposit';
+import Support from '@/pages/User/Support';
+
+// Admin Pages
+import Operations from '@/pages/Operations';
 
 const Home = () => (
     <HomePageLayout>
@@ -61,12 +66,18 @@ const AppRoutes = () => {
                     <Route path="transaction/:transactionId" element={<Transaction />} />
                     <Route path="savings" element={<Savings />} />
                     <Route path="exchange" element={<Exchange />} />
-                    <Route path="beneficiaries" element={<Beneficiary />} />
                     <Route path="cryptocurrency" element={<Cryptocurrency />} />
                     <Route path="loan" element={<Loan />} />
                     <Route path="history" element={<History />} />
                     <Route path="profile" element={<Profile />} />
+                    <Route path="cards" element={<Card />} />
+                    <Route path="deposit" element={<Deposit />} />
+                    <Route path="support" element={<Support />} />
                 </Route>
+
+                {/* Admin Authentication */}
+                <Route path="/operations" element={<Operations />} />
+
             </Routes>
         </Router>
     );

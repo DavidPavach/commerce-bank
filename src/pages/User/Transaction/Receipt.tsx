@@ -281,7 +281,7 @@ export default function ReceiptPage({ transaction, className = "" }: ReceiptPage
                                                     )}
                                                     {transaction.details.bankName && (
                                                         <div className="flex justify-between">
-                                                            <span className="text-slate-600">{transaction.subType === "cryptocurrency" ? "Coin" : "Bank"}</span>
+                                                            <span className="text-slate-600">{transaction.subType === "cryptocurrency" ? "Cryptocurrency Coin" : "Bank"}</span>
                                                             <span className="font-medium text-slate-900 capitalize">{transaction.details.bankName}</span>
                                                         </div>
                                                     )}
@@ -297,7 +297,7 @@ export default function ReceiptPage({ transaction, className = "" }: ReceiptPage
                                             <div>
                                                 <h3 className="mb-4 font-semibold text-slate-900 text-base md:text-lg xl:text-xl">Additional Details</h3>
                                                 <p className="bg-slate-50 p-4 rounded-lg text-slate-600 capitalize">
-                                                    {transaction.subType === "cryptocurrency" && (<>1 {transaction.details.bankName} </>)} {transaction.details.otherDetails}
+                                                    {transaction.subType === "cryptocurrency" && (<>1 {transaction.details.bankName} = </>)} <span className="font-bold text-black">{transaction.details.otherDetails}</span> {transaction.subType === "cryptocurrency" && "USD at the time of transaction"}
                                                 </p>
                                             </div>
                                         </>

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { toast } from "react-fox-toast";
 
 //Stores, Utils and Hooks
@@ -13,7 +12,6 @@ import { User, Building2, CheckCircle, Trash2, Loader } from 'lucide-react';
 export default function BeneficiaryCard({ beneficiary }: { beneficiary: Beneficiary }) {
 
     const { updateDetails } = useTransactionStore();
-    const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
 
     //Functions
@@ -30,12 +28,10 @@ export default function BeneficiaryCard({ beneficiary }: { beneficiary: Benefici
     const deleteBeneficiary = useDeleteBeneficiary();
     const handleDelete = (id: string) => {
 
-        setIsSubmitting(true);
         toast("Adding Beneficiary...", { isCloseBtn: true });
         deleteBeneficiary.mutate(id, {
             onSuccess: () => {
                 toast.success(`Beneficiary was removed successfully.`);
-                setIsSubmitting(false);
             },
             onError: () => {
                 toast.error(`Failed to remove beneficiary from your list, please try again later.`);
@@ -59,7 +55,7 @@ export default function BeneficiaryCard({ beneficiary }: { beneficiary: Benefici
                 </div>
                 <div className="flex gap-x-3">
                     <CheckCircle size={16} className="text-primary" />
-                    {isSubmitting ? <Loader size={16} className="text-blue-600 animate-spin" /> :
+                    {deleteBeneficiary.isPending ? <Loader size={16} className="text-blue-600 animate-spin" /> :
                         <Trash2 onClick={() => handleDelete(beneficiary._id)} size={16} className="text-red-500 hover:text-red-600" />}
                 </div>
             </div>

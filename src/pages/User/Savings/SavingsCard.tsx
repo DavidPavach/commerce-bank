@@ -16,7 +16,6 @@ import { Target, Calendar, DollarSign, TrendingUp, Trash2, CheckCircle, X, Loade
 
 export default function SavingsGoalCard({ savings }: { savings: Savings }) {
 
-    const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
     const [activeForm, setActiveForm] = useState<string>("")
     const progressPercentage = savings.targetAmount
         ? Math.min((savings.savedAmount / savings.targetAmount) * 100, 100)
@@ -47,17 +46,14 @@ export default function SavingsGoalCard({ savings }: { savings: Savings }) {
     const deleteSavings = useDeleteSavings();
     const handleDelete = (savingsId: string) => {
 
-        setIsSubmitting(true);
         toast("Deleting Savings....", { isCloseBtn: true });
         deleteSavings.mutate(savingsId, {
             onSuccess: () => {
                 toast.success(`${savings.title}  was deleted successfully.`);
-                setIsSubmitting(false);
             },
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             onError: (error: any) => {
                 toast.error(`${error.response.data.message || `Failed to delete ${savings.title}, kindly try again later.`}`);
-                setIsSubmitting(false);
             },
         });
     }
@@ -78,7 +74,7 @@ export default function SavingsGoalCard({ savings }: { savings: Savings }) {
                         </div>
                     </div>
                     <button className="hover:bg-neutral-100 p-2 rounded-lg transition-colors">
-                        {isSubmitting ? <Loader size={20} className="text-blue-500 animate-spin" /> : <Trash2 onClick={() => handleDelete(savings._id)} size={20} className="text-red-500 hover:text-red-600 duration-300" />}
+                        {deleteSavings.isPending ? <Loader size={20} className="text-blue-500 animate-spin" /> : <Trash2 onClick={() => handleDelete(savings._id)} size={20} className="text-red-500 hover:text-red-600 duration-300" />}
                     </button>
                 </div>
 

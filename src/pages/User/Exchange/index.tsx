@@ -45,11 +45,11 @@ const Index = () => {
                 <main className="bg-neutral-100 mt-10 border border-neutral-200 rounded-2xl w-full lg:w-[60%]">
                     <div className="flex mb-4">
                         <button onClick={() => setActiveTab('fiat')}
-                            className={`flex-1 px-4 py-3 text-center font-medium transition-colors ${activeTab === 'fiat' ? 'text-primary border-b-2 border-primary bg-primary/5' : 'text-neutral-600 hover:text-primary'}`}>
+                            className={`flex-1 px-2 sm:px-4 py-3 text-center transition-colors ${activeTab === 'fiat' ? 'font-semibold text-sm md:text-base xl:text-lg text-primary border-b-2 border-primary bg-primary/5' : 'text-neutral-600 hover:text-primary font-medium'}`}>
                             <DollarSquare className="inline mr-2 size-4 md:size-5 xl:size-6" />
                             Fiat Currencies
                         </button>
-                        <button onClick={() => setActiveTab('crypto')} className={`flex-1 px-4 py-3 text-center font-medium transition-colors ${activeTab === 'crypto' ? 'text-primary border-b-2 border-primary bg-primary/5' : 'text-neutral-600 hover:text-primary'}`}>
+                        <button onClick={() => setActiveTab('crypto')} className={`flex-1 px-2 sm:px-4 py-3 text-center transition-colors ${activeTab === 'crypto' ? 'text-primary border-b-2 border-primary bg-primary/5 font-semibold text-sm md:text-base xl:text-lg ' : 'text-neutral-600 hover:text-primary font-medium '}`}>
                             <Coin1 size={20} className="inline mr-2 size-4 md:size-5 xl:size-6" />
                             Cryptocurrencies
                         </button>

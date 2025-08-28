@@ -59,7 +59,7 @@ const TransferForm = () => {
 
                     {(isFetching || isLoading) && <Loader className="mx-auto my-4 text-blue-600 animate-spin" />}
 
-                    {((isError && data.status === "404") || (transaction.details.fullName.length > 0)) &&
+                    {((isError && transaction.details.accountNumber.length === 10) || (transaction.details.fullName.length > 0)) &&
                         <div className="flex flex-col gap-y-3">
                             <Input type="text" placeholder="John Doe" label="Full Name" id="fullName" value={transaction.details.fullName} required={true} onChange={(e) => updateDetails({ fullName: e.target.value })} />
 

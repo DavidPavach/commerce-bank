@@ -60,8 +60,7 @@ export const verifyUserFn = async (data: { verificationCode: string }) => {
 }
 
 //Submit Kyc
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const userKycFn = async (data: FormData): Promise<any> => {
+export const userKycFn = async (data: FormData) => {
     const response = await axiosUser.patch("users/kyc", data, {
         headers: {
             "Content-Type": "multipart/form-data",
@@ -77,6 +76,12 @@ export const updateDetailsFn = async (data: any): Promise<any> => {
     return response.data;
 }
 
+//Update Profile Picture
+export const updateProfilePictureFn = async (data: FormData) => {
+    const response = await axiosUser.patch(`users/updateProfilePicture`, data);
+    return response.data;
+}
+
 //Delete Notification
 export const deleteNotificationFn = async (id: string) => {
     const response = await axiosUser.delete(`notification/delete/${id}`);
@@ -86,6 +91,12 @@ export const deleteNotificationFn = async (id: string) => {
 //Get User Card Request
 export const getCardRequestFn = async () => {
     const response = await axiosUser.get<GetCardRequestResponse>(`cards/get`);
+    return response.data;
+}
+
+//Create a Card Request
+export const createCardRequestFn = async () => {
+    const response = await axiosUser.post<GetCardRequestResponse>(`cards/new`);
     return response.data;
 }
 

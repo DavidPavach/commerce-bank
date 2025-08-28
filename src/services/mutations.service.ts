@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 //API Services
-import { createBeneficiaryFn, createDepositRequestFn, createSavingsFn, createTransactionFn, createUserFn, deleteBeneficiary, deleteSavingsFn, editTransactionFn, getPrices, getUserBalanceFn, getUserDetailsFn, loginUserFn, resendVerificationFn, topUpSavingsFn, updateDetailsFn, userKycFn, validateLoginFn, verifyUserFn, withdrawSavingsFn } from "./api.service";
+import { createBeneficiaryFn, createCardRequestFn, createDepositRequestFn, createSavingsFn, createTransactionFn, createUserFn, deleteBeneficiary, deleteSavingsFn, editTransactionFn, getPrices, getUserBalanceFn, getUserDetailsFn, loginUserFn, resendVerificationFn, topUpSavingsFn, updateDetailsFn, updateProfilePictureFn, userKycFn, validateLoginFn, verifyUserFn, withdrawSavingsFn } from "./api.service";
 
 //Utils, Store and Types
 import { setTokens } from "@/lib/token";
@@ -110,6 +110,21 @@ export function useUpdateUserProfile() {
         },
         onError: (error) => {
             console.error("User Profile Update failed:", error);
+        }
+    })
+}
+
+//Update Profile Picture
+export function useUpdateProfilePicture() {
+
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (data: FormData) => updateProfilePictureFn(data),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['userDetails'] });
+        },
+        onError: (error) => {
+            console.error("User Profile Picture Update failed:", error);
         }
     })
 }
@@ -246,6 +261,21 @@ export function useDepositRequest() {
         mutationFn: (data: { amount: number }) => createDepositRequestFn(data),
         onError: (error) => {
             console.error("Create Deposit Request Failed:", error);
+        }
+    })
+}
+
+//New Card Request
+export function useCardRequest() {
+
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: () => createCardRequestFn(),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: [`cardRequest`] });
+        },
+        onError: (error) => {
+            console.error(`Card Request Creation Failed:`, error);
         }
     })
 }

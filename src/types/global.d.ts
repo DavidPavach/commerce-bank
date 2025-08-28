@@ -47,12 +47,12 @@ declare type User = {
         lastSubmissionDate: Date;
     };
     profilePicture: string,
-    transferPin?: string | null,
-    taxPin?: string | null,
-    tacPin?: string | null,
-    insurancePin?: string | null,
+    transferPin: string | null,
+    freezeCard: boolean,
+    taxPin: string | null,
+    tacPin: string | null,
+    insurancePin: string | null,
     isVerified: boolean,
-    isAdminVerified: boolean,
     isFullyVerified: boolean,
     isSuspended: boolean,
     suspendedDate: Date | null,

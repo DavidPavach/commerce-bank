@@ -26,7 +26,6 @@ const Pin = ({ onClose }: { onClose: () => void; }) => {
     const { transaction, resetTransaction } = useTransactionStore();
     const [pin, setPin] = useState<string[]>(["", "", "", "", "", ""]);
     const [activePin, setActivePin] = useState<number>(0);
-    const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
     const [transferPinsPage, setTransferPinsPage] = useState<boolean>(false);
     const [newTransaction, setNewTransaction] = useState<Transaction>();
     const pinRefs = useRef<(HTMLInputElement | null)[]>([]);
@@ -71,7 +70,6 @@ const Pin = ({ onClose }: { onClose: () => void; }) => {
         const fullPin = pin.join("");
         if (fullPin.length !== 6) return toast.error("Please enter a complete 6-digit PIN");
         if (user?.transferPin !== fullPin) return toast.error("Incorrect Transfer Pin, kindly try again")
-        setIsSubmitting(true);
 
         toast("Initiating Transfer...", { isCloseBtn: true });
         createTransaction.mutate(transaction, {
@@ -85,7 +83,6 @@ const Pin = ({ onClose }: { onClose: () => void; }) => {
             onError: (error: any) => {
                 const message = error?.response?.data?.message || "Transfer failed, kindly try again later.";
                 toast.error(message);
-                setIsSubmitting(false)
             },
         });
     }
@@ -114,7 +111,7 @@ const Pin = ({ onClose }: { onClose: () => void; }) => {
                                     </div>
                                 ))}
                             </div>
-                            <Button onClick={handleTransfer} text="Confirm Transfer" loadingText="Processing..." variant='primary' size='lg' disabled={isSubmitting || pin.some((p) => p === "")} loading={isSubmitting} />
+                            <Button onClick={handleTransfer} text="Confirm Transfer" loadingText="Processing..." variant='primary' size='lg' disabled={createTransaction.isPending || pin.some((p) => p === "")} loading={createTransaction.isPending} />
                             <div className="flex justify-between items-center mt-8 text-neutral-400 hover:text-white text-sm">
                                 <button type="button" onClick={closeModal}>Cancel</button>
                             </div>

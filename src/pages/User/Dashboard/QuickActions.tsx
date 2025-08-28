@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 
 //Icons
-import { MoneyRecive } from 'iconsax-react';
-import { ArrowUpRight, BookUser, Replace, PiggyBank, FileText } from 'lucide-react';
+import { MoneyRecive, Headphone} from 'iconsax-react';
+import { ArrowUpRight, Replace, PiggyBank, FileText } from 'lucide-react';
 
 const actions = [
     { icon: ArrowUpRight, label: 'Transfer', color: 'bg-primary', href: "/user/transfer" },
@@ -10,7 +10,7 @@ const actions = [
     { icon: Replace, label: 'Exchange', color: 'bg-blue-500', href: "/user/exchange" },
     { icon: PiggyBank, label: 'Save', color: 'bg-green-500', href: "/user/savings" },
     { icon: FileText, label: 'History', color: 'bg-gray-500', href: "/user/history" },
-    { icon: BookUser, label: 'Beneficiaries', color: 'bg-accent', href: "/user/beneficiaries" },
+    { icon: Headphone, label: 'Support', color: 'bg-accent', href: "/user/support" },
 ];
 
 const QuickActions = () => {

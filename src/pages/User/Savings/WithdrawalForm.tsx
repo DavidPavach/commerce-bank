@@ -20,7 +20,6 @@ const WithdrawalForm = ({ onClose, savings }: { onClose: () => void, savings: Sa
 
     const { balance } = useUserStore()
     const [amount, setAmount] = useState<string>('');
-    const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
     //Constants
     const quickAmounts = [500, 1000, 2500, 5000, 10000];
@@ -32,17 +31,14 @@ const WithdrawalForm = ({ onClose, savings }: { onClose: () => void, savings: Sa
         if (Number(amount) < 0 || Number(amount) === 0) return toast.error("Withdrawal amount must be greater than zero");
         if (Number(amount) < 100) return toast.error("Withdrawal amount must be greater than $100 USD");
 
-        setIsSubmitting(true);
         toast("Processing Withdrawal...", { isCloseBtn: true });
         withdrawSavings.mutate({ savingsId: savings._id, amount: Number(amount) }, {
             onSuccess: () => {
                 toast.success(`Successful 🎉, Your withdrawal was successful.`);
-                setIsSubmitting(false);
                 onClose();
             },
             onError: () => {
                 toast.error(`Withdrawal could not be completed, please try again later.`);
-                setIsSubmitting(false);
             },
         });
     }
@@ -79,7 +75,7 @@ const WithdrawalForm = ({ onClose, savings }: { onClose: () => void, savings: Sa
                         <Input type="number" placeholder="$100.00" label="Amount" id="amount" value={amount} min={100} pattern="[0-9]*" title="Please enter a positive number" required={true} onChange={(e) => { setAmount(e.target.value) }} />
                     </div>
                     <div className="mt-4">
-                        <Button onClick={handleWithdrawal} text="Confirm Withdrawal" loadingText="Processing..." variant='primary' size='lg' disabled={isSubmitting} loading={isSubmitting} />
+                        <Button onClick={handleWithdrawal} text="Confirm Withdrawal" loadingText="Processing..." variant='primary' size='lg' disabled={withdrawSavings.isPending} loading={withdrawSavings.isPending} />
                     </div>
                 </div>
             </motion.div>

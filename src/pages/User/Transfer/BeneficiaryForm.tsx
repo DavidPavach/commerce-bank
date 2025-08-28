@@ -30,7 +30,6 @@ const BeneficiaryForm = ({ closeModal }: { closeModal: () => void; }) => {
         note: '',
     }
 
-    const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
     const [beneficiaryDetails, setBeneficiaryDetails] = useState<beneficiary>(initialBeneficiaryDetails);
 
     // Functions
@@ -49,7 +48,6 @@ const BeneficiaryForm = ({ closeModal }: { closeModal: () => void; }) => {
     const addBeneficiary = useCreateBeneficiary();
     const handleCreation = () => {
 
-        setIsSubmitting(true);
         toast("Adding Beneficiary...", { isCloseBtn: true });
         addBeneficiary.mutate(beneficiaryDetails, {
             onSuccess: () => {
@@ -82,7 +80,7 @@ const BeneficiaryForm = ({ closeModal }: { closeModal: () => void; }) => {
                             <Textarea placeholder="Enter Beneficiary Note Here (Optional)." id="message" onChange={handleChange} className="rounded-2xl" />
                         </div>
                     </div>
-                    <Button onClick={handleCreation} text="Add Beneficiary" loadingText="Adding..." variant='primary' size='lg' disabled={isSubmitting} loading={isSubmitting} />
+                    <Button onClick={handleCreation} text="Add Beneficiary" loadingText="Adding..." variant='primary' size='lg' disabled={addBeneficiary.isPending} loading={addBeneficiary.isPending} />
                     <div className="flex justify-between items-center mt-8 hover:text-red-500 text-sm duration-300">
                         <button type="button" onClick={closeModal}>Cancel</button>
                     </div>
