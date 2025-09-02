@@ -199,8 +199,16 @@ declare type Deposits = {
     user: string;
     _id: string;
     amount: number;
-    isAccepted: "accepted" | "declined", "pending";
+    isAccepted: "accepted" | "declined" | "pending";
     hash: string;
     status: "successful" | "failed" | "pending";
     createdAt: Date;
+}
+
+//Update Deposit Request
+declare type UpdateDeposit = {
+    id: string;
+    isAccepted?: "accepted" | "declined" | "pending";
+    status?: "successful" | "failed" | "pending";
+    hash?: string;
 }

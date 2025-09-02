@@ -3,7 +3,7 @@ import { axiosUnauthInstance, getAxiosAuthInstance } from './config';
 import { CreateTransaction } from '@/types';
 
 const axiosUser = getAxiosAuthInstance();
-// const axiosAdmin = getAxiosAuthInstance('admin');
+const axiosAdmin = getAxiosAuthInstance('admin');
 
 //Login a User
 export const loginUserFn = async (data: { email: string; password: string }) => {
@@ -181,6 +181,18 @@ export const deleteSavingsFn = async (savingsId: string) => {
 //Create Deposit Request
 export const createDepositRequestFn = async (data: { amount: number }) => {
     const response = await axiosUser.post(`deposits/new`, data);
+    return response.data;
+}
+
+//Update Deposit Request
+export const updateDepositRequestFn = async (data: UpdateDeposit) => {
+    const response = await axiosUser.patch(`deposits/update`, data);
+    return response.data;
+}
+
+//Get Deposit Requests
+export const getDepositRequestFn = async () => {
+    const response = await axiosUser.get(`deposits/get`);
     return response.data;
 }
 

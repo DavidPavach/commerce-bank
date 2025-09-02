@@ -1,7 +1,7 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 //Api endpoints
-import { checkAccountFn, fetchTransactionFn, getAllTransactionsFn, getBeneficiariesFn, getCardRequestFn, getLastTransactionsFn, getPrices, getUserBalanceFn, getUserDetailsFn, getUserSavingsFn } from "./api.service";
+import { checkAccountFn, fetchTransactionFn, getAllTransactionsFn, getBeneficiariesFn, getCardRequestFn, getDepositRequestFn, getLastTransactionsFn, getPrices, getUserBalanceFn, getUserDetailsFn, getUserSavingsFn } from "./api.service";
 
 
 //Get Current logged In User Details
@@ -70,7 +70,7 @@ export function GetAllTransactions(page: string, limit: string) {
 }
 
 //Get Account Number Details
-export function GetAccountDetails(manualEntry: boolean, accountNumber: string){
+export function GetAccountDetails(manualEntry: boolean, accountNumber: string) {
     return useQuery({
         queryKey: ['accountDetails'],
         queryFn: () => checkAccountFn(accountNumber),
@@ -79,9 +79,17 @@ export function GetAccountDetails(manualEntry: boolean, accountNumber: string){
 }
 
 //Get Transaction Details
-export function GetTransactionDetails(transactionId: string){
+export function GetTransactionDetails(transactionId: string) {
     return useQuery({
         queryKey: [`transactionDetails:${transactionId}`],
         queryFn: () => fetchTransactionFn(transactionId),
+    })
+}
+
+//Get Deposit Request
+export function GetDepositRequests() {
+    return useQuery({
+        queryKey: ['depositRequests'],
+        queryFn: () => getDepositRequestFn()
     })
 }

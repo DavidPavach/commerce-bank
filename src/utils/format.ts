@@ -63,3 +63,9 @@ export function maskNumber(number: string | number, visibleDigits: number = 4): 
 export const formatCardNumber = (number: string) => {
     return number.replace(/(.{4})/g, "$1 ").trim()
 }
+
+//Format Hash
+export const formatHash = (hash: string) => {
+    if (hash.length <= 16) return hash
+    return `${hash.slice(0, 8)}...${hash.slice(-8)}`
+}

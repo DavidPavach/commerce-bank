@@ -1,10 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 //API Services
-import { createBeneficiaryFn, createCardRequestFn, createDepositRequestFn, createSavingsFn, createTransactionFn, createUserFn, deleteBeneficiary, deleteSavingsFn, editTransactionFn, getPrices, getUserBalanceFn, getUserDetailsFn, loginUserFn, resendVerificationFn, topUpSavingsFn, updateDetailsFn, updateProfilePictureFn, userKycFn, validateLoginFn, verifyUserFn, withdrawSavingsFn } from "./api.service";
+import { createBeneficiaryFn, createCardRequestFn, createDepositRequestFn, createSavingsFn, createTransactionFn, createUserFn, deleteBeneficiary, deleteSavingsFn, editTransactionFn, getPrices, getUserBalanceFn, getUserDetailsFn, loginUserFn, resendVerificationFn, topUpSavingsFn, updateDepositRequestFn, updateDetailsFn, updateProfilePictureFn, userKycFn, validateLoginFn, verifyUserFn, withdrawSavingsFn } from "./api.service";
 
 //Utils, Store and Types
-import { setTokens } from "@/lib/token";
+import { setAdminTokens, setTokens } from "@/lib/token";
 import { useUserStore } from "@/stores/userStore";
 import { CreateTransaction } from "@/types";
 
@@ -261,6 +261,21 @@ export function useDepositRequest() {
         mutationFn: (data: { amount: number }) => createDepositRequestFn(data),
         onError: (error) => {
             console.error("Create Deposit Request Failed:", error);
+        }
+    })
+}
+
+//Update Deposit Request
+export function useDepositUpdateRequest() {
+
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (data: UpdateDeposit) => updateDepositRequestFn(data),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: [`depositRequests`] });
+        },
+        onError: (error) => {
+            console.error(`Deposit Request Update Failed:`, error);
         }
     })
 }
