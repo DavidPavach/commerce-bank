@@ -10,6 +10,7 @@ import { ErrorScreen } from '@/components/ErrorComponents';
 //Icons
 import { Gift } from 'iconsax-react';
 import { CreditCard, Lock, Eye } from 'lucide-react';
+import { NavLink } from 'react-router-dom';
 
 const Card = () => {
 
@@ -56,10 +57,10 @@ const Card = () => {
             </div>
 
             <div className="flex space-x-2 my-2.5 xl:my-5">
-                <button disabled={data && data.data === null} className="flex flex-1 justify-center items-center space-x-2 bg-primary hover:bg-primary/90 disabled:bg-gray-600 px-4 py-2 rounded-lg text-white disabled:text-gray-300 transition-colors disabled:cursor-not-allowed">
+                <NavLink to="/user/cards" className="flex flex-1 justify-center items-center space-x-2 bg-primary hover:bg-primary/90 disabled:bg-gray-600 px-4 py-2 rounded-lg text-white disabled:text-gray-300 transition-colors disabled:cursor-not-allowed">
                     <Eye size={16} />
                     <span>View Details</span>
-                </button>
+                </NavLink>
                 <button disabled={data && data.data === null} className="flex flex-1 justify-center items-center space-x-2 hover:bg-neutral-50 px-4 py-2 border border-neutral-200 rounded-lg text-lightBlack disabled:text-gray-300 transition-colors disabled:cursor-not-allowed">
                     <Lock size={16} />
                     <span>Freeze Card</span>

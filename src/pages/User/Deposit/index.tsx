@@ -61,7 +61,7 @@ const Index = () => {
                     </button>
                 </div>
             </section>
-            <section className="mt-10">
+            <section className="mt-4">
                 {activeTab === "deposits" && <DepositCard deposits={data.data} />}
                 {activeTab === "new" && <Form />}
             </section>

@@ -3,7 +3,7 @@ import { axiosUnauthInstance, getAxiosAuthInstance } from './config';
 import { CreateTransaction } from '@/types';
 
 const axiosUser = getAxiosAuthInstance();
-const axiosAdmin = getAxiosAuthInstance('admin');
+// const axiosAdmin = getAxiosAuthInstance('admin');
 
 //Login a User
 export const loginUserFn = async (data: { email: string; password: string }) => {

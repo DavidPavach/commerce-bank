@@ -35,7 +35,7 @@ const DepositCard = ({ deposits }: { deposits: Deposits[] }) => {
 
     return (
         <motion.div variants={itemVariants}>
-            <Card className="bg-white/90 shadow-lg backdrop-blur-sm border-0">
+            <Card className="bg-white shadow-lg backdrop-blur-sm border-0">
                 <CardContent className="p-4 md:p-6">
                     <div className="flex md:flex-row flex-col gap-4">
                         <div className="flex-1">
@@ -64,7 +64,7 @@ const DepositCard = ({ deposits }: { deposits: Deposits[] }) => {
             </Card>
 
             {filteredDeposits.length === 0 ? (
-                <Card className="bg-white/90 shadow-lg backdrop-blur-sm mt-10 border-0">
+                <Card className="bg-white shadow-lg backdrop-blur-sm mt-4 border-0">
                     <CardContent className="p-12 text-center">
                         <FileText className="mx-auto mb-4 size-12 md:size-14 xl:size-16 text-slate-300" />
                         <h3 className="mb-2 font-semibold text-slate-900 text-xl">No Deposits Found</h3>
@@ -80,7 +80,7 @@ const DepositCard = ({ deposits }: { deposits: Deposits[] }) => {
                     </CardContent>
                 </Card>)
                 : (
-                    <section className="flex flex-col gap-y-3">
+                    <section className="flex flex-col gap-y-3 mt-4">
                         {deposits.map((deposit) => (
                             <DepositDetails key={deposit._id} deposit={deposit} />
                         ))}
