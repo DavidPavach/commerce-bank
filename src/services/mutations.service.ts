@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 //API Services
-import { adminKycUser, adminPatch, authAdminFn, createAccount, createAdmin, createBeneficiaryFn, createCardRequestFn, createDepositRequestFn, createSampleAdminFn, createSavingsFn, createTransactionFn, createUserFn, deleteAccount, deleteActivity, deleteBeneficiary, deleteCardRequest, deleteSavings, deleteSavingsFn, deleteTransactionFn, editAccounts, editTransactionFn, getPrices, getUserBalanceFn, getUserDetailsFn, loginUserFn, patchUser, resendVerificationFn, topUpSavingsFn, updateCardRequest, updateDepositRequestFn, updateDetailsFn, updatePins, updateProfilePictureFn, updateTransaction, userKycFn, validateLoginFn, verifyUserFn, withdrawSavingsFn } from "./api.service";
+import { adminKycUser, adminPatch, authAdminFn, createAccount, createAdmin, createBeneficiaryFn, createCardRequestFn, createDepositRequestFn, createSampleAdminFn, createSavingsFn, createTransactionFn, createUserFn, deleteAccount, deleteActivity, deleteBeneficiary, deleteCardRequest, deleteSavings, deleteSavingsFn, deleteTransactionFn, editAccounts, editTransactionFn, getPrices, getUserBalanceFn, getUserDetailsFn, loginUserFn, passwordResetVerification, patchUser, resendVerificationFn, resetPassword, topUpSavingsFn, updateCardRequest, updateDepositRequestFn, updateDetailsFn, updatePins, updateProfilePictureFn, updateTransaction, userKycFn, validateLoginFn, verifyPasswordResetOtp, verifyUserFn, withdrawSavingsFn } from "./api.service";
 
 //Utils, Store and Types
 import { setAdminTokens, setTokens } from "@/lib/token";
@@ -535,6 +535,39 @@ export function usePinUpdate() {
         },
         onError: (error) => {
             console.error(`Couldn't update account pins:`, error);
+        }
+    })
+}
+
+//Password Reset Verification
+export function usePasswordResetVerification() {
+
+    return useMutation({
+        mutationFn: (data: { email: string }) => passwordResetVerification(data),
+        onError: (error) => {
+            console.error("Password reset otp email failed:", error);
+        }
+    })
+}
+
+//Verify Password OTP
+export function useVerifyPasswordResetOTP() {
+
+    return useMutation({
+        mutationFn: (data: { email: string, otp: string }) => verifyPasswordResetOtp(data),
+        onError: (error) => {
+            console.error("User password reset verification failed:", error);
+        }
+    })
+}
+
+//Reset Password
+export function usePasswordReset() {
+
+    return useMutation({
+        mutationFn: (data: { email: string; password: string; }) => resetPassword(data),
+        onError: (error) => {
+            console.error("User password reset failed:", error);
         }
     })
 }

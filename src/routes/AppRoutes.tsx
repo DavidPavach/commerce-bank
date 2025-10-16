@@ -14,6 +14,7 @@ import Kyc from '@/pages/Kyc';
 import Pin from '@/pages/Pin';
 import Pending from '@/pages/Pending';
 import NotFound from '@/components/Not-Found';
+import ResetPassword from '@/pages/PasswordReset';
 
 // User pages
 import Dashboard from '@/pages/User/Dashboard';
@@ -40,7 +41,7 @@ import AdminCardRequest from '@/pages/Admin/CardRequest';
 import AdminStaff from '@/pages/Admin/Staff';
 import AdminProfile from '@/pages/Admin/Profile';
 import AdminMessages from '@/pages/Admin/Messages';
-import AdminNotifications from '@/pages/Admin/Notifications';
+
 
 const Home = () => (
     <HomePageLayout>
@@ -77,6 +78,7 @@ const AppRoutes = () => {
                 <Route path="/pin" element={<Pin />} />
                 <Route path="/pending" element={<Pending />} />
                 <Route path="*" element={<NotFound />} />
+                <Route path="/forgot" element={<ResetPassword />} />
 
                 {/* User Routes */}
                 <Route path="/user" element={<User />}>
@@ -107,7 +109,6 @@ const AppRoutes = () => {
                     <Route path="admins" element={<AdminStaff />} />
                     <Route path="profile" element={<AdminProfile />} />
                     <Route path="messages" element={<AdminMessages />} />
-                    <Route path="notifications" element={<AdminNotifications />} />
                 </Route>
             </Routes>
         </Router>

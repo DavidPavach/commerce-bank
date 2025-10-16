@@ -367,4 +367,5 @@ declare type ChatState = {
     setTyping: (userId: string, isTyping: boolean) => void;
     resetUnread: (userId: string) => void;
     setActiveConversation: (userId: string) => void;
+    reset: () => void;
 };

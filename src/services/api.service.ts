@@ -23,6 +23,24 @@ export const createUserFn = async (data: UserCreation) => {
     return response.data;
 }
 
+//Password Reset Verification
+export const passwordResetVerification = async (data: { email: string }) => {
+    const response = await axiosUnauthInstance.post("auth/passwordResetVerification", data);
+    return response.data;
+}
+
+//Verify Password Reset OTP
+export const verifyPasswordResetOtp = async (data: { email: string, otp: string }) => {
+    const response = await axiosUnauthInstance.post("auth/verifyPasswordResetOTP", data);
+    return response.data;
+}
+
+//Reset Password
+export const resetPassword = async (data: { email: string, password: string }) => {
+    const response = await axiosUnauthInstance.post("auth/resetPassword", data);
+    return response.data;
+}
+
 //Get Logged in User Details
 export const getUserDetailsFn = async () => {
     const response = await axiosUser.get<GetDetailsResponse>("users/currentUser")

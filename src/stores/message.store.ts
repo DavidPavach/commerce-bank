@@ -109,4 +109,13 @@ export const useChatStore = create<ChatState>((set) => ({
         c.userId === userId ? { ...c, unreadCount: 0 } : c
       ),
     })),
+
+  reset: () =>
+    set({
+      selfId: null,
+      conversations: [],
+      activeUser: null,
+      activeConversationId: null,
+      typingUsers: {},
+    }),
 }));

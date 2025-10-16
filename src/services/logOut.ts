@@ -1,20 +1,31 @@
-//Utils, Stores and Libs
-import { useNotificationStore } from "@/stores/notificationStore";
+// Services
 import { disconnectSocket } from "./sockets/socketService";
-import { useUserStore } from "@/stores/userStore";
+
+//Libs
 import { clearTokens } from "@/lib/token";
 
-export const handleLogout = async () => {
+// Stores
+import { useNotificationStore } from "@/stores/notificationStore";
+import { useTransactionStore } from "@/stores/transactionStore";
+import { useChatStore } from "@/stores/message.store";
+import { useUserStore } from "@/stores/userStore";
+
+export const handleLogout = () => {
   try {
-    // 1️⃣ Disconnect the socket
+
+    // Disconnect the socket
     disconnectSocket();
 
-    // 2️⃣ Clear your stores (user, notifications, etc.)
+    // Clear your stores (user, notifications, etc.)
     useUserStore.getState().clearUser();
-    // useNotificationStore.getState().clearNotifications();
+    useTransactionStore.getState().resetTransaction();
+    useNotificationStore.getState().clearAllNotifications();
+    useChatStore.getState().reset();
+
+    // Clear tokens
     clearTokens()
 
-    // 3️⃣ Redirect to login
+    // Redirect to login
     window.location.replace('/login');
   } catch (err) {
     console.error('Logout failed', err);
