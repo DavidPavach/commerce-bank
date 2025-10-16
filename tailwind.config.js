@@ -38,9 +38,17 @@ export default {
           "0%,70%,100%": { opacity: "1" },
           "20%,50%": { opacity: "0" },
         },
+        shake: {
+          '0%, 100%': { transform: 'translateX(0)' },
+          '25%': { transform: 'translateX(-3px)' },
+          '50%': { transform: 'translateX(3px)' },
+          '75%': { transform: 'translateX(-3px)' },
+        },
       },
       animation: {
         "caret-blink": "caret-blink 1.25s ease-out infinite",
+        shake: 'shake 2.0s ease-in-out infinite',
+        shakeSlow: 'shake 0.5s ease-in-out infinite alternate',
       },
     },
   },

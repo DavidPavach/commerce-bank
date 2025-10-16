@@ -1,7 +1,7 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 //Api endpoints
-import { checkAccountFn, fetchTransactionFn, getAllTransactionsFn, getBeneficiariesFn, getCardRequestFn, getDepositRequestFn, getLastTransactionsFn, getPrices, getUserBalanceFn, getUserDetailsFn, getUserSavingsFn } from "./api.service";
+import { adminSavings, adminUserTransactions, checkAccountFn, fetchTransactionFn, getAccounts, getActivities, getAdminDetails, getAdmins, getAdminsFn, getAllTransactionsFn, getAllUsers, getBeneficiariesFn, getCardRequestFn, getCardRequests, getDepositRequestFn, getLastTransactionsFn, getPrices, getSavings, getTransactionsFn, getUserBalanceFn, getUserDetailsFn, getUserSavingsFn } from "./api.service";
 
 
 //Get Current logged In User Details
@@ -91,5 +91,103 @@ export function GetDepositRequests() {
     return useQuery({
         queryKey: ['depositRequests'],
         queryFn: () => getDepositRequestFn()
+    })
+}
+
+
+// Admin Queries
+
+//Get Admins
+export function GetAdmins() {
+    return useQuery({
+        queryKey: ["admins"],
+        queryFn: () => getAdminsFn()
+    })
+}
+
+//Get All Transactions
+export function GetTransactions(page: string, limit: string) {
+    return useQuery({
+        queryKey: ['transactions', page, limit],
+        queryFn: () => getTransactionsFn(page, limit),
+        placeholderData: keepPreviousData
+    })
+}
+
+//Fetch all Users
+export function GetAllUsers(page?: string, limit?: string) {
+    return useQuery({
+        queryKey: ['allUsers', page, limit],
+        queryFn: () => getAllUsers(page, limit),
+        placeholderData: keepPreviousData,
+    })
+}
+
+//Fetch User Savings
+export function UserSavings(userId: string) {
+    return useQuery({
+        queryKey: [`${userId}_savings`],
+        queryFn: () => adminSavings(userId)
+    })
+}
+
+//Fetch a user Transactions
+export function useGetUserTransactions(data: { page?: string, limit?: string, userId: string, transactionType?: string }) {
+    return useQuery({
+        queryKey: [`${data.userId} user-transactions`, data.userId, data.page, data.limit, data.transactionType],
+        queryFn: () => adminUserTransactions(data),
+        placeholderData: keepPreviousData,
+    });
+}
+
+//Fetch all Users
+export function useAllAccounts(page?: string, limit?: string) {
+    return useQuery({
+        queryKey: ['allAccounts', page, limit],
+        queryFn: () => getAccounts(page, limit),
+        placeholderData: keepPreviousData,
+    })
+}
+
+//Fetch all Savings
+export function useAllSavings(page?: string, limit?: string) {
+    return useQuery({
+        queryKey: ['allSavings', page, limit],
+        queryFn: () => getSavings(page, limit),
+        placeholderData: keepPreviousData,
+    })
+}
+
+//Fetch all Savings
+export function useAllActivities(page?: string, limit?: string) {
+    return useQuery({
+        queryKey: ['allActivities', page, limit],
+        queryFn: () => getActivities(page, limit),
+        placeholderData: keepPreviousData,
+    })
+}
+
+//Fetch all Card Requests
+export function useCardRequests(page?: string, limit?: string) {
+    return useQuery({
+        queryKey: ['allCardRequests', page, limit],
+        queryFn: () => getCardRequests(page, limit),
+        placeholderData: keepPreviousData,
+    })
+}
+
+//Fetch All Admins
+export function useAdmins() {
+    return useQuery({
+        queryKey: ['allAdmins'],
+        queryFn: () => getAdmins(),
+    })
+}
+
+//Fetch logged in Admin
+export function useCurrentAdmin() {
+    return useQuery({
+        queryKey: ['currentAdmin'],
+        queryFn: () => getAdminDetails(),
     })
 }

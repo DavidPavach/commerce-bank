@@ -52,7 +52,7 @@ const TransferForm = () => {
             <main className="text-neutral-900">
                 <h1 className="font-semibold text-base md:text-lg xl:text-xl">Transfer Details</h1>
                 <div className="flex flex-col gap-y-3 mt-4">
-                    <Input type="text" placeholder="0000 0000 00" label="Account Number" id="accountNumber" pattern="\d{10,12}" title="Account number must be 10 to 12 digits long" value={transaction.details.accountNumber} required={true} onChange={(e) => {
+                    <Input type="text" placeholder="0000 0000 00" label="Account Number" id="accountNumber" pattern="\d{10,12}$" title="Account number must be 10 to 12 digits long" value={transaction.details.accountNumber} inputMode="numeric" max={12} required={true} onChange={(e) => {
                         updateDetails({ accountNumber: e.target.value });
                         setManualEntry(true);
                     }} />
@@ -84,7 +84,7 @@ const TransferForm = () => {
 
                     <div className="flex flex-col gap-y-1">
                         <label htmlFor="description">Description (Optional)</label>
-                        <textarea name="description" id="description" placeholder="Description (Optional)" maxLength={140} title="Description must be 140 characters or fewer" className="bg-inherit px-4 py-3 border focus:border-primary rounded-2xl focus:outline-none h-20 text-sm md:text-base xl:text-lg duration-300 focus:caret-primary resize-none" onChange={(e) => updateTransaction({ description: e.target.value})}></textarea>
+                        <textarea name="description" value={transaction.description} id="description" placeholder="Description (Optional)" maxLength={140} title="Description must be 140 characters or fewer" className="bg-inherit px-4 py-3 border focus:border-primary rounded-2xl focus:outline-none h-20 text-sm md:text-base xl:text-lg duration-300 focus:caret-primary resize-none" onChange={(e) => updateTransaction({ description: e.target.value })}></textarea>
                     </div>
 
                     <div className="flex items-center gap-x-3 my-1">

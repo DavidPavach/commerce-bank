@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
-// Utils and Stores
+// Utils, Stores and Services
 import { getAccessToken } from "@/lib/token";
 import { useUserStore } from "@/stores/userStore";
+import { useSocket } from "@/services/sockets/socket.on";
 
 // Components
 import Navbar from "@/components/Navbar";
@@ -15,6 +16,9 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
     const navigate = useNavigate();
     const location = useLocation();
     const { user } = useUserStore();
+
+    // Socket Connection
+    useSocket(user?._id ?? '');
 
     useEffect(() => {
         const accessToken = getAccessToken();

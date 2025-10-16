@@ -39,7 +39,7 @@ declare type User = {
     encryptedPassword: string,
     accountId: string,
     accountNumber: string,
-    gender: male,
+    gender: 'male' | 'female' | 'prefer not to say',
     kyc?: {
         images: string[];
         idType: string;
@@ -52,6 +52,7 @@ declare type User = {
     taxPin: string | null,
     tacPin: string | null,
     insurancePin: string | null,
+    transactionSuspended: boolean,
     isVerified: boolean,
     isFullyVerified: boolean,
     isSuspended: boolean,
@@ -60,6 +61,25 @@ declare type User = {
     isOnline: boolean,
     lastSession?: Date;
     createdAt: Date
+}
+
+//Patch User
+declare type PatchUser = {
+    email: string,
+    fullName?: string,
+    country?: string,
+    address?: string,
+    phoneNumber?: string,
+    transferPin?: string,
+    password?: string,
+    accountNumber?: string,
+    gender?: 'male' | 'female' | 'prefer not to say',
+    freezeCard?: boolean,
+    isFullyVerified?: boolean,
+    isSuspended?: boolean,
+    taxPin?: string,
+    tacPin?: string,
+    insurancePin?: string,
 }
 
 //Get Current User Response
@@ -212,3 +232,139 @@ declare type UpdateDeposit = {
     status?: "successful" | "failed" | "pending";
     hash?: string;
 }
+
+//Admin
+
+//DownBar and SideBar NavItem
+declare type NavItem = {
+    href: string;
+    icon: React.ElementType;
+    label: string;
+}
+
+//Edit Account
+declare type EditAccount = {
+    accountId: string,
+    accountNumber?: string,
+    fullName?: string,
+    bankName?: string,
+}
+
+//Savings with User Details
+declare type SavingsWithUser = Savings & {
+    user: {
+        fullName: string;
+        email: string;
+        profilePicture: string;
+        _id: string;
+        isFullyVerified: boolean;
+        isOnline: boolean;
+        isVerified: boolean;
+    }
+}
+
+//Admin Activity
+declare type Activity = {
+    _id: string
+    action: string
+    admin: {
+        email: string
+        role: string
+        _id: string
+    }
+    createdAt: string
+    metadata: Record<string, string | Date | number>
+    target: string
+    updatedAt: string
+    __v?: number
+}
+
+//Card Requests
+declare type CardRequest = {
+    _id: string;
+    cardCVV: string;
+    cardExpiryDate: string;
+    cardNumber: string;
+    createdAt: string;
+    status: "successful" | "declined" | "pending";
+    updatedAt: string;
+    user: {
+        email: string;
+        fullName: string;
+        isFullyVerified: boolean;
+        isOnline: boolean;
+        isVerified: boolean;
+        profilePicture: string;
+        _id: string;
+    }
+}
+
+//Edit Admin
+declare type PatchAdmin = {
+    adminId: string,
+    email?: string,
+    password?: string,
+    role?: "admin" | "super_admin",
+    isSuspended?: boolean
+}
+
+//Admin
+declare type Admin = {
+    createdAt: string;
+    email: string;
+    adminId: string;
+    encryptedPassword: string;
+    role: "admin" | "super_admin";
+    _id: string;
+    isSuspended: boolean;
+    lastSession?: string | Date | null;
+}
+
+//Messages
+declare type Message = {
+    id: string;
+    from: string;
+    to: string;
+    text: string;
+    timestamp: string | Date | number;
+    status: 'pending' | 'successful' | 'failed'
+}
+
+declare type Conversation = {
+    userId: string;
+    unreadCount: number;
+    messages: Message[];
+    userPreview?: UserPreview;
+};
+
+declare type UserPreview = {
+    fullName: string;
+    email: string;
+    profilePicture: string;
+    lastSession: string | Date | undefined;
+    isOnline: boolean;
+    isSuspended: boolean;
+    isFullyVerified: boolean;
+    _id: string;
+}
+
+//ChatState
+declare type ChatState = {
+    selfId: string | null;
+    conversations: Conversation[];
+    activeUser: UserPreview | null;
+    activeConversationId: string | null;
+    typingUsers: Record<string, boolean>;
+
+    // Actions
+    setSelfId: (id: string) => void;
+    setConversations: (convs: Conversation[]) => void;
+    setActiveUser: (user: UserPreview | null) => void;
+    addMessage: (msg: Message) => void;
+    updateMessageStatus: (id: string, status: 'pending' | 'successful' | 'failed') => void;
+    deleteMessage: (messageId: string) => void;
+    replaceMessage: (id: string, newData: Message) => void;
+    setTyping: (userId: string, isTyping: boolean) => void;
+    resetUnread: (userId: string) => void;
+    setActiveConversation: (userId: string) => void;
+};

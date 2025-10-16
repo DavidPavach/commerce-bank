@@ -116,7 +116,7 @@ export default function ReceiptPage({ transaction, className = "" }: ReceiptPage
         if (navigator.share) {
             navigator.share({
                 title: "Transaction Receipt",
-                text: "Commerce Bank USA Transaction Receipt",
+                text: "CBSH Bank Transaction Receipt",
                 url: window.location.href,
             })
         } else {
@@ -170,7 +170,7 @@ export default function ReceiptPage({ transaction, className = "" }: ReceiptPage
                         {/* Header */}
                         <motion.div variants={itemVariants} className="mb-8 text-center">
                             <h1 className="font-bold text-slate-900 text-xl md:text-2xl xl:text-3xl">Transaction Receipt</h1>
-                            <p className="font-medium text-slate-600">Commerce Bank USA</p>
+                            <p className="font-medium text-slate-600">CBSH Bank</p>
                         </motion.div>
                         {/* Main Receipt Card */}
                         <motion.div ref={printRef} variants={itemVariants}>
@@ -232,9 +232,11 @@ export default function ReceiptPage({ transaction, className = "" }: ReceiptPage
                                                         <span>Account Information</span>
                                                     </h3>
                                                     <div className="space-y-3">
-                                                        {transaction.details && transaction.details.accountNumber !== null && (
+                                                        {transaction.details?.accountNumber && typeof transaction.details.accountNumber === 'string' && (
                                                             <div className="flex justify-between">
-                                                                <span className="text-slate-600">{transaction.subType === "cryptocurrency" ? "Wallet Address" : "Account Number"}</span>
+                                                                <span className="text-slate-600">
+                                                                    {transaction.subType === 'cryptocurrency' ? 'Wallet Address' : 'Account Number'}
+                                                                </span>
                                                                 <span className="font-mono text-slate-900 text-sm">
                                                                     ****{transaction.details.accountNumber.slice(-4)}
                                                                 </span>
@@ -273,12 +275,6 @@ export default function ReceiptPage({ transaction, className = "" }: ReceiptPage
                                                     <span>Recipient Information</span>
                                                 </h3>
                                                 <div className="gap-6 grid md:grid-cols-2">
-                                                    {transaction.details.recipient && (
-                                                        <div className="flex justify-between">
-                                                            <span className="text-slate-600">Recipient</span>
-                                                            <span className="font-medium text-slate-900">{transaction.details.recipient}</span>
-                                                        </div>
-                                                    )}
                                                     {transaction.details.bankName && (
                                                         <div className="flex justify-between">
                                                             <span className="text-slate-600">{transaction.subType === "cryptocurrency" ? "Cryptocurrency Coin" : "Bank"}</span>
@@ -348,10 +344,10 @@ export default function ReceiptPage({ transaction, className = "" }: ReceiptPage
                                     <Shield className="mx-auto mb-3 size-6 text-primary" />
                                     <h4 className="mb-2 font-semibold text-slate-900">Secure Transaction</h4>
                                     <p className="text-slate-600">
-                                        This receipt is digitally secured and verified by Commerce Bank USA. Keep this receipt for your
+                                        This receipt is digitally secured and verified by CBSH Bank. Keep this receipt for your
                                         records and contact us immediately if you notice any discrepancies.
                                     </p>
-                                    <p className="mt-3 text-slate-500 text-xs">Customer Service: support@commercebankusa.com | Available 24/7</p>
+                                    <p className="mt-3 text-slate-500 text-xs">Customer Service: support@cbshbank.com | Available 24/7</p>
                                 </CardContent>
                             </Card>
                         </motion.div>

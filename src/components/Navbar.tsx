@@ -3,14 +3,14 @@ import { useEffect } from "react";
 
 // Stores
 import { useUserStore } from "@/stores/userStore";
+import { useChatStore } from "@/stores/message.store";
 
 // Components
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
 import { BellIcon } from "./BellIcon";
 
 // Icons
-import { Home2, ArrowSwapVertical, Profile, Headphone, Card, MoneyRecive } from "iconsax-react";
-import { useSocket } from "@/services/socket.service";
+import { Home2, ArrowSwapVertical, Profile, Headphone, Card, MoneyRecive, DeviceMessage } from "iconsax-react";
 
 const mainNavItems = [
     { id: "home", label: "Home", icon: Home2, href: "/user/dashboard" },
@@ -24,23 +24,28 @@ const mainNavItems = [
 const Navbar = () => {
 
     const { user, refetchUserData } = useUserStore();
+    const { conversations } = useChatStore();
     const location = useLocation();
-
-    //Hooks
-    useSocket(user?._id ?? '');
 
     useEffect(() => {
         if (!user) {
-            refetchUserData()
+            refetchUserData();
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [user])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [user]);
+
 
     return (
         <nav className="flex justify-between items-center p-4">
-            <p className="font-medium text-base md:text-lg xl:text-xl">
-                Hi, <span className="capitalize">{user?.fullName ?? "User"}</span>
-            </p>
+            <div className="relative flex gap-x-2 font-medium text-base md:text-lg xl:text-xl">
+                Hi, <span className="capitalize">{user?.fullName && user.fullName.trim().split(/\s+/)[0]}</span>
+                <DeviceMessage variant="Bulk" className={`text-primaryYellow ${conversations.length > 0 && "animate-shakeSlow"} `} />
+                {conversations.length > 0 && (
+                    <span className="-top-1 -right-1 absolute bg-red-500 px-1 rounded-full text-white text-xs">
+                        {conversations[0]?.unreadCount}
+                    </span>
+                )}
+            </div>
 
             <main className="flex items-center gap-x-5">
                 <div className="hidden lg:flex gap-x-3 bg-neutral-100 p-2 px-4 border border-neutral-200 rounded-3xl text-black">
@@ -62,7 +67,7 @@ const Navbar = () => {
                     <div className="place-content-center grid bg-neutral-100 rounded-full size-10 md:size-12 xl:size-14">
                         <BellIcon />
                     </div>
-                    <Avatar className="bg-neutral-100 p-2 border border-neutral-200 size-10 md:size-12 xl:size-14">
+                    <Avatar className="bg-neutral-100 p-1 md:p-1.5 xl:p-2 border border-neutral-200 size-10 md:size-12 xl:size-14">
                         <AvatarImage src={user?.profilePicture} alt={user?.fullName} className="rounded-[50%]" />
                         <AvatarFallback className="bg-primary/20 text-primary text-sm md:text-base xl:text-lg">
                             {user?.fullName.substring(0, 2).toUpperCase()}

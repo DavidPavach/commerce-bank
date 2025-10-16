@@ -125,7 +125,7 @@ export function ErrorScreen({ variant = "fullscreen", type = "generic", size = "
         },
     }
 
-    const MotionButton = motion(Button);
+    const MotionButton = motion.create(Button);
 
     // Fullscreen Error
     if (variant === "fullscreen") {

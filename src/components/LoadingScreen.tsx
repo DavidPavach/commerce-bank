@@ -92,7 +92,7 @@ export function LoadingScreen({ variant = "fullscreen", size = "md", message = "
                                 variants={pulseVariants} animate="animate">
                                 <Shield className={`${sizeClasses[size]} text-white`} />
                             </motion.div>
-                            <h2 className="font-bold text-slate-900 text-xl">Commerce Bank USA</h2>
+                            <h2 className="font-bold text-slate-900 text-xl">CBSH Bank</h2>
                         </motion.div>
                     )}
 

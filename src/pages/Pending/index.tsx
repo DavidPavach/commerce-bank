@@ -86,7 +86,7 @@ const Index = () => {
                                 </div>
                                 <CardTitle className="text-slate-900 text-sm md:text-base xl:text-xl">Your Application is Being Reviewed</CardTitle>
                                 <CardDescription>
-                                    Thank you for choosing Commerce Bank USA. Our team is carefully reviewing your application to ensure the
+                                    Thank you for choosing CBSH Bank. Our team is carefully reviewing your application to ensure the
                                     highest level of security.
                                 </CardDescription>
                             </CardHeader>
@@ -201,7 +201,7 @@ const Index = () => {
                                     </div>
                                     <div className="flex items-start space-x-3">
                                         <div className="flex-shrink-0 bg-primary mt-2 rounded-full size-2" />
-                                        <p>Upon approval, you'll gain full access to your Commerce Bank USA account</p>
+                                        <p>Upon approval, you'll gain full access to your CBSH Bank account</p>
                                     </div>
                                     <div className="flex items-start space-x-3">
                                         <div className="flex-shrink-0 bg-primary mt-2 rounded-full size-2" />
@@ -215,16 +215,16 @@ const Index = () => {
                     <motion.div variants={itemVariants} className="mt-8 text-neutral-100 text-sm text-center">
                         <p className="mb-2">Need immediate assistance? Our support team is available 24/7</p>
                         <div className="flex justify-center space-x-6">
-                            <a href="mailto:support@commercebankusa.com" className="flex items-center space-x-1 hover:text-neutral-800 transition-colors">
+                            <a href="mailto:support@cbshbank.com" className="flex items-center space-x-1 hover:text-neutral-800 transition-colors">
                                 <Headphones className="size-4" />
                                 <span>Support Center</span>
                             </a>
-                            <a href="mailto:support@commercebankusa.com" className="flex items-center space-x-1 hover:text-neutral-800 transition-colors">
+                            <a href="mailto:support@cbshbank.com" className="flex items-center space-x-1 hover:text-neutral-800 transition-colors">
                                 <Mail className="size-4" />
                                 <span>Email Support</span>
                             </a>
                         </div>
-                        <p className="mt-4 text-xs">© {new Date().getFullYear()} Commerce Bank USA. All rights reserved.</p>
+                        <p className="mt-4 text-xs">© {new Date().getFullYear()} CBSH Bank. All rights reserved.</p>
                     </motion.div>
                 </motion.div>
             </div>

@@ -1,3 +1,5 @@
+import { NavLink } from 'react-router-dom';
+
 //Hooks, Utils and Stores
 import { GetCardRequest } from '@/services/queries.service';
 import { formatCardNumber, formatCurrency, maskNumber } from '@/utils/format';
@@ -10,7 +12,6 @@ import { ErrorScreen } from '@/components/ErrorComponents';
 //Icons
 import { Gift } from 'iconsax-react';
 import { CreditCard, Lock, Eye } from 'lucide-react';
-import { NavLink } from 'react-router-dom';
 
 const Card = () => {
 

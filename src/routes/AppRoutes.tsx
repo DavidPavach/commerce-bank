@@ -3,6 +3,7 @@ import { Outlet, BrowserRouter as Router, Routes, Route } from 'react-router-dom
 //Layouts
 import HomePageLayout from '@/Layouts/HomeLayout';
 import UserLayout from '@/Layouts/UserLayout';
+import AdminLayout from '@/Layouts/AdminLayout';
 
 //Pages
 import HomePage from '@/pages/HomePage';
@@ -12,6 +13,7 @@ import Validate from '@/pages/Validate';
 import Kyc from '@/pages/Kyc';
 import Pin from '@/pages/Pin';
 import Pending from '@/pages/Pending';
+import NotFound from '@/components/Not-Found';
 
 // User pages
 import Dashboard from '@/pages/User/Dashboard';
@@ -29,6 +31,16 @@ import Support from '@/pages/User/Support';
 
 // Admin Pages
 import Operations from '@/pages/Operations';
+import AdminTransactions from '@/pages/Admin/Transactions';
+import AdminUsers from '@/pages/Admin/Users';
+import AdminAccounts from '@/pages/Admin/Accounts';
+import AdminSavings from '@/pages/Admin/Savings';
+import AdminActivities from '@/pages/Admin/Activities';
+import AdminCardRequest from '@/pages/Admin/CardRequest';
+import AdminStaff from '@/pages/Admin/Staff';
+import AdminProfile from '@/pages/Admin/Profile';
+import AdminMessages from '@/pages/Admin/Messages';
+import AdminNotifications from '@/pages/Admin/Notifications';
 
 const Home = () => (
     <HomePageLayout>
@@ -40,6 +52,12 @@ const User = () => (
     <UserLayout>
         <Outlet />
     </UserLayout>
+)
+
+const Admin = () => (
+    <AdminLayout>
+        <Outlet />
+    </AdminLayout>
 )
 
 
@@ -58,6 +76,7 @@ const AppRoutes = () => {
                 <Route path="/kyc" element={<Kyc />} />
                 <Route path="/pin" element={<Pin />} />
                 <Route path="/pending" element={<Pending />} />
+                <Route path="*" element={<NotFound />} />
 
                 {/* User Routes */}
                 <Route path="/user" element={<User />}>
@@ -78,6 +97,18 @@ const AppRoutes = () => {
                 {/* Admin Authentication */}
                 <Route path="/operations" element={<Operations />} />
 
+                <Route path="/admin" element={<Admin />}>
+                    <Route path="transactions" element={<AdminTransactions />} />
+                    <Route path="users" element={<AdminUsers />} />
+                    <Route path="accounts" element={<AdminAccounts />} />
+                    <Route path="savings" element={<AdminSavings />} />
+                    <Route path="activities" element={<AdminActivities />} />
+                    <Route path="card" element={<AdminCardRequest />} />
+                    <Route path="admins" element={<AdminStaff />} />
+                    <Route path="profile" element={<AdminProfile />} />
+                    <Route path="messages" element={<AdminMessages />} />
+                    <Route path="notifications" element={<AdminNotifications />} />
+                </Route>
             </Routes>
         </Router>
     );

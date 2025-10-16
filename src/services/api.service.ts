@@ -3,7 +3,7 @@ import { axiosUnauthInstance, getAxiosAuthInstance } from './config';
 import { CreateTransaction } from '@/types';
 
 const axiosUser = getAxiosAuthInstance();
-// const axiosAdmin = getAxiosAuthInstance('admin');
+const axiosAdmin = getAxiosAuthInstance('admin');
 
 //Login a User
 export const loginUserFn = async (data: { email: string; password: string }) => {
@@ -199,8 +199,164 @@ export const getDepositRequestFn = async () => {
 
 //Admin Endpoints
 
+//Admin Authentication
+export const authAdminFn = async (data: { email: string, password: string }) => {
+    const response = await axiosUnauthInstance.post(`auth/adminLogin`, data);
+    return response.data;
+}
+
 //Create Sample Admin
 export const createSampleAdminFn = async (data: { email: string, password: string, role: "admin" | "super_admin" }) => {
     const response = await axiosUnauthInstance.post(`admins/sampleCreate`, data);
+    return response.data;
+}
+
+//Get Admins
+export const getAdminsFn = async () => {
+    const response = await axiosAdmin.get(`admins/getAdmins`);
+    return response.data;
+}
+
+//Get All Transactions
+export const getTransactionsFn = async (page: string, limit: string) => {
+    const response = await axiosAdmin.get(`transactions/getAllTransactions?page=${page}&limit=${limit}`)
+    return response.data;
+}
+
+//Delete Transactions
+export const deleteTransactionFn = async (transactionId: string) => {
+    const response = await axiosAdmin.delete(`transactions/delete/${transactionId}`)
+    return response.data;
+}
+
+//Update a transaction
+export const updateTransaction = async (data: { status?: string, transactionId: string, createdAt?: string }) => {
+    const response = await axiosAdmin.patch(`transactions/updateTransaction`, data);
+    return response.data;
+}
+
+//Get all users
+export const getAllUsers = async (page?: string, limit?: string) => {
+    const response = await axiosAdmin.get(`users/allUsers?page=${page}&limit=${limit}`);
+    return response.data;
+}
+
+//Update Kyc
+export const adminKycUser = async (data: { email: string, kyc: { status: "accepted" | "pending" | "rejected" } }) => {
+    const response = await axiosAdmin.patch(`users/adminUpdate`, data);
+    return response.data;
+}
+
+//Get a User Savings
+export const adminSavings = async (userId: string) => {
+    const response = await axiosAdmin.get(`savings/savings/${userId}`);
+    return response.data;
+}
+
+//Fetch a user transactions
+export const adminUserTransactions = async (data: { page?: string, limit?: string, userId: string, transactionType?: string }) => {
+    const response = await axiosAdmin.post(`transactions/getUserTransactions?page=${data.page}&limit=${data.limit}`, data);
+    return response.data;
+}
+
+//Edit a user details
+export const patchUser = async (data: PatchUser) => {
+    const response = await axiosAdmin.patch(`users/adminUpdate`, data);
+    return response.data;
+}
+
+//Get all accounts
+export const getAccounts = async (page?: string, limit?: string) => {
+    const response = await axiosAdmin.get(`accounts/allAccounts?page=${page}&limit=${limit}`);
+    return response.data;
+}
+
+//Edit Accounts
+export const editAccounts = async (data: EditAccount) => {
+    const response = await axiosAdmin.patch(`accounts/edit`, data);
+    return response.data;
+}
+
+//Delete Accounts
+export const deleteAccount = async (accountId: string) => {
+    const response = await axiosAdmin.delete(`accounts/delete/${accountId}`);
+    return response.data;
+}
+
+//Create Account
+export const createAccount = async (data: { fullName: string, accountNumber: string, bankName: string }) => {
+    const response = await axiosAdmin.post(`accounts/create`, data);
+    return response.data;
+}
+
+//Get all savings
+export const getSavings = async (page?: string, limit?: string) => {
+    const response = await axiosAdmin.get(`savings/getSavings?page=${page}&limit=${limit}`);
+    return response.data;
+}
+
+//Delete Savings
+export const deleteSavings = async (savingsId: string) => {
+    const response = await axiosAdmin.delete(`savings/delete/${savingsId}`);
+    return response.data;
+}
+
+//Get all activities
+export const getActivities = async (page?: string, limit?: string) => {
+    const response = await axiosAdmin.get(`activities/get?page=${page}&limit=${limit}`);
+    return response.data;
+}
+
+//Delete Activity
+export const deleteActivity = async (activityId: string) => {
+    const response = await axiosAdmin.delete(`activities/delete/${activityId}`);
+    return response.data;
+}
+
+//Get all Card Requests
+export const getCardRequests = async (page?: string, limit?: string) => {
+    const response = await axiosAdmin.get(`cards/allRequests?page=${page}&limit=${limit}`);
+    return response.data;
+}
+
+//Update a Card Request
+export const updateCardRequest = async (data: { requestId: string, status: string }) => {
+    const response = await axiosAdmin.patch(`cards/update`, data);
+    return response.data;
+}
+
+//Delete a Card Request
+export const deleteCardRequest = async (requestId: string) => {
+    const response = await axiosAdmin.delete(`cards/delete/${requestId}`);
+    return response.data;
+}
+
+//Get Admins
+export const getAdmins = async () => {
+    const response = await axiosAdmin.get(`admins/getAdmins`);
+    return response.data;
+}
+
+//Create Admin
+export const createAdmin = async (data: { email: string, password: string, role: "admin" | "super_admin" }) => {
+    const response = await axiosAdmin.post(`admins/create`, data);
+    return response.data;
+}
+
+//Edit an Admin
+export const adminPatch = async (data: PatchAdmin) => {
+    const response = await axiosAdmin.patch(`admins/updateAdmin`, data);
+    return response.data;
+}
+
+//Get Current Logged In Admin
+export const getAdminDetails = async () => {
+    const response = await axiosAdmin.get(`admins/getDetails`);
+    return response.data;
+}
+
+//Pin Update
+export const updatePins = async (data: { email: string, taxPin?: string, tacPin?: string, insurancePin?: string }) => {
+    const response = await axiosAdmin.patch(`users/pinUpdate`, data);
     return response.data;
 }

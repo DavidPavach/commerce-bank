@@ -53,7 +53,7 @@ const Form = () => {
                         </div>
                         <CardTitle className="mb-2 font-bold text-slate-900 text-lg md:text-xl xl:text-2xl">Get Your Commerce Bank Card</CardTitle>
                         <p className="text-slate-600">
-                            Apply for your first Commerce Bank USA card and enjoy secure, convenient banking.
+                            Apply for your first CBSH Bank card and enjoy secure, convenient banking.
                         </p>
                     </CardHeader>
                 </Card>

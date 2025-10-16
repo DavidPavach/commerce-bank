@@ -40,3 +40,13 @@ export type CreateTransaction = {
     beneficiary?: boolean;
     note?: string;
 }
+
+//Admin Transactions
+export type TransactionWithUser = Transaction & {
+    user: {
+        fullName: string;
+        email: string;
+        profilePicture: string;
+        _id: string;
+    }
+}

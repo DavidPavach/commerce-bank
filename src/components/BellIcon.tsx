@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 //Stores and Utils
 import { useNotificationStore } from '@/stores/notificationStore';
-import { formatDate } from '@/utils/format';
+import { formatCurrency, formatDate } from '@/utils/format';
 
 //Components
 import { Badge } from './ui/badge';
@@ -33,7 +33,6 @@ export const BellIcon = () => {
                 return <Settings className="w-5 h-5 text-slate-500" />
             case "alert":
                 return <AlertTriangle className="w-5 h-5 text-yellow-500" />
-            case "info":
             default:
                 return <Info className="w-5 h-5 text-blue-500" />
         }
@@ -61,8 +60,8 @@ export const BellIcon = () => {
 
     return (
         <div className="relative">
-            <button className="relative" onClick={toggleOpen}> 
-                <NotificationBing variant='Bold' className='text-primary' />
+            <button className="relative" onClick={toggleOpen}>
+                <NotificationBing variant='Bold' className={`text-primary ${notifications.length > 0 && "animate-shake"}`} />
                 {notifications.length > 0 && (
                     <span className="-top-1 -right-1 absolute bg-red-500 px-1 rounded-full text-white text-xs">
                         {notifications.length}
@@ -101,6 +100,12 @@ export const BellIcon = () => {
                                                     </div>
                                                 </div>
                                                 <p className="mt-1 text-neutral-800 text-sm">{n.message}</p>
+                                                {(n.subtype === "credit" || n.subtype === "debit") &&
+                                                    <div className={`flex gap-x-5 text-[11px] md:text-xs ${n.subtype === "credit" ? "text-green-600" : "text-red-600"}`}>
+                                                        {n.data.amount && <p>Amount <span>{formatCurrency(n.data.amount)}</span></p>}
+                                                        {n.data.balance && <p>Balance <span>{formatCurrency(n.data.balance)}</span></p>}
+                                                    </div>
+                                                }
                                             </div>
                                             <button onClick={() => clearNotification(n._id)} className="top-2 right-2 absolute text-neutral-500 hover:text-red-500 duration-200">
                                                 <X size={14} />

@@ -40,7 +40,7 @@ const Index = () => {
         <main>
             <header>
                 <h1 className="font-bold text-xl md:text-2xl lg:text-3xl xl:text-4xl">Deposit Management</h1>
-                <p className="text-neutral-400">Manage your Commerce Bank USA deposit requests</p>
+                <p className="text-neutral-400">Manage your CBSH Bank deposit requests</p>
             </header>
             <section className="gap-2 sm:gap-5 grid grid-cols-2 lg:grid-cols-4 mt-10">
                 <SummaryCard title="Total Deposits" iconClasses="bg-[#1D9B5E]/10" icon={<TrendingUp className="size-4 md:size-5 xl:size-6 text-[#1D9B5E]" />} value={data.data.length} />

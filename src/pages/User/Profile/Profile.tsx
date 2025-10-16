@@ -153,7 +153,7 @@ const Profile = ({ user }: { user: User }) => {
                 <motion.div variants={containerVariants} initial="hidden" animate="visible">
                     <motion.div variants={itemVariants} className="mb-8 text-center">
                         <h1 className="font-bold text-xl md:text-2xl lg:text-3xl xl:text-4xl">User Profile</h1>
-                        <p className="text-slate-600">Manage your Commerce Bank USA account information</p>
+                        <p className="text-slate-600">Manage your CBSH Bank account information</p>
                     </motion.div>
                     <motion.div variants={itemVariants} className="mb-8">
                         <Card className="bg-white/90 shadow-xl backdrop-blur-sm border-0">

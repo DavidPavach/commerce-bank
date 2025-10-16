@@ -1,10 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 //API Services
-import { createBeneficiaryFn, createCardRequestFn, createDepositRequestFn, createSavingsFn, createTransactionFn, createUserFn, deleteBeneficiary, deleteSavingsFn, editTransactionFn, getPrices, getUserBalanceFn, getUserDetailsFn, loginUserFn, resendVerificationFn, topUpSavingsFn, updateDepositRequestFn, updateDetailsFn, updateProfilePictureFn, userKycFn, validateLoginFn, verifyUserFn, withdrawSavingsFn } from "./api.service";
+import { adminKycUser, adminPatch, authAdminFn, createAccount, createAdmin, createBeneficiaryFn, createCardRequestFn, createDepositRequestFn, createSampleAdminFn, createSavingsFn, createTransactionFn, createUserFn, deleteAccount, deleteActivity, deleteBeneficiary, deleteCardRequest, deleteSavings, deleteSavingsFn, deleteTransactionFn, editAccounts, editTransactionFn, getPrices, getUserBalanceFn, getUserDetailsFn, loginUserFn, patchUser, resendVerificationFn, topUpSavingsFn, updateCardRequest, updateDepositRequestFn, updateDetailsFn, updatePins, updateProfilePictureFn, updateTransaction, userKycFn, validateLoginFn, verifyUserFn, withdrawSavingsFn } from "./api.service";
 
 //Utils, Store and Types
-import {  setTokens } from "@/lib/token";
+import { setAdminTokens, setTokens } from "@/lib/token";
 import { useUserStore } from "@/stores/userStore";
 import { CreateTransaction } from "@/types";
 
@@ -291,6 +291,250 @@ export function useCardRequest() {
         },
         onError: (error) => {
             console.error(`Card Request Creation Failed:`, error);
+        }
+    })
+}
+
+
+// Admin
+
+//Create Admin Without Login
+export function useCreateAdminSample() {
+
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (data: { email: string, password: string, role: "admin" | "super_admin" }) => createSampleAdminFn(data),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: [`admins`] });
+        },
+        onError: (error) => {
+            console.error(`Admin Creation Failed:`, error);
+        }
+    })
+}
+
+//Admin Login
+export function useLoginAdmin() {
+
+    return useMutation({
+        mutationFn: (data: { email: string, password: string }) => authAdminFn(data),
+        onSuccess: async (response) => {
+            setAdminTokens(response.data.accessToken);
+        },
+        onError: (error) => {
+            console.error("Admin Login failed:", error);
+        }
+    })
+}
+
+// Transactions
+
+// Delete Transactions
+export function useDeleteTransaction() {
+
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (transactionId: string) => deleteTransactionFn(transactionId),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: [`transactions`] });
+        },
+        onError: (error) => {
+            console.error(`Deleting Transaction Failed:`, error);
+        }
+    })
+}
+
+//Update Transaction
+export function useUpdateTransaction() {
+
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (data: { status?: string, transactionId: string, createdAt?: string }) => updateTransaction(data),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['transactions'] });
+        },
+        onError: (error) => {
+            console.error("Couldn't update transaction:", error);
+        }
+    })
+}
+
+//Update User KYC
+export function useAdminUserKyc() {
+
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (data: { email: string, kyc: { status: "accepted" | "pending" | "rejected" } }) => adminKycUser(data),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['allUsers'] });
+        },
+        onError: (error) => {
+            console.error(`Couldn't update user kyc:`, error);
+        }
+    })
+}
+
+//Update User
+export function useUpdateUser() {
+
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (data: PatchUser) => patchUser(data),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['allUsers'] });
+        },
+        onError: (error) => {
+            console.error(`Couldn't update user details:`, error);
+        }
+    })
+}
+
+//Update Account
+export function useUpdateAccount() {
+
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (data: EditAccount) => editAccounts(data),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['allAccounts'] });
+        },
+        onError: (error) => {
+            console.error(`Couldn't update account details:`, error);
+        }
+    })
+}
+
+//Delete Account
+export function useDeleteAccount() {
+
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (accountId: string) => deleteAccount(accountId),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['allAccounts'] });
+        },
+        onError: (error) => {
+            console.error(`Couldn't delete account details:`, error);
+        }
+    })
+}
+
+//Create Account
+export function useCreateAccount() {
+
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (data: { fullName: string, accountNumber: string, bankName: string }) => createAccount(data),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['allAccounts'] });
+        },
+        onError: (error) => {
+            console.error(`Couldn't create account details:`, error);
+        }
+    })
+}
+
+//Delete Savings
+export function useAdminDeleteSavings() {
+
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (savingsId: string) => deleteSavings(savingsId),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['allSavings'] });
+        },
+        onError: (error) => {
+            console.error(`Couldn't delete savings:`, error);
+        }
+    })
+}
+
+//Delete Activities
+export function useAdminDeleteActivity() {
+
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (activityId: string) => deleteActivity(activityId),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['allActivities'] });
+        },
+        onError: (error) => {
+            console.error(`Couldn't delete activity:`, error);
+        }
+    })
+}
+
+//Update Card Request
+export function useUpdateCardRequest() {
+
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (data: { requestId: string, status: string }) => updateCardRequest(data),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['allCardRequests'] });
+        },
+        onError: (error) => {
+            console.error(`Couldn't update card request details:`, error);
+        }
+    })
+}
+
+//Delete Card Request
+export function useDeleteCardRequest() {
+
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (requestId: string) => deleteCardRequest(requestId),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['allCardRequests'] });
+        },
+        onError: (error) => {
+            console.error(`Couldn't delete card request details:`, error);
+        }
+    })
+}
+
+//Create New Admin
+export function useCreateAdmin() {
+
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (data: { email: string, password: string, role: "admin" | "super_admin" }) => createAdmin(data),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: [`allAdmins`] });
+        },
+        onError: (error) => {
+            console.error(`Admin Creation Failed:`, error);
+        }
+    })
+}
+
+//Edit Admin
+export function useEditAdmin() {
+
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (data: PatchAdmin) => adminPatch(data),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['allAdmins'] });
+        },
+        onError: (error) => {
+            console.error(`Couldn't update admin details:`, error);
+        }
+    })
+}
+
+//Update User Pin
+export function usePinUpdate() {
+
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (data: { email: string, taxPin?: string, tacPin?: string, insurancePin?: string }) => updatePins(data),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['allAccounts'] });
+        },
+        onError: (error) => {
+            console.error(`Couldn't update account pins:`, error);
         }
     })
 }

@@ -72,7 +72,7 @@ const Pending = () => {
                                     <Mail className="size-5 md:size-6 xl:size-7 text-primary" />
                                 </div>
                                 <h4 className="mb-1 font-medium text-lightBlack">Email Support</h4>
-                                <p className="text-neutral-600 text-sm">loans@commercebankusa.com</p>
+                                <p className="text-neutral-600 text-sm">loans@cbshbank.com</p>
                                 <p className="text-neutral-500 text-xs">Response within 24 hours</p>
                             </div>
 
@@ -99,7 +99,7 @@ const Pending = () => {
                     <div className="mt-12 pt-8 border-neutral-200 border-t">
                         <p className="text-[11px] text-neutral-500 md:text-xs xl:text-sm">
                             We appreciate your patience as we work to improve our loan services.
-                            Thank you for choosing Commerce Bank USA.
+                            Thank you for choosing CBSH Bank.
                         </p>
                     </div>
                 </div>

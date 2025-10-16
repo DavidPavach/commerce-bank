@@ -17,7 +17,7 @@ export default function PaginationControls({ currentPage, totalPages, onPageChan
     };
 
     return (
-        <div className="flex justify-center mt-6">
+        <div className="flex justify-center bg-white mt-6">
             <Pagination>
                 <PaginationContent>
                     <PaginationItem>

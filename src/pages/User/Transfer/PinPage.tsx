@@ -6,12 +6,14 @@ import { toast } from "react-fox-toast";
 import { useUserStore } from "@/stores/userStore";
 import { Transaction } from "@/types";
 import { useEditTransaction } from "@/services/mutations.service";
+import { formatCurrency } from "@/utils/format";
 
 //Components
 import AnimatedProgress from "@/pages/Pending/AnimatedProgress";
 import Button from "@/components/Button";
 
 //Icons
+import { Lock, Shield } from "iconsax-react";
 import { X } from "lucide-react";
 
 const getLevelPercent = (level: string) => {
@@ -118,31 +120,75 @@ const PinPage = ({ transaction, onClose }: { transaction: Transaction, onClose: 
     }
 
     return (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="z-20 fixed inset-0 flex justify-center items-center bg-black/80 p-4">
-            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="bg-[#121212] shadow-2xl rounded-xl w-full max-w-md overflow-hidden" onClick={(e) => e.stopPropagation()}>
-                <div className="p-4 md:p-6">
-                    <div className="flex justify-between items-center mb-6">
-                        <h3 className="font-bold text-white text-base md:text-lg xl:text-xl capitalize">Enter {transaction.level} PIN</h3>
-                        <button type="button" onClick={closeModal} className="text-neutral-400 hover:text-white">
-                            <X size={20} />
-                        </button>
-                    </div>
-                    <AnimatedProgress value={getLevelPercent(transaction.level)} />
-                    <p className="font-mono text-[10px] text-primary md:text-xs xl:text-sm text-right animate-pulse">{getLevelPercent(transaction.level)}%</p>
-                    <p className="my-6 text-neutral-400">
-                        Kindly enter the <span className="font-bold text-primary capitalize">{transaction.level}</span> Pin to continue.
-                    </p>
-                    <div className="flex justify-center gap-2 mb-6">
-                        {pin.map((digit, index) => (
-                            <div key={index} className={`w-10 h-12 flex items-center justify-center border ${activePin === index ? "border-primary" : digit ? "border-neutral-600" : "border-neutral-800"} rounded-lg ${digit ? "bg-neutral-300" : "bg-white"}`}>
-                                <input ref={(el) => { pinRefs.current[index] = el }} type="password" inputMode="numeric" maxLength={1} value={digit}
-                                    onChange={(e) => handlePinChange(index, e.target.value)} onKeyDown={(e) => handlePinKeyDown(index, e)} onFocus={() => setActivePin(index)} className="bg-transparent focus:outline-none w-full h-full text-black text-center" />
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="z-20 fixed inset-0 flex justify-center items-center bg-black/80">
+            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="bg-white shadow-2xl rounded-xl w-full max-w-lg overflow-hidden" onClick={(e) => e.stopPropagation()}>
+                <div className="text-sm">
+                    <div className="bg-primary mb-6 p-4 md:p-6 text-white">
+                        <div className="flex justify-between items-center">
+                            <div className="flex items-center space-x-3">
+                                <div className="bg-white/20 p-2 rounded-lg">
+                                    <Shield variant="Bulk" className="size-5" />
+                                </div>
+                                <div>
+                                    <h1 className="font-semibold text-lg md:text-xl xl:text-2xl capitalize">{transaction.level} PIN Verification</h1>
+                                    <p className="text-white/90">
+                                        Secure transaction authentication
+                                    </p>
+                                </div>
                             </div>
-                        ))}
+                            <X className="size-5 hover:text-red-600 cursor-pointer" onClick={closeModal} />
+                        </div>
                     </div>
-                    <Button onClick={handleUpdate} text="Confirm Transfer" loadingText="Processing..." variant='primary' size='lg' disabled={editTransaction.isPending || pin.some((p) => p === "")} loading={editTransaction.isPending} />
-                    <div className="flex justify-between items-center mt-8 text-neutral-400 hover:text-white text-sm">
-                        <button type="button" onClick={closeModal}>Cancel</button>
+                    <div className="p-4 md:p-6">
+                        <div className="flex justify-between items-center mb-2 text-neutral-500">
+                            <p>Progress</p>
+                            <p>{getLevelPercent(transaction.level)}%</p>
+                        </div>
+                        <AnimatedProgress value={getLevelPercent(transaction.level)} />
+                    </div>
+                    <div className="p-4 md:p-6">
+                        <div className="bg-neutral-50 p-4 md:p-6 rounded-lg">
+                            <h4 className="font-semibold text-neutral-900">Transfer Details</h4>
+                            <div className="flex justify-between mt-2">
+                                <span className="text-neutral-600">Amount</span>
+                                <span className="font-semibold text-primary">
+                                    {formatCurrency(transaction.amount)}
+                                </span>
+                            </div>
+                            <div className="flex justify-between">
+                                <span className="text-neutral-600">Recipient</span>
+                                <span className="font-semibold text-neutral-900">{transaction.details.fullName}</span>
+                            </div>
+                        </div>
+
+                        <div className="mt-4 text-center">
+                            <p className="font-medium text-neutral-700">Enter Your 6-Digit {transaction.level} PIN</p>
+                            <p className="text-neutral-600">
+                                Please enter your Tax PIN to authorize this transaction securely.
+                            </p>
+                        </div>
+
+                        <div className="flex justify-center gap-2 my-6">
+                            {pin.map((digit, index) => (
+                                <div key={index} className={`size-12 flex items-center justify-center border-2 ${activePin === index ? "border-primary" : digit ? "border-neutral-600" : "border-neutral-800"} rounded-lg ${digit ? "bg-green-200" : "bg-white"}`}>
+                                    <input ref={(el) => { pinRefs.current[index] = el }} type="password" inputMode="numeric" maxLength={1} value={digit}
+                                        onChange={(e) => handlePinChange(index, e.target.value)} onKeyDown={(e) => handlePinKeyDown(index, e)} onFocus={() => setActivePin(index)} className="bg-transparent focus:outline-none w-full h-full text-black text-center" />
+                                </div>
+                            ))}
+                        </div>
+                        <div className="bg-blue-50 p-4 border border-blue-200 rounded-lg">
+                            <div className="flex items-start space-x-3">
+                                <Lock className="flex-shrink-0 mt-0.5 size-5 text-blue-600" />
+                                <div>
+                                    <h4 className="mb-1 font-semibold text-blue-800 text-sm">Secure Transaction</h4>
+                                    <p className="text-blue-700 text-xs">
+                                        Your {transaction.level} PIN is encrypted and used only for transaction verification. Never share your PIN with
+                                        anyone.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <Button onClick={handleUpdate} text="Confirm Transfer" loadingText="Processing..." variant='primary' size='lg' disabled={editTransaction.isPending || pin.some((p) => p === "")} loading={editTransaction.isPending} />
                     </div>
                 </div>
             </motion.div>

@@ -1,75 +1,22 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 //Utils and Enums
 import { formatCurrency, formatDate } from "@/utils/format";
 import { Transaction } from "@/types";
 import { SubType } from "@/enums";
+import { getIcon, getStatusBadge } from "./Utils";
 
 //Components
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 //Icons
-import { ArrowDownLeft, Replace, FileText, CreditCard, BanknoteArrowUp, BanknoteArrowDown, ArrowLeftRight, Zap, Percent, ArrowUpRight, Undo2, TrendingUp, Wallet, Coins, PiggyBank, Filter, Banknote, Eye, CirclePause, CircleCheck, ClockFading, X } from 'lucide-react';
+import { Eye, Filter } from "lucide-react";
 import { Receipt1 } from "iconsax-react";
-import { Link } from "react-router-dom";
 
-//Functions
-const getIcon = (type: string) => {
-    switch (type) {
-        case "withdrawal":
-            return <ArrowDownLeft />
-        case "wire transfer":
-            return <Replace />
-        case "check":
-            return <FileText />
-        case "bill payment":
-            return <CreditCard />
-        case "ACH debit":
-            return <BanknoteArrowUp />
-        case "transfer":
-            return <ArrowLeftRight />
-        case "charge":
-            return <Zap />
-        case "fee":
-            return <Percent />
-        case "deposit":
-            return <ArrowUpRight />
-        case "ACH credit":
-            return <BanknoteArrowDown />
-        case "refund":
-            return <Undo2 />
-        case "interest":
-            return <TrendingUp />
-        case "cash back":
-            return <Wallet />
-        case "cryptocurrency":
-            return <Coins />
-        case "savings":
-            return <PiggyBank />
-        default:
-            return <Banknote />
-    }
-}
 
-const getStatusBadge = (status: string) => {
-    switch (status) {
-        case "successful":
-            return <Badge className="bg-green-100 hover:bg-green-200 text-green-600"><CircleCheck className="mr-0.5 size-4" />Successful</Badge>
-        case "pending":
-            return <Badge className="bg-yellow-100 hover:bg-yellow-200 text-yellow-600"><ClockFading className="mr-0.5 size-4" />Pending</Badge>
-        case "reversed":
-            return <Badge className="bg-blue-100 hover:bg-blue-200 text-blue-600"><Undo2 className="mr-0.5 size-4" />Reversed</Badge>
-        case "failed":
-            return <Badge className="bg-red-100 hover:bg-red-100 text-red-600"><X className="mr-0.5 size-4" />Failed</Badge>
-        case "disputed":
-            return <Badge className="bg-amber-100 hover:bg-amber-200 text-amber-600"><CirclePause className="mr-0.5 size-4" />Disputed</Badge>
-        default:
-            return <Badge variant="secondary">{status}</Badge>
-    }
-}
 
 const TransactionTable = ({ transactions }: { transactions: Transaction[] }) => {
 
@@ -147,6 +94,7 @@ const TransactionTable = ({ transactions }: { transactions: Transaction[] }) => 
                             <table className="w-full">
                                 <thead className="bg-slate-50 border-slate-200 border-b">
                                     <tr>
+                                        <th className="p-4 font-medium text-slate-700 text-left">S/N</th>
                                         <th className="p-4 font-medium text-slate-700 text-left">Description</th>
                                         <th className="p-4 font-medium text-slate-700 text-right">Amount</th>
                                         <th className="p-4 font-medium text-slate-700 text-center">Status</th>
@@ -155,8 +103,9 @@ const TransactionTable = ({ transactions }: { transactions: Transaction[] }) => 
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {filteredTransactions.map((transaction) => (
+                                    {filteredTransactions.map((transaction, index) => (
                                         <motion.tr variants={itemVariants} key={transaction._id} className="hover:bg-slate-50/50 transition-colors">
+                                            <td className="p-2 text-right">{index + 1}</td>
                                             <td className="p-2">
                                                 <div className="flex items-start space-x-3">
                                                     <div className={`p-2 rounded-lg bg-white ${transaction.transactionType === "credit" ? "bg-green-200 text-green-600" : "bg-red-100 text-red-600"}`}>

@@ -17,9 +17,9 @@ const Index = () => {
         <main className="flex justify-center lg:justify-between items-center bg-brand-gradient min-h-dvh overflow-auto">
             <div className="lg:mx-auto px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 py-4 w-full lg:w-[45%]">
                 <div className="text-center">
-                    <motion.div className="inline-flex justify-center items-center bg-white mb-4 p-3 rounded-full size-12 md:size-14 xl:size-16"
+                    <motion.div className="inline-flex justify-center items-center bg-white mb-4 p-2 rounded-xl size-16 md:size-[4.5rem] xl:size-[5.5rem]"
                         whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                        <img src={Logo} alt="Commerce Bank USA" />
+                        <img src={Logo} alt="CBSH Bank" />
                     </motion.div>
                 </div>
                 <div className="mt-4 text-neutral-700 text-center">

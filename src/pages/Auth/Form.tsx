@@ -134,11 +134,11 @@ export default function AuthPage() {
     return (
         <motion.div variants={containerVariants} initial="hidden" animate="visible">
             <motion.div variants={itemVariants} className="mb-8 text-center">
-                <motion.div className="inline-flex justify-center items-center bg-white mb-4 p-3 rounded-full size-12 md:size-14 xl:size-16"
+                <motion.div className="inline-flex justify-center items-center bg-white mb-4 p-2 rounded-xl size-16 md:size-[4.5rem] xl:size-[5.5rem]"
                     whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                    <img src={Logo} alt="Commerce Bank USA" />
+                    <img src={Logo} alt="CBSH Bank" />
                 </motion.div>
-                <h1 className="font-bold text-slate-900 text-lg md:text-xl xl:text-2xl">Commerce Bank USA</h1>
+                <h1 className="font-bold text-slate-900 text-lg md:text-xl xl:text-2xl">CBSH Bank</h1>
                 <p className="mt-1 text-slate-600">Secure Banking Solutions</p>
             </motion.div>
 
@@ -161,7 +161,7 @@ export default function AuthPage() {
                             <motion.div key={isLogin ? "login" : "signup"} variants={slideVariants} initial="enter" animate="center" exit="exit"
                                 custom={isLogin ? -1 : 1} transition={{ duration: 0.3 }}>
                                 <p className="text-center">
-                                    {isLogin ? "Sign in to access your secure banking portal" : "Join Commerce Bank USA for secure banking"}
+                                    {isLogin ? "Sign in to access your secure banking portal" : "Join CBSH Bank for secure banking"}
                                 </p>
                             </motion.div>
                         </AnimatePresence>
@@ -241,7 +241,7 @@ export default function AuthPage() {
             </motion.div>
 
             <motion.div variants={itemVariants} className="mt-6 text-[10px] text-slate-200 md:text-xs xl:text-sm text-center">
-                <p>© {new Date().getFullYear()} Commerce Bank USA. All rights reserved.</p>
+                <p>© {new Date().getFullYear()} CBSH Bank. All rights reserved.</p>
                 <div className="flex justify-center space-x-4 mt-2">
                     <Link to="/privacy" className="hover:text-black transition-colors">
                         Privacy Policy

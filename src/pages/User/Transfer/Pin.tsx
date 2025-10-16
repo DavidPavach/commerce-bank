@@ -74,8 +74,8 @@ const Pin = ({ onClose }: { onClose: () => void; }) => {
         toast("Initiating Transfer...", { isCloseBtn: true });
         createTransaction.mutate(transaction, {
             onSuccess: (response) => {
-                toast.success(response.data.message || "Your Transfer was initiated successfully!");
-                setNewTransaction(response.data.data)
+                toast.success("Your Transfer was initiated successfully!");
+                setNewTransaction(response.data)
                 setTransferPinsPage(true);
                 resetTransaction()
             },
