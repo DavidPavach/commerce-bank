@@ -38,7 +38,7 @@ export default function TransactionDetails({ transaction, onClose }: { transacti
     }
 
     return (
-        <div className="space-y-4 pb-20 rounded-lg">
+        <div className="space-y-4 mx-auto pb-20 rounded-lg w-full max-w-4xl">
             <Card className="shadow-sm border-neutral-200">
                 <CardHeader className="bg-neutral-100/50 border-neutral-200 border-b">
                     <div className="flex md:flex-row flex-col md:justify-between md:items-center gap-4">
@@ -50,7 +50,7 @@ export default function TransactionDetails({ transaction, onClose }: { transacti
                     </div>
                 </CardHeader>
                 <CardContent className="pt-4">
-                    <div className="gap-x-8 gap-y-4 grid grid-cols-1 md:grid-cols-2">
+                    <div className="gap-x-8 gap-y-4 grid grid-cols-1 sm:grid-cols-2">
                         <div className="space-y-1">
                             <p className="font-medium text-neutral-500">Transaction Mode</p>
                             <div className="font-medium text-lightBlack">{getIcon(transaction.subType, true)}</div>
@@ -124,7 +124,7 @@ export default function TransactionDetails({ transaction, onClose }: { transacti
                             <label className="block font-medium text-[11px] md:text-xs xl:text-sm">
                                 Date and Time
                             </label>
-                            <input type="datetime-local" value={newCreatedAt} onChange={(e) => setNewCreatedAt(e.target.value)} className="p-2 border rounded" />
+                            <input type="datetime-local" value={newCreatedAt} onChange={(e) => setNewCreatedAt(e.target.value)} className="p-2 border rounded w-full" />
                         </div>
                         <Button onClick={handleUpdate} disabled={updateTransaction.isPending} className="bg-primary hover:bg-primary/90 py-3 text-white">
                             {updateTransaction.isPending ? <Loader className="mr-2 size-5 animate-spin" /> : <Save className="mr-2 size-5" />}

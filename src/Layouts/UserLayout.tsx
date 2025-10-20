@@ -34,10 +34,10 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
             return;
         }
 
-        // if (user?.kyc?.status !== "accepted" || !user.isFullyVerified) {
-        //     navigate("/pending");
-        //     return;
-        // }
+        if (user?.kyc?.status !== "accepted" || !user.isFullyVerified) {
+            navigate("/pending");
+            return;
+        }
 
     }, [navigate, location, user?.isSuspended, user?.kyc?.status, user?.isFullyVerified]);
 

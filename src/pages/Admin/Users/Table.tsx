@@ -121,8 +121,8 @@ const Table = ({ users, handleViewMore }: { users: User[], handleViewMore: (user
                                 {loadingEmail === user.email ? (
                                     <Loader className="size-4 md:size-5 xl:size-6 animate-spin" />
                                 ) : (
-                                    <span onClick={() => handleSuspension(user._id, user.email, !user.isSuspended)}>
-                                        {user.isSuspended ? <Unlock variant="Bold" size={20} className="text-green-400 hover:text-green-600 duration-300" /> : <Forbidden variant="Bold" className="text-red-400 hover:text-red-600 duration-300 cursor-pointer" size={18} />}
+                                    <span className="size-6 duration-300 cursor-pointer" onClick={() => handleSuspension(user._id, user.email, !user.isSuspended)}>
+                                        {user.isSuspended ? <Unlock variant="Bold" className="text-green-400 hover:text-green-600" /> : <Forbidden variant="Bold" className="text-red-400 hover:text-red-600" />}
                                     </span>
                                 )}
                                 <button onClick={() => handleViewMore(user)}>

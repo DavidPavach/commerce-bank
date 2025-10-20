@@ -1,7 +1,7 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 //Api endpoints
-import { adminSavings, adminUserTransactions, checkAccountFn, fetchTransactionFn, getAccounts, getActivities, getAdminDetails, getAdmins, getAdminsFn, getAllTransactionsFn, getAllUsers, getBeneficiariesFn, getCardRequestFn, getCardRequests, getDepositRequestFn, getLastTransactionsFn, getPrices, getSavings, getTransactionsFn, getUserBalanceFn, getUserDetailsFn, getUserSavingsFn } from "./api.service";
+import { adminSavings, adminUserTransactions, checkAccountFn, fetchDepositRequests, fetchTransactionFn, getAccounts, getActivities, getAdminDetails, getAdmins, getAdminsFn, getAllTransactionsFn, getAllUsers, getBeneficiariesFn, getCardRequestFn, getCardRequests, getDepositRequestFn, getLastTransactionsFn, getPrices, getSavings, getTransactionsFn, getUser, getUserBalanceFn, getUserDetailsFn, getUserSavingsFn } from "./api.service";
 
 
 //Get Current logged In User Details
@@ -189,5 +189,23 @@ export function useCurrentAdmin() {
     return useQuery({
         queryKey: ['currentAdmin'],
         queryFn: () => getAdminDetails(),
+    })
+}
+
+//Fetch a user
+export function useSearchUser(value: string) {
+    return useQuery({
+        queryKey: ['searchUser'],
+        queryFn: () => getUser(value),
+        enabled: value.trim().length > 5,
+    })
+}
+
+//Fetch All Deposit Requests
+export function useGetDepositRequest(page?: string, limit?: string){
+    return useQuery({
+        queryKey: ['allDepositRequest', page, limit],
+        queryFn: () => fetchDepositRequests(page, limit),
+        placeholderData: keepPreviousData,
     })
 }

@@ -72,9 +72,7 @@ const TransferForm = () => {
                                 <Bank className="size-5" />
                             </div>
                             <div>
-                                <p className="font-medium text-sm md:text-base xl:text-lg">
-                                    {data.data.fullName}
-                                </p>
+                                <p className="font-medium text-sm md:text-base xl:text-lg">{data.data.fullName}</p>
                                 <p>{data.data.bankName}</p>
                             </div>
                         </div>

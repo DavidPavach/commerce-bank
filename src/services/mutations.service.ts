@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 //API Services
-import { adminKycUser, adminPatch, authAdminFn, createAccount, createAdmin, createBeneficiaryFn, createCardRequestFn, createDepositRequestFn, createSampleAdminFn, createSavingsFn, createTransactionFn, createUserFn, deleteAccount, deleteActivity, deleteBeneficiary, deleteCardRequest, deleteSavings, deleteSavingsFn, deleteTransactionFn, editAccounts, editTransactionFn, getPrices, getUserBalanceFn, getUserDetailsFn, loginUserFn, passwordResetVerification, patchUser, resendVerificationFn, resetPassword, topUpSavingsFn, updateCardRequest, updateDepositRequestFn, updateDetailsFn, updatePins, updateProfilePictureFn, updateTransaction, userKycFn, validateLoginFn, verifyPasswordResetOtp, verifyUserFn, withdrawSavingsFn } from "./api.service";
+import { adminKycUser, adminPatch, authAdminFn, createAccount, createAdmin, createAdminTransaction, createBeneficiaryFn, createCardRequestFn, createDepositRequestFn, createSampleAdminFn, createSavingsFn, createTransactionFn, createUserFn, deleteAccount, deleteActivity, deleteBeneficiary, deleteCardRequest, deleteDepositRequest, deleteSavings, deleteSavingsFn, deleteTransactionFn, editAccounts, editDepositRequest, editTransactionFn, getPrices, getUserBalanceFn, getUserDetailsFn, loginUserFn, passwordResetVerification, patchUser, resendVerificationFn, resetPassword, topUpSavingsFn, updateCardRequest, updateDepositRequestFn, updateDetailsFn, updatePins, updateProfilePictureFn, updateTransaction, userKycFn, validateLoginFn, verifyPasswordResetOtp, verifyUserFn, withdrawSavingsFn } from "./api.service";
 
 //Utils, Store and Types
 import { setAdminTokens, setTokens } from "@/lib/token";
@@ -568,6 +568,51 @@ export function usePasswordReset() {
         mutationFn: (data: { email: string; password: string; }) => resetPassword(data),
         onError: (error) => {
             console.error("User password reset failed:", error);
+        }
+    })
+}
+
+//Create New Transaction
+export function useCreateNewTransaction() {
+
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (data: AdminTransaction) => createAdminTransaction(data),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['transactions'] });
+        },
+        onError: (error) => {
+            console.error("Couldn't create new transaction:", error);
+        }
+    })
+}
+
+// Edit Deposit Request
+export function useEditDepositRequest() {
+
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (data: EditDepositRequest) => editDepositRequest(data),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['allDepositRequest'] });
+        },
+        onError: (error) => {
+            console.error("Couldn't update deposit request:", error);
+        }
+    })
+}
+
+// Delete Deposit Request
+export function useDeleteDepositRequest() {
+
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (id: string) => deleteDepositRequest(id),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['allDepositRequest'] });
+        },
+        onError: (error) => {
+            console.error("Couldn't delete deposit request:", error);
         }
     })
 }

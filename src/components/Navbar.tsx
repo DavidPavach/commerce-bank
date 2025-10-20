@@ -39,7 +39,7 @@ const Navbar = () => {
         <nav className="flex justify-between items-center p-4">
             <div className="relative flex gap-x-2 font-medium text-base md:text-lg xl:text-xl">
                 Hi, <span className="capitalize">{user?.fullName && user.fullName.trim().split(/\s+/)[0]}</span>
-                <DeviceMessage variant="Bulk" className={`text-primaryYellow ${conversations.length > 0 && "animate-shakeSlow"} `} />
+                <Link to="/user/support"><DeviceMessage variant="Bulk" className={`text-primaryYellow ${conversations.length > 0 && "animate-shakeSlow"} `} /></Link>
                 {conversations.length > 0 && (
                     <span className="-top-1 -right-1 absolute bg-red-500 px-1 rounded-full text-white text-xs">
                         {conversations[0]?.unreadCount}

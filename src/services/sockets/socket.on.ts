@@ -1,16 +1,20 @@
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 //Services
 import { connectSocket } from '@/services/sockets/socketService';
 import { handleLogout } from '../logOut';
 
 //Stores and Components
+import { useUserStore } from '@/stores/userStore';
 import { useNotificationStore } from '@/stores/notificationStore';
 import { useChatStore } from '@/stores/message.store';
 import NotificationBox from '@/components/Notification';
 
 export const useSocket = (userId: string, isAdmin = false, adminConnect = "") => {
 
+  const navigate = useNavigate();
+  const { refetchUser } = useUserStore();
   const { addAllNotifications, addNotification } = useNotificationStore();
   const { addMessage, setTyping, setConversations, setSelfId, deleteMessage } = useChatStore();
 
@@ -25,9 +29,9 @@ export const useSocket = (userId: string, isAdmin = false, adminConnect = "") =>
     }
 
     //Log socket entries
-    socket.onAny((eventName, ...args) => {
-      console.log('Socket event:', eventName, ...args);
-    });
+    // socket.onAny((eventName, ...args) => {
+    //   console.log('Socket event:', eventName, ...args);
+    // });
 
 
     //Notifications
@@ -72,12 +76,16 @@ export const useSocket = (userId: string, isAdmin = false, adminConnect = "") =>
         createdAt: new Date(),
       });
 
+      //Refetch User Details
+      refetchUser()
+
       //Redirect to the suspend page
+      navigate("/user/suspend");
     });
 
     //Logout user
     socket.on('offline', () => {
-      handleLogout()
+      handleLogout();
     })
 
     return () => {

@@ -36,6 +36,19 @@ export const useUserStore = create<UserStore>((set) => ({
             console.error('Refetch failed:', error);
         }
     },
+    refetchUser: async () => {
+        const accessToken = getAccessToken();
+        if (!accessToken) return;
+
+        try {
+            
+            const user = await getUserDetailsFn()
+            set({ user: user.data });
+        } catch (error) {
+            console.error('User Refetch failed:', error);
+        }
+
+    },
     refetchPrices: async () => {
         const pricesData = await getPrices();
         set({ prices: pricesData.data })

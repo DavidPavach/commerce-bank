@@ -27,7 +27,6 @@ const Index = () => {
 
     const selectedUser = useMemo(() => {
         if (!userEmailParam) return null;
-        console.log("The email", userEmailParam)
         return users.find(
             (u: User) => u.email.toLowerCase() === userEmailParam.toLowerCase()
         );

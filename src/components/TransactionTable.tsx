@@ -61,7 +61,7 @@ const TransactionTable = ({ transactions }: { transactions: Transaction[] }) => 
                                     <SelectContent>
                                         <SelectItem value="all">All Types</SelectItem>
                                         {Object.values(SubType).map((type) => (
-                                            <SelectItem className="capitalize" key={type} value={type}>
+                                            <SelectItem className="text-xs md:text-sm xl:text-base capitalize" key={type} value={type}>
                                                 {type}
                                             </SelectItem>
                                         ))}
@@ -73,9 +73,9 @@ const TransactionTable = ({ transactions }: { transactions: Transaction[] }) => 
                                         <SelectValue placeholder="Type" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        <SelectItem value="all">All Types</SelectItem>
-                                        <SelectItem value="credit">Credits</SelectItem>
-                                        <SelectItem value="debit">Debits</SelectItem>
+                                        <SelectItem className="text-xs md:text-sm xl:text-base" value="all">All Types</SelectItem>
+                                        <SelectItem className="text-xs md:text-sm xl:text-base" value="credit">Credits</SelectItem>
+                                        <SelectItem className="text-xs md:text-sm xl:text-base" value="debit">Debits</SelectItem>
                                     </SelectContent>
                                 </Select>
                             </div>

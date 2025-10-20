@@ -378,3 +378,33 @@ export const updatePins = async (data: { email: string, taxPin?: string, tacPin?
     const response = await axiosAdmin.patch(`users/pinUpdate`, data);
     return response.data;
 }
+
+//Get a user by userName, accountId, emails
+export const getUser = async (value: string) => {
+    const response = await axiosAdmin.get(`users/getUser/${value}`);
+    return response.data;
+}
+
+//Create a new admin transaction
+export const createAdminTransaction = async (data: AdminTransaction) => {
+    const response = await axiosAdmin.post(`transactions/createUserTransaction`, data);
+    return response.data;
+}
+
+//Get all Deposit Requests
+export const fetchDepositRequests = async (page?: string, limit?: string) => {
+    const response = await axiosAdmin.get(`deposits/getAll?page=${page}&limit=${limit}`);
+    return response.data;
+}
+
+//Approve and Edit Deposit Request
+export const editDepositRequest = async (data: EditDepositRequest) => {
+    const response = await axiosAdmin.patch(`deposits/approve`, data);
+    return response.data;
+}
+
+//Delete Deposit Request
+export const deleteDepositRequest = async (id: string) => {
+    const response = await axiosAdmin.delete(`deposits/delete/${id}`);
+    return response.data;
+}

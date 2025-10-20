@@ -217,13 +217,13 @@ export function ErrorScreen({ variant = "fullscreen", type = "generic", size = "
                     {showActions && (
                         <motion.div variants={itemVariants} className="flex justify-center space-x-3">
                             {onRetry && (
-                                <MotionButton onClick={onRetry} size="sm" className="text-white" style={{ backgroundColor: "#1D9B5E" }} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                                <MotionButton onClick={onRetry} size="sm" className="py-2 text-white" style={{ backgroundColor: "#1D9B5E" }} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                                     <RefreshCw className="mr-2 size-4" />
                                     Retry
                                 </MotionButton>
                             )}
                             {onGoBack && (
-                                <MotionButton onClick={onGoBack} size="sm" variant="outline" className="bg-transparent hover:border-[#1D9B5E] hover:text-[#1D9B5E]" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                                <MotionButton onClick={onGoBack} size="sm" variant="outline" className="bg-transparent py-2 hover:border-[#1D9B5E] hover:text-[#1D9B5E]" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                                     <ArrowLeft className="mr-2 size-4" />
                                     Back
                                 </MotionButton>

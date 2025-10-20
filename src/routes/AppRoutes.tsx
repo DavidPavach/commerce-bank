@@ -29,6 +29,7 @@ import Profile from '@/pages/User/Profile';
 import Card from '@/pages/User/Card';
 import Deposit from '@/pages/User/Deposit';
 import Support from '@/pages/User/Support';
+import Suspend from '@/pages/User/Suspend';
 
 // Admin Pages
 import Operations from '@/pages/Operations';
@@ -41,7 +42,7 @@ import AdminCardRequest from '@/pages/Admin/CardRequest';
 import AdminStaff from '@/pages/Admin/Staff';
 import AdminProfile from '@/pages/Admin/Profile';
 import AdminMessages from '@/pages/Admin/Messages';
-
+import AdminDeposits from '@/pages/Admin/Deposits';
 
 const Home = () => (
     <HomePageLayout>
@@ -94,6 +95,7 @@ const AppRoutes = () => {
                     <Route path="cards" element={<Card />} />
                     <Route path="deposit" element={<Deposit />} />
                     <Route path="support" element={<Support />} />
+                    <Route path="suspend" element={<Suspend />} />
                 </Route>
 
                 {/* Admin Authentication */}
@@ -109,6 +111,7 @@ const AppRoutes = () => {
                     <Route path="admins" element={<AdminStaff />} />
                     <Route path="profile" element={<AdminProfile />} />
                     <Route path="messages" element={<AdminMessages />} />
+                    <Route path="deposits" element={<AdminDeposits />} />
                 </Route>
             </Routes>
         </Router>

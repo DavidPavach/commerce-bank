@@ -11,7 +11,7 @@ import logo from "/logo.png"
 
 //Icons
 import { X, LogOut, ChevronDown } from 'lucide-react';
-import { Category, DeviceMessage, UserTag, Activity, Messages2 } from "iconsax-react";
+import { Category, UserTag, Activity, Messages2, MoneyRecive, Bank } from "iconsax-react";
 
 const AdminHeader = () => {
 
@@ -64,8 +64,11 @@ const AdminHeader = () => {
 
         // Handle different menu actions
         switch (action) {
-            case "notification":
-                navigate(`/admin/notifications`);
+            case "savings":
+                navigate(`/admin/savings`);
+                break
+            case "deposits":
+                navigate(`/admin/deposits`);
                 break
             case "messages":
                 navigate(`/admin/messages`);
@@ -86,11 +89,17 @@ const AdminHeader = () => {
     }
 
     const menuItems = [
+         {
+            id: "savings",
+            label: "Savings",
+            icon: <Bank size={18} />,
+            action: () => handleMenuClick("savings"),
+        },
         {
-            id: "notification",
-            label: "Send Notification",
-            icon: <DeviceMessage size={18} />,
-            action: () => handleMenuClick("notification"),
+            id: "deposit",
+            label: "Deposits",
+            icon: <MoneyRecive size={18} />,
+            action: () => handleMenuClick("deposits"),
         },
         {
             id: "messages",

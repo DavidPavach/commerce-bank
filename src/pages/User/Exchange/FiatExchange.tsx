@@ -58,8 +58,8 @@ const FiatExchange = ({ currencies }: { currencies: Currencies }) => {
             <h3 className="font-medium text-base md:text-lg xl:text-xl"><Calculator className="inline mr-1 mb-1 size-5 md:size-6 xl:size-7" />Currency Converter</h3>
             <section className="relative flex flex-col gap-y-5 mt-4">
                 <Input type="number" label="Amount" min={0} value={amount} onChange={(e) => setAmount(e.target.value)} placeholder="Enter Amount" required otherClass="border-gray-300" />
-                <div className="relative flex sm:flex-row flex-col sm:justify-between gap-y-5 bg-gray-200 p-3 rounded-2xl">
-                    <div onClick={() => toggleTab("from")} className="relative flex justify-between items-center bg-white p-2 md:p-3 xl:p-4 rounded-xl w-full sm:w-[45%] cursor-pointer">
+                <div className="relative flex md:flex-row flex-col md:justify-between gap-y-5 bg-gray-200 p-3 rounded-2xl">
+                    <div onClick={() => toggleTab("from")} className="relative flex justify-between items-center bg-white p-2 md:p-3 xl:p-4 rounded-xl w-full md:w-[45%] cursor-pointer">
                         <div className="flex items-center gap-x-2">
                             <img src={`/currencies/${fromCurrency}.svg`} alt={`${fromCurrency} flag`} className="rounded-[50%] size-6 md:size-8 xl:size-10" />
                             <div className="text-left">
@@ -90,7 +90,7 @@ const FiatExchange = ({ currencies }: { currencies: Currencies }) => {
                             </div>
                         }
                     </div>
-                    <div onClick={() => toggleTab("to")} className="relative flex justify-between items-center bg-white p-2 md:p-3 xl:p-4 rounded-xl w-full sm:w-[45%] cursor-pointer">
+                    <div onClick={() => toggleTab("to")} className="relative flex justify-between items-center bg-white p-2 md:p-3 xl:p-4 rounded-xl w-full md:w-[45%] cursor-pointer">
                         <div className="flex items-center gap-x-2">
                             <img src={`/currencies/${toCurrency}.svg`} alt={`${toCurrency} flag`} className="rounded-[50%] size-6 md:size-8 xl:size-10" />
                             <div className="text-left">
@@ -122,8 +122,8 @@ const FiatExchange = ({ currencies }: { currencies: Currencies }) => {
                         }
                     </div>
                     <button onClick={switchCurrency} className="top-1/2 left-1/2 absolute place-content-center grid bg-primary hover:bg-goldenYellow p-2 rounded-[50%] size-10 md:size-12 xl:size-14 text-white hover:text-black -translate-x-1/2 -translate-y-1/2 duration-300 transform">
-                        <ArrowSwapVertical className="sm:hidden size-6" />
-                        <ArrowSwapHorizontal className="hidden sm:block size-5 md:size-6 xl:size-7" />
+                        <ArrowSwapVertical className="md:hidden size-6" />
+                        <ArrowSwapHorizontal className="hidden md:block size-5 md:size-6 xl:size-7" />
                     </button>
                 </div>
             </section>

@@ -4,7 +4,7 @@ import { toast } from "react-fox-toast";
 //Stores and Utils
 import { useChatStore } from "@/stores/message.store";
 import { formatDate } from "@/utils/format";
-import { markMessagesAsRead, resendMessage, sendMessage, startTyping, stopTyping } from "@/services/sockets/socketService";
+import { fetchAllConversations, markMessagesAsRead, resendMessage, sendMessage, startTyping, stopTyping } from "@/services/sockets/socketService";
 
 //Components
 import Header from "./Header";
@@ -44,6 +44,7 @@ const Index = () => {
                 el.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
                 if (selfId) {
                     markMessagesAsRead(selfId, ADMIN_CONNECT)
+                    fetchAllConversations(selfId, false)
                 }
             } catch {
                 (el as HTMLDivElement).scrollIntoView();

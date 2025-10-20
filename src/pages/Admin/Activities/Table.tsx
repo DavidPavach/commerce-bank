@@ -127,7 +127,7 @@ export function ActivityTable({ data }: { data: Activity[] }) {
                             <TableBody>
                                 {filteredData.map((item) => {
                                     const isExpanded = expandedRows.has(item._id)
-                                    const metadataEntries = Object.entries(item.metadata)
+                                    const metadataEntries = Object.entries(item.metadata || {});
 
                                     return (
                                         <Collapsible key={item._id} open={isExpanded} onOpenChange={() => toggleRow(item._id)} asChild>

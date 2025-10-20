@@ -101,6 +101,7 @@ declare type UserStore = {
     setUser: (user: User) => void;
     setBalance: (balance: Balance) => void;
     setPrices: (prices: Prices) => void;
+    refetchUser: () => void;
     refetchUserData: () => Promise<void>;
     refetchPrices: () => Promise<void>;
     clearUser: () => void;
@@ -369,3 +370,61 @@ declare type ChatState = {
     setActiveConversation: (userId: string) => void;
     reset: () => void;
 };
+
+//Bank Account
+declare type BankAccount = {
+    _id: string
+    accountNumber: string
+    bankName: string
+    fullName: string
+    createdAt: string
+    updatedAt: string
+}
+
+//Admin Transaction
+declare type AdminTransaction = {
+    user: string;
+    transactionType: string;
+    subType: string;
+    description: string;
+    amount: number;
+    details: {
+        accountNumber: string;
+        recipient: string;
+        fullName: string;
+        bankName: string;
+    };
+    beneficiary: boolean,
+    note?: string,
+    level: string;
+    status: string;
+    initiatedBy: string;
+    createdAt: string | null;
+    notification: boolean;
+}
+
+//Edit Deposit Request
+declare type EditDepositRequest = {
+    id: string,
+    isAccepted?: "accepted" | "declined" | "pending",
+    status?: "successful" | "failed" | "pending",
+}
+
+//Declare Deposit Request
+declare type DepositRequest = {
+    _id: string
+    amount: number
+    createdAt: string
+    isAccepted: string
+    status: string
+    updatedAt: string
+    user: {
+        email: string
+        fullName: string
+        isFullyVerified: boolean
+        isOnline: boolean
+        isVerified: boolean
+        profilePicture: string
+        _id: string
+    }
+}
