@@ -15,6 +15,12 @@ import Pin from '@/pages/Pin';
 import Pending from '@/pages/Pending';
 import NotFound from '@/components/Not-Found';
 import ResetPassword from '@/pages/PasswordReset';
+import Privacy from '@/pages/Privacy';
+import Terms from '@/pages/Terms';
+import Contact from '@/pages/Contact';
+import Company from '@/pages/Company';
+import Digital from '@/pages/Digital';
+import Careers from '@/pages/Careers';
 
 // User pages
 import Dashboard from '@/pages/User/Dashboard';
@@ -69,6 +75,9 @@ const AppRoutes = () => {
             <Routes>
                 <Route element={<Home />}>
                     <Route path="/" element={<HomePage />} />
+                    <Route path="/company" element={<Company />} />
+                    <Route path="/digital" element={<Digital />} />
+                    <Route path="/careers" element={<Careers />} />
                 </Route>
 
                 {/* Page Routes */}
@@ -80,6 +89,9 @@ const AppRoutes = () => {
                 <Route path="/pending" element={<Pending />} />
                 <Route path="*" element={<NotFound />} />
                 <Route path="/forgot" element={<ResetPassword />} />
+                <Route path="/privacy" element={<Privacy />} />
+                <Route path="/terms" element={<Terms />} />
+                <Route path="/contact" element={<Contact />} />
 
                 {/* User Routes */}
                 <Route path="/user" element={<User />}>

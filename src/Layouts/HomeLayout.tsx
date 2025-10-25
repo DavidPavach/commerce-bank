@@ -5,9 +5,9 @@ import Footer from "@/pages/HomePage/Footer";
 const HomePageLayout = ({ children }: { children: React.ReactNode }) => {
 
     return (
-        <main className="bg-lightBlack min-h-dvh overflow-y-auto text-neutral-100">
+        <main className="bg-white min-h-dvh overflow-y-auto text-blueBlack">
             <Nav />
-                <div className="xl:mx-auto px-4 sm:px-6 md:px-8 lg:px-10 2xl:px-16 xl:px-12 py-8 xl:max-w-7xl">
+                <div className="px-[1rem] sm:px-12 md:px-[4rem] lg:px-[5rem] 2xl:px-[7rem] xl:px-[6rem] py-4">
                     {children}
                 </div>
             <Footer />

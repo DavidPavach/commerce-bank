@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 body {
-    font-family: 'Host Grotesk', sans-serif;
-    font-optical-sizing: auto;
+  font-family: 'Host Grotesk', sans-serif;
+  font-optical-sizing: auto;
 }
 
 .outfit {
-    font-family: 'Outfit', sans-serif;
-    font-optical-sizing: auto;
+  font-family: 'Outfit', sans-serif;
+  font-optical-sizing: auto;
 }
 
 /* For the Sidebar layout */
@@ -17,8 +17,57 @@ body {
   width: calc(100% - 20rem);
   float: right;
 }
+
 @media screen and (max-width: 1023px) {
   .mainWidth {
     width: 100%;
+  }
+}
+
+.animate-scroll-left {
+  animation: scroll 20s linear infinite;
+}
+
+.animate-scroll-right {
+  animation: roll 20s linear infinite;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes roll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(50%);
+  }
+}
+
+@media (min-width: 768px) {
+  .animate-scroll-left {
+    animation: scroll 45s linear infinite;
+  }
+
+  .animate-scroll-right {
+    animation: roll 45s linear infinite;
+  }
+}
+
+@media (min-width: 1280px) {
+  .animate-scroll-left {
+    animation: scroll 60s linear infinite;
+  }
+
+  .animate-scroll-right {
+    animation: roll 60s linear infinite;
   }
 }
