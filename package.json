@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:pwa": "tsc -b && vite build && npx workbox generateSW workbox-config.cjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
@@ -51,6 +52,7 @@
     "tailwind-merge": "^3.2.0",
     "tailwindcss-animate": "^1.0.7",
     "ulid": "^3.0.1",
+    "workbox-cli": "^7.3.0",
     "zod": "^3.24.3",
     "zustand": "^5.0.3"
   },

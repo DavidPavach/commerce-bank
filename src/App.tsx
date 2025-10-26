@@ -1,8 +1,9 @@
 import { QueryClientProvider, QueryClient, MutationCache } from '@tanstack/react-query';
 import AppRoutes from './routes/AppRoutes';
 
-//Toast
+// Components
 import { ToastContainer } from "react-fox-toast";
+import InstallPrompt from './components/InstallationPrompt';
 
 
 const queryClient = new QueryClient({
@@ -21,14 +22,15 @@ const queryClient = new QueryClient({
 })
 
 const App = () => {
-  return ( 
+  return (
     <main className='text-xs md:text-sm xl:text-base'>
       <QueryClientProvider client={queryClient}>
         <AppRoutes />
-        <ToastContainer position="top-center" isPausedOnHover={true} duration={5000} /> 
+        <InstallPrompt />
+        <ToastContainer position="top-center" isPausedOnHover={true} duration={5000} />
       </QueryClientProvider>
     </main>
-   );
+  );
 }
- 
+
 export default App;

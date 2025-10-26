@@ -215,11 +215,11 @@ const Index = () => {
                     <motion.div variants={itemVariants} className="mt-8 text-neutral-100 text-sm text-center">
                         <p className="mb-2">Need immediate assistance? Our support team is available 24/7</p>
                         <div className="flex justify-center space-x-6">
-                            <a href="mailto:support@cbshbank.com" className="flex items-center space-x-1 hover:text-neutral-800 transition-colors">
+                            <a href="mailto:support@cbshvault.com" className="flex items-center space-x-1 hover:text-neutral-800 transition-colors">
                                 <Headphones className="size-4" />
                                 <span>Support Center</span>
                             </a>
-                            <a href="mailto:support@cbshbank.com" className="flex items-center space-x-1 hover:text-neutral-800 transition-colors">
+                            <a href="mailto:support@cbshvault.com" className="flex items-center space-x-1 hover:text-neutral-800 transition-colors">
                                 <Mail className="size-4" />
                                 <span>Email Support</span>
                             </a>

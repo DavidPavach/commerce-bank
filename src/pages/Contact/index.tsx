@@ -35,7 +35,7 @@ const Index = () => {
         {
             question: "How do I report suspicious activity?",
             answer:
-                "If you notice any suspicious activity on your account, contact us immediately at email security@cbshbank.com. We'll investigate and take appropriate action.",
+                "If you notice any suspicious activity on your account, contact us immediately at email security@cbshvault.com. We'll investigate and take appropriate action.",
         },
     ]
 
@@ -44,7 +44,7 @@ const Index = () => {
             icon: Mail,
             title: "Email Support",
             description: "Send us your questions",
-            details: "support@cbshbank.com",
+            details: "support@cbshvault.com",
             color: "bg-accent",
         },
         {

@@ -97,7 +97,7 @@ const Footer = () => {
                             <Mail className="flex-shrink-0 mt-0.5 size-5 text-[#D2F801]" />
                             <div>
                                 <p className="font-semibold text-white text-sm">Email</p>
-                                <p className="text-neutral-300 text-sm">support@cbshbank.com</p>
+                                <p className="text-neutral-300 text-sm">support@cbshvault.com</p>
                             </div>
                         </div>
                         <div className="flex items-start gap-3">

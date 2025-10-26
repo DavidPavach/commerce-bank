@@ -72,7 +72,7 @@ const Pending = () => {
                                     <Mail className="size-5 md:size-6 xl:size-7 text-primary" />
                                 </div>
                                 <h4 className="mb-1 font-medium text-lightBlack">Email Support</h4>
-                                <p className="text-neutral-600 text-sm">loans@cbshbank.com</p>
+                                <p className="text-neutral-600 text-sm">loans@cbshvault.com</p>
                                 <p className="text-neutral-500 text-xs">Response within 24 hours</p>
                             </div>
 

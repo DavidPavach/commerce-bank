@@ -347,7 +347,7 @@ export default function ReceiptPage({ transaction, className = "" }: ReceiptPage
                                         This receipt is digitally secured and verified by CBSH Bank. Keep this receipt for your
                                         records and contact us immediately if you notice any discrepancies.
                                     </p>
-                                    <p className="mt-3 text-slate-500 text-xs">Customer Service: support@cbshbank.com | Available 24/7</p>
+                                    <p className="mt-3 text-slate-500 text-xs">Customer Service: support@cbshvault.com | Available 24/7</p>
                                 </CardContent>
                             </Card>
                         </motion.div>

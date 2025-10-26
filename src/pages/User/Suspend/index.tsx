@@ -77,9 +77,9 @@ export default function Index() {
                             <p className="mb-3 text-neutral-300 text-sm">
                                 Have questions? Our support team is here to help explain the situation.
                             </p>
-                            <Link to={`mailto:support@cbshbank.com?subject=Account Suspension - Case ${user && user.accountId}`}
+                            <Link to={`mailto:support@cbshvault.com?subject=Account Suspension - Case ${user && user.accountId}`}
                                 className="font-medium text-blue-400 hover:text-blue-300 text-sm transition-colors">
-                                support@cbshbank.com
+                                support@cbshvault.com
                             </Link>
                         </div>
                     </div>

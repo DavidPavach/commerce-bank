@@ -130,7 +130,7 @@ const Index = () => {
                             If you have questions about this Privacy Policy or our privacy practices, please contact us:
                         </p>
                         <div className="space-y-2 text-neutral-600">
-                            <p><strong>Email:</strong> privacy@cbshbank.com</p>
+                            <p><strong>Email:</strong> privacy@cbshvault.com</p>
                             <p><strong>Address:</strong> 2740 W 55th St, Chicago, IL 60632, United States</p>
                         </div>
                     </section>
