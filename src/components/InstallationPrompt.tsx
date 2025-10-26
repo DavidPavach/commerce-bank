@@ -65,7 +65,7 @@ export default function InstallPrompt() {
             ) : (
                 <>
                     <InfoCircle className="size-5" />
-                    <span className="text-sm">
+                    <span className="text-[11px] md:text-xs xl:text-sm">
                         Add this app to your home screen via your browser menu.
                     </span>
                     <button onClick={handleDismiss} className="hover:bg-blue-700 p-1 rounded-xl" aria-label="Dismiss fallback">
