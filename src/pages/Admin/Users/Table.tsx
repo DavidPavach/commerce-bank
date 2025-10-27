@@ -150,7 +150,7 @@ const Table = ({ users, handleViewMore }: { users: User[], handleViewMore: (user
                                                 </div>
                                                 <div className="flex flex-col gap-y-2 mt-2">
                                                     <div className="flex gap-x-2">
-                                                        {user.kyc?.images.map((image) => (
+                                                        {user.kyc?.images?.map((image) => (
                                                             <img className="border border-neutral-300 rounded-lg w-1/2 h-40" key={image} src={image} alt="KYC Images" />
                                                         ))}
                                                     </div>
