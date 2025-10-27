@@ -1,8 +1,12 @@
+import { useEffect } from 'react';
 import { QueryClientProvider, QueryClient, MutationCache } from '@tanstack/react-query';
 import AppRoutes from './routes/AppRoutes';
 
+//Hooks
+import { useServiceWorkerPrompt } from './Hooks/serviceWorkerUpdate';
+
 // Components
-import { ToastContainer } from "react-fox-toast";
+import { toast, ToastContainer } from "react-fox-toast";
 import InstallPrompt from './components/InstallationPrompt';
 
 
@@ -22,6 +26,26 @@ const queryClient = new QueryClient({
 })
 
 const App = () => {
+
+  const { showPrompt, reloadPage } = useServiceWorkerPrompt();
+
+  useEffect(() => {
+    if (showPrompt) {
+      toast.info(
+        <div className="flex flex-col items-center gap-2 text-xs md:text-sm xl:text-base">
+          <p>✨ New version available!</p>
+          <button onClick={reloadPage} className="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded-lg font-medium text-white text-xs">
+            Reload
+          </button>
+        </div>,
+        {
+          duration: 10000,
+          position: "bottom-center",
+        }
+      );
+    }
+  }, [showPrompt, reloadPage]);
+
   return (
     <main className='text-xs md:text-sm xl:text-base'>
       <QueryClientProvider client={queryClient}>

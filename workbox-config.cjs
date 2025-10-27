@@ -5,10 +5,11 @@ module.exports = {
   clientsClaim: true,
   skipWaiting: true,
   maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+  importScripts: ["sw-custom.js"],
   runtimeCaching: [
     {
       urlPattern: ({ url }) => url.origin === self.location.origin,
-      handler: "CacheFirst",
+      handler: "NetworkFirst",
       options: {
         cacheName: "static-resources",
         expiration: { maxEntries: 50 },
