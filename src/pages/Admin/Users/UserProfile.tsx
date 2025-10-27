@@ -21,6 +21,7 @@ export function UserProfile({ user }: { user: User }) {
     { label: "Tax Pin", value: user.taxPin ? user.taxPin : "No Tax Pin" },
     { label: "Tac Pin", value: user.tacPin ? user.tacPin : "No Tac Pin" },
     { label: "Insurance Pin", value: user.taxPin ? user.insurancePin : "No Insurance Pin" },
+    { label: "Transaction Suspended", value: user.transactionSuspended ? "Yes" : "No" },
     { label: "Created On", value: formatDate(user.createdAt) },
   ]
   return (

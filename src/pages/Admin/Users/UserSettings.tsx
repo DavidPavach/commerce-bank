@@ -5,7 +5,6 @@ import { toast } from "react-fox-toast";
 import { usePinUpdate, useUpdateUser } from "@/services/mutations.service";
 import { suspendUser } from "@/services/sockets/socketService";
 import { randomSix } from "@/utils/format";
-import { buildPayload } from "@/utils";
 
 //Components
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -38,7 +37,6 @@ export function UserSettings({ user }: { user: User }) {
     }
 
     const [formData, setFormData] = useState(defaultState);
-    const [updatedFields, setUpdatedFields] = useState<Set<keyof typeof formData>>(new Set());
     const [see, setSee] = useState<boolean>(false);
     const [pinType, setPinType] = useState<"taxPin" | "tacPin" | "insurancePin" | "default">("default");
 
@@ -48,13 +46,6 @@ export function UserSettings({ user }: { user: User }) {
 
     const handleChange = <K extends keyof typeof formData>(field: K, value: typeof formData[K]) => {
         setFormData(prev => ({ ...prev, [field]: value }));
-
-        // Add to set of updated fields
-        setUpdatedFields(prev => {
-            const next = new Set(prev);
-            next.add(field);
-            return next;
-        });
     };
 
     const resetForm = () => {
@@ -67,15 +58,11 @@ export function UserSettings({ user }: { user: User }) {
         const proceed = confirm(`Update ${user.fullName.toUpperCase()}'s Details?`);
         if (!proceed) return toast.error("Update was cancelled");
 
-        // Build Payload
-        const payload = buildPayload(formData, updatedFields);
-
         // Handle form submission
-        patchUser.mutate({ email: user.email, ...payload }, {
+        patchUser.mutate({ email: user.email, ...formData }, {
             onSuccess: (response) => {
                 toast.success(response.data.message || `${user.fullName.toUpperCase()}'s profile was updated successfully!`);
                 resetForm();
-                setUpdatedFields(new Set());
             },
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             onError: (error: any) => {
@@ -213,7 +200,7 @@ export function UserSettings({ user }: { user: User }) {
                                     ) : (
                                         <MoneyRemove className="size-4 md:size-5 xl:size-6" />
                                     )}
-                                    {formData.transactionSuspended ? "Restore Trans." : "Pause Trans."}
+                                    {formData.transactionSuspended ? "Restore Trx" : "Pause Trx"}
                                 </Toggle>
                             </div>
                             <div className="space-y-2">
@@ -223,7 +210,7 @@ export function UserSettings({ user }: { user: User }) {
                                     ) : (
                                         <BadgeCheck className="size-4 md:size-5 xl:size-6" />
                                     )}
-                                    {formData.isFullyVerified ? "Invalidate Fully" : "Verify Fully"}
+                                    {formData.isFullyVerified ? "Invalidate" : "Verify"}
                                 </Toggle>
                             </div>
                             <div className="space-y-2" onClick={handleSuspension}>
