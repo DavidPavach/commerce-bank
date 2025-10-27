@@ -178,7 +178,7 @@ const Form = ({ onClose }: { onClose: () => void }) => {
 
                     {/* Amount */}
                     <div className="flex flex-col gap-y-1">
-                        <label htmlFor="amount">Account Name<span className="text-red-600">*</span></label>
+                        <label htmlFor="amount">Amount<span className="text-red-600">*</span></label>
                         <Input type="number" min={0} pattern="[0-9]*" id="amount" className="bg-inherit px-4 py-2 border border-neutral-200 rounded-lg focus:outline-1 focus:outline-none focus:outline-primary w-full text-black duration-300 focus:caret-primary" value={formData.amount} onChange={(e) => handleChange("amount", e.target.value)} placeholder="$0.00" />
                     </div>
 
