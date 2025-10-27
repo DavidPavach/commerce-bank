@@ -83,7 +83,7 @@ export default function InstallPrompt() {
     };
 
     return (
-        <div className="right-4 bottom-4 z-50 fixed flex items-center gap-2 bg-blue-600 shadow-lg px-4 py-2 rounded-2xl max-w-sm text-[11px] text-white md:text-xs xl:text-sm animate-fade-in">
+        <div className="right-4 bottom-20 z-50 fixed flex items-center gap-2 bg-blue-600 shadow-lg px-4 py-2 rounded-2xl max-w-sm text-[11px] text-white md:text-xs xl:text-sm animate-fade-in">
             {isVisible ? (
                 <>
                     <button onClick={handleInstall} className="flex items-center gap-1 hover:bg-blue-700 px-2 py-1 rounded-xl">
