@@ -40,7 +40,7 @@ const App = () => {
         </div>,
         {
           duration: 10000,
-          position: "bottom-center",
+          position: "top-center",
         }
       );
     }

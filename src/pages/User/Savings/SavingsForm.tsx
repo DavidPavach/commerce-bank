@@ -127,7 +127,7 @@ const SavingsForm = ({ onClose }: { onClose: () => void; }) => {
                         <p className="mt-1 text-neutral-500 text-xs">Leave empty for open-ended savings</p>
                     </div>
                     <div className="flex flex-col gap-y-1">
-                        <Input type="number" min={0} required={true} value={formData.savedAmount} onChange={(e) => handleChange('savedAmount', e.target.value)} otherClass={`${errors.savedAmount ? 'border-red-300' : 'border-neutral-200'}`} placeholder="100.00" label="Initial Deposit (Optional)" />
+                        <Input type="number" min={0} required={true} value={formData.savedAmount} onChange={(e) => handleChange('savedAmount', e.target.value)} otherClass={`${errors.savedAmount ? 'border-red-300' : 'border-neutral-200'}`} placeholder="100.00" label="Initial Deposit" />
                         {errors.savedAmount && <ErrorText message={errors.savedAmount} />}
                     </div>
                     <div className="gap-4 grid grid-cols-1 sm:grid-cols-2">

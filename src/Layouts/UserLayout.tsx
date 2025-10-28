@@ -29,17 +29,19 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
             return;
         }
 
-        if (user?.isSuspended) {
+        if (!user) return;
+
+        if (user.isSuspended) {
             navigate("/user/suspend");
             return;
         }
 
-        if (user?.kyc?.status !== "accepted" || !user.isFullyVerified) {
+        if (user.kyc?.status !== "accepted" || !user.isFullyVerified) {
             navigate("/pending");
             return;
         }
+    }, [navigate, location, user]);
 
-    }, [navigate, location, user?.isSuspended, user?.kyc?.status, user?.isFullyVerified]);
 
 
     return (

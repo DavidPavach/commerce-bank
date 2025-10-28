@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 export function useServiceWorkerPrompt() {
+  
   const [waitingWorker, setWaitingWorker] = useState<ServiceWorker | null>(null);
   const [showPrompt, setShowPrompt] = useState(false);
 

@@ -312,10 +312,6 @@ const Profile = ({ user }: { user: User }) => {
                                             <p className="font-mono font-medium">****{user.accountNumber.slice(-4)}</p>
                                         </div>
                                     </div>
-                                    <div>
-                                        <Label className="text-slate-600">Member Since</Label>
-                                        <p className="font-medium">{formatDate(user.createdAt)}</p>
-                                    </div>
                                     {user.lastSession && (
                                         <div>
                                             <Label className="text-slate-600">Last Session</Label>
@@ -430,10 +426,6 @@ const Profile = ({ user }: { user: User }) => {
                                         <div>
                                             <Label className="text-slate-600 text-sm">ID Type</Label>
                                             <p className="font-medium capitalize">{user && user.kyc && user.kyc.idType.replace("_", " ")}</p>
-                                        </div>
-                                        <div>
-                                            <Label className="text-slate-600 text-sm">Submission Date</Label>
-                                            <p className="font-medium">{user && user.kyc && formatDate(user.kyc.lastSubmissionDate)}</p>
                                         </div>
                                     </div>
                                     <div>
