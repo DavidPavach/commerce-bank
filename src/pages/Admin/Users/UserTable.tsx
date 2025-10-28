@@ -99,11 +99,11 @@ const UserTable = ({ transactions }: { transactions: TransactionWithUser[] }) =>
                                     <td className="px-4 py-3">{getIcon(tx.subType, true)}</td>
                                     <td className="px-4 py-3">{getStatusBadge(tx.status)}</td>
                                     <td className="flex justify-between items-center gap-x-3 px-4 py-3">
-                                        {loading === tx._id ? <Loader className="size-4 md:size-5 xl:size-6 animate-spin" /> : <Trash onClick={() => handleDelete(tx._id)} variant="Bold" className="size-4 md:size-5 xl:size-6 text-red-500 cursor-pointer" />}
-                                        <FolderOpen onClick={() => setShowTransaction(tx)} variant="Bold" className="size-4 md:size-5 xl:size-6 text-blue-500 cursor-pointer" />
-                                        {loading === tx._id ? <Loader className="size-4 md:size-5 xl:size-6 animate-spin" /> : <Popover>
+                                        {loading === tx._id ? <Loader className="size-5 md:size-6 animate-spin" /> : <Trash onClick={() => handleDelete(tx._id)} variant="Bold" className="size-5 md:size-6 text-red-500 cursor-pointer" />}
+                                        <FolderOpen onClick={() => setShowTransaction(tx)} variant="Bold" className="size-5 md:size-6 text-blue-500 cursor-pointer" />
+                                        {loading === tx._id ? <Loader className="size-5 md:size-6 animate-spin" /> : <Popover>
                                             <PopoverTrigger asChild>
-                                                <More variant="Bold" className="size-4 md:size-5 xl:size-6 cursor-pointer" />
+                                                <More variant="Bold" className="size-5 md:size-6 cursor-pointer" />
                                             </PopoverTrigger>
                                             <PopoverContent className="space-y-4 p-4 w-fit text-[11px] md:text-xs xl:text-sm">
                                                 <p className="mb-2">Update Status</p>

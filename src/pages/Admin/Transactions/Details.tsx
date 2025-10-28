@@ -20,6 +20,7 @@ import { Building2, Loader, Save } from "lucide-react";
 export default function TransactionDetails({ transaction, onClose }: { transaction: TransactionWithUser, onClose: () => void; }) {
 
     const [newCreatedAt, setNewCreatedAt] = useState("");
+    console.log("The transaction", transaction)
 
     //Functions
     const updateTransaction = useUpdateTransaction()
@@ -133,7 +134,7 @@ export default function TransactionDetails({ transaction, onClose }: { transacti
                     </div>
                 </CardContent>
             </Card>
-            <UserInfo user={transaction.user} />
+            {typeof transaction.user !== "string" && <UserInfo user={transaction.user} />}
         </div>
     )
 }
