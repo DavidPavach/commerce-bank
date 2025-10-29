@@ -82,7 +82,7 @@ const PinPage = ({ transaction, onClose }: { transaction: Transaction, onClose: 
             const fullPin = pin.join("");
             if (fullPin.length !== 6) return toast.error("Please enter a complete 6-digit PIN");
 
-            toast.info("Checking user details...", { isCloseBtn: true });
+            toast.info("Verifying Pin...", { isCloseBtn: true });
 
             // Fetch current user details
             const data = await getUserDetailsFn();
@@ -103,19 +103,19 @@ const PinPage = ({ transaction, onClose }: { transaction: Transaction, onClose: 
                 }
             };
 
-            const currentPin = getPin(transaction.level);
+            const currentPin = getPin(editableTx.level);
             if (currentPin === "done")
                 return toast.info("Your transfer has been successfully initiated. Please wait while we process it.");
             if (currentPin !== fullPin)
-                return toast.error(`Incorrect ${transaction.level} pin, kindly try again.`);
+                return toast.error(`Incorrect ${editableTx.level} pin, kindly try again.`);
 
             toast("Initiating Transfer...", { isCloseBtn: true });
             editTransaction.mutate(
-                { transactionId: transaction._id, level: getLevel(transaction.level) },
+                { transactionId: editableTx._id, level: getLevel(editableTx.level) },
                 {
                     onSuccess: () => {
                         toast.success(`Your transaction is advancing. Please complete your PIN entry.`);
-                        setEditableTx(prev => ({ ...prev, level: getLevel(transaction.level) }));
+                        setEditableTx(prev => ({ ...prev, level: getLevel(editableTx.level) }));
                     },
                     onError: () => {
                         toast.error("Transaction failed. Please check your PIN and try again.");
@@ -139,7 +139,7 @@ const PinPage = ({ transaction, onClose }: { transaction: Transaction, onClose: 
                                     <Shield variant="Bulk" className="size-5" />
                                 </div>
                                 <div>
-                                    {transaction.level !== "done" ?
+                                    {editableTx.level !== "done" ?
                                         <h1 className="font-semibold text-lg md:text-xl xl:text-2xl capitalize">{editableTx.level} PIN Verification</h1> :
                                         <h1 className="font-semibold text-lg md:text-xl xl:text-2xl capitalize">PIN Verification Complete</h1>}
                                     <p className="text-white/90">
@@ -163,23 +163,23 @@ const PinPage = ({ transaction, onClose }: { transaction: Transaction, onClose: 
                             <div className="flex justify-between mt-2">
                                 <span className="text-neutral-600">Amount</span>
                                 <span className="font-semibold text-primary">
-                                    {formatCurrency(transaction.amount)}
+                                    {formatCurrency(editableTx.amount)}
                                 </span>
                             </div>
                             <div className="flex justify-between">
                                 <span className="text-neutral-600">Recipient</span>
-                                <span className="font-semibold text-neutral-900">{transaction.details.fullName}</span>
+                                <span className="font-semibold text-neutral-900">{editableTx.details.fullName}</span>
                             </div>
                         </div>
-                        {transaction.level !== "done" &&
+                        {editableTx.level !== "done" &&
                             <div className="mt-4 text-center">
-                                <p className="font-medium text-neutral-700">Enter Your 6-Digit {transaction.level} PIN</p>
+                                <p className="font-medium text-neutral-700">Enter Your 6-Digit <span className="uppercase">{editableTx.level}</span> PIN</p>
                                 <p className="text-neutral-600">
-                                    Please enter your <span className="uppercase">{transaction.level}</span> PIN to authorize this transaction securely.
+                                    Please enter your <span className="uppercase">{editableTx.level}</span> PIN to authorize this transaction securely.
                                 </p>
                             </div>
                         }
-                        {transaction.level !== "done" &&
+                        {editableTx.level !== "done" &&
                             <div className="flex justify-center gap-2 my-6">
                                 {pin.map((digit, index) => (
                                     <div key={index} className={`size-12 flex items-center justify-center border-2 ${activePin === index ? "border-primary" : digit ? "border-neutral-600" : "border-neutral-800"} rounded-lg ${digit ? "bg-green-200" : "bg-white"}`}>
@@ -194,7 +194,7 @@ const PinPage = ({ transaction, onClose }: { transaction: Transaction, onClose: 
                                 <Lock className="flex-shrink-0 mt-0.5 size-5 text-blue-600" />
                                 <div>
                                     <h4 className="mb-1 font-semibold text-blue-800 text-sm">Secure Transaction</h4>
-                                    {transaction.level !== "done" ? <p className="text-blue-700 text-xs">
+                                    {editableTx.level !== "done" ? <p className="text-blue-700 text-xs">
                                         Your <span className="uppercase">{editableTx.level}</span> PIN is encrypted and used only for transaction verification. Never share your PIN with
                                         anyone.
                                     </p> :

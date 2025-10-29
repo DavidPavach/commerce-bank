@@ -78,7 +78,10 @@ const Form = ({ onClose }: { onClose: () => void }) => {
     const createTransaction = useCreateNewTransaction()
     const handleTransaction = () => {
 
-        toast.info("Creating Transaction...")
+        if (!formData.user || formData.user === "") return toast.error("Kindly select a user to continue.");
+
+        toast.info("Creating Transaction...");
+        
         createTransaction.mutate({
             ...formData,
             createdAt: formData.createdAt ? new Date(formData.createdAt).toISOString() : new Date().toISOString()
