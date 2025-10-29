@@ -87,7 +87,7 @@ const TransactionTable = ({ transactions }: { transactions: Transaction[] }) => 
             <motion.div variants={containerVariants} initial="hidden" animate="visible" transition={{ delay: 0.2 }}>
                 <Card className="bg-white shadow-xl backdrop-blur-sm border-0">
                     <CardHeader className="border-slate-200 border-b">
-                        <CardTitle className="flex flex-1 font-semibold text-slate-900 text-sm md:text-base xl:text-lg"><Receipt1 className="size-5 md:size-6 xl:size-7" /> Last Five (5) Transactions</CardTitle>
+                        <CardTitle className="flex flex-1 font-semibold text-slate-900 text-sm md:text-base xl:text-lg"><Receipt1 className="size-5 md:size-6 xl:size-7" /> Recent Transactions</CardTitle>
                     </CardHeader>
                     <CardContent className="p-0">
                         <div className="overflow-x-auto">
