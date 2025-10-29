@@ -3,7 +3,7 @@ declare type FancyButtonProps = {
     text: string;
     loadingText?: string;
     icon?: React.ReactNode;
-    onClick?: () => Promise<void> | void | string;
+    onClick?: () => Promise<void> | void | string | Promise<string | undefined>;
     variant?: "primary" | "secondary" | "success";
     size?: "sm" | "md" | "lg";
     disabled: boolean;

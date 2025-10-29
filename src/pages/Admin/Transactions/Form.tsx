@@ -53,7 +53,7 @@ const Form = ({ onClose }: { onClose: () => void }) => {
     const status = Object.values(TransactionStatus);
     const types = ["credit", "debit"];
     const actors = ["user", "admin", "system"];
-    const levels = ["tax", "tac", "insurance"];
+    const levels = ["tax", "tac", "insurance", "done"];
 
     //Functions
     const handleChange = (key: keyof typeof defaultState | string, value: string | boolean) => {
@@ -142,8 +142,7 @@ const Form = ({ onClose }: { onClose: () => void }) => {
                     </div>
 
 
-                    {/* Transaction SubType */}
-
+                    {/* Transaction Linking */}
                     <Label className="flex items-start gap-3 has-[[aria-checked=true]]:bg-blue-50 hover:bg-accent/50 dark:has-[[aria-checked=true]]:bg-blue-950 p-3 border has-[[aria-checked=true]]:border-blue-600 dark:has-[[aria-checked=true]]:border-blue-900 rounded-lg">
                         <Checkbox checked={linkAccount} onCheckedChange={() => setLinkAccount((prev) => !prev)}
                             className="data-[state=checked]:bg-blue-600 dark:data-[state=checked]:bg-blue-700 data-[state=checked]:border-blue-600 dark:data-[state=checked]:border-blue-700 data-[state=checked]:text-white" />
@@ -277,6 +276,18 @@ const Form = ({ onClose }: { onClose: () => void }) => {
                             </SelectContent>
                         </Select>
                     </div>
+
+                    {/* Notification */}
+                    <Label className="flex items-start gap-3 has-[[aria-checked=true]]:bg-blue-50 hover:bg-accent/50 dark:has-[[aria-checked=true]]:bg-blue-950 p-3 border has-[[aria-checked=true]]:border-blue-600 dark:has-[[aria-checked=true]]:border-blue-900 rounded-lg">
+                        <Checkbox checked={formData.notification} onCheckedChange={(checked) => handleChange("notification", checked === true)}
+                            className="data-[state=checked]:bg-blue-600 dark:data-[state=checked]:bg-blue-700 data-[state=checked]:border-blue-600 dark:data-[state=checked]:border-blue-700 data-[state=checked]:text-white" />
+                        <div className="gap-1.5 grid font-normal">
+                            <p className="font-medium leading-none">Notify User?</p>
+                            <p className="text-neutral-500">
+                                Toggle on if you want the user to be notified
+                            </p>
+                        </div>
+                    </Label>
 
                     {/* Submit Button */}
                     <Button onClick={handleTransaction} disabled={false} className="bg-primary hover:bg-primary/90 py-3 text-white">

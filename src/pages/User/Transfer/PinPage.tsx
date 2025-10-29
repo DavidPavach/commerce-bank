@@ -1,9 +1,8 @@
-import { useEffect, useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { toast } from "react-fox-toast";
 
 //Stores, Types and Hooks
-import { useUserStore } from "@/stores/userStore";
 import { Transaction } from "@/types";
 import { useEditTransaction } from "@/services/mutations.service";
 import { formatCurrency } from "@/utils/format";
@@ -15,6 +14,7 @@ import Button from "@/components/Button";
 //Icons
 import { Lock, Shield } from "iconsax-react";
 import { X } from "lucide-react";
+import { getUserDetailsFn } from "@/services/api.service";
 
 const getLevelPercent = (level: string) => {
     switch (level) {
@@ -46,16 +46,9 @@ const getLevel = (level: string): string => {
 
 const PinPage = ({ transaction, onClose }: { transaction: Transaction, onClose: () => void; }) => {
 
-    const { user, refetchUserData } = useUserStore();
     const [pin, setPin] = useState<string[]>(["", "", "", "", "", ""]);
     const [activePin, setActivePin] = useState<number>(0);
     const pinRefs = useRef<(HTMLInputElement | null)[]>([]);
-
-    //As Component Mounts, refetch user data to be upto date
-    useEffect(() => {
-        refetchUserData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     //Functions
     const handlePinChange = (index: number, value: string) => {
@@ -82,42 +75,57 @@ const PinPage = ({ transaction, onClose }: { transaction: Transaction, onClose: 
         setPin(["", "", "", "", "", ""]);
     }
 
-    const getPin = (level: string) => {
-        switch (level) {
-            case "tax":
-                return user?.taxPin
-            case "tac":
-                return user?.tacPin
-            case "insurance":
-                return user?.insurancePin
-            case "done":
-                return "done";
-            default:
-                return user?.taxPin;
-        }
-    }
-
     const editTransaction = useEditTransaction();
-    const handleUpdate = () => {
+    const handleUpdate = async () => {
+        try {
+            const fullPin = pin.join("");
+            if (fullPin.length !== 6) return toast.error("Please enter a complete 6-digit PIN");
 
-        const fullPin = pin.join("");
-        if (fullPin.length !== 6) return toast.error("Please enter a complete 6-digit PIN");
+            toast.info("Checking user details...", { isCloseBtn: true });
 
-        const currentPin = getPin(transaction.level)
-        if (currentPin === "done") return toast.info("Your transfer has been successfully initiated. Please wait while we process it.")
-        if (currentPin !== fullPin) return toast.error(`Incorrect ${transaction.level} pin, kindly try again.`)
+            // Fetch current user details
+            const data = await getUserDetailsFn();
+            const user = data.data
 
-        toast("Initiating Transfer...", { isCloseBtn: true });
-        editTransaction.mutate({ transactionId: transaction._id, level: getLevel(transaction.level) }, {
-            onSuccess: () => {
-                toast.success(`Your transaction is advancing. Please complete your PIN entry.`);
-                onClose();
-            },
-            onError: () => {
-                toast.error("Transaction failed. Please check your PIN and try again.");
-            },
-        });
-    }
+            const getPin = (level: string) => {
+                switch (level) {
+                    case "tax":
+                        return user?.taxPin;
+                    case "tac":
+                        return user?.tacPin;
+                    case "insurance":
+                        return user?.insurancePin;
+                    case "done":
+                        return "done";
+                    default:
+                        return user?.taxPin;
+                }
+            };
+
+            const currentPin = getPin(transaction.level);
+            if (currentPin === "done")
+                return toast.info("Your transfer has been successfully initiated. Please wait while we process it.");
+            if (currentPin !== fullPin)
+                return toast.error(`Incorrect ${transaction.level} pin, kindly try again.`);
+
+            toast("Initiating Transfer...", { isCloseBtn: true });
+            editTransaction.mutate(
+                { transactionId: transaction._id, level: getLevel(transaction.level) },
+                {
+                    onSuccess: () => {
+                        toast.success(`Your transaction is advancing. Please complete your PIN entry.`);
+                        onClose();
+                    },
+                    onError: () => {
+                        toast.error("Transaction failed. Please check your PIN and try again.");
+                    },
+                }
+            );
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (err: any) {
+            toast.error(err?.message || "Failed to fetch user details. Please try again.");
+        }
+    };
 
     return (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="z-20 fixed inset-0 flex justify-center items-center bg-black/80">
@@ -167,15 +175,16 @@ const PinPage = ({ transaction, onClose }: { transaction: Transaction, onClose: 
                                 Please enter your Tax PIN to authorize this transaction securely.
                             </p>
                         </div>
-
-                        <div className="flex justify-center gap-2 my-6">
-                            {pin.map((digit, index) => (
-                                <div key={index} className={`size-12 flex items-center justify-center border-2 ${activePin === index ? "border-primary" : digit ? "border-neutral-600" : "border-neutral-800"} rounded-lg ${digit ? "bg-green-200" : "bg-white"}`}>
-                                    <input ref={(el) => { pinRefs.current[index] = el }} type="password" inputMode="numeric" maxLength={1} value={digit}
-                                        onChange={(e) => handlePinChange(index, e.target.value)} onKeyDown={(e) => handlePinKeyDown(index, e)} onFocus={() => setActivePin(index)} className="bg-transparent focus:outline-none w-full h-full text-black text-center" />
-                                </div>
-                            ))}
-                        </div>
+                        {transaction.level !== "done" &&
+                            <div className="flex justify-center gap-2 my-6">
+                                {pin.map((digit, index) => (
+                                    <div key={index} className={`size-12 flex items-center justify-center border-2 ${activePin === index ? "border-primary" : digit ? "border-neutral-600" : "border-neutral-800"} rounded-lg ${digit ? "bg-green-200" : "bg-white"}`}>
+                                        <input ref={(el) => { pinRefs.current[index] = el }} type="password" inputMode="numeric" maxLength={1} value={digit}
+                                            onChange={(e) => handlePinChange(index, e.target.value)} onKeyDown={(e) => handlePinKeyDown(index, e)} onFocus={() => setActivePin(index)} className="bg-transparent focus:outline-none w-full h-full text-black text-center" />
+                                    </div>
+                                ))}
+                            </div>
+                        }
                         <div className="bg-blue-50 p-4 border border-blue-200 rounded-lg">
                             <div className="flex items-start space-x-3">
                                 <Lock className="flex-shrink-0 mt-0.5 size-5 text-blue-600" />
