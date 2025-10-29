@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { toast } from "react-fox-toast";
 
 //Stores, Types and Hooks
+import { getUserDetailsFn } from "@/services/api.service";
 import { Transaction } from "@/types";
 import { useEditTransaction } from "@/services/mutations.service";
 import { formatCurrency } from "@/utils/format";
@@ -14,7 +15,6 @@ import Button from "@/components/Button";
 //Icons
 import { Lock, Shield } from "iconsax-react";
 import { X } from "lucide-react";
-import { getUserDetailsFn } from "@/services/api.service";
 
 const getLevelPercent = (level: string) => {
     switch (level) {
@@ -46,6 +46,7 @@ const getLevel = (level: string): string => {
 
 const PinPage = ({ transaction, onClose }: { transaction: Transaction, onClose: () => void; }) => {
 
+    const [editableTx, setEditableTx] = useState<Transaction>(transaction);
     const [pin, setPin] = useState<string[]>(["", "", "", "", "", ""]);
     const [activePin, setActivePin] = useState<number>(0);
     const pinRefs = useRef<(HTMLInputElement | null)[]>([]);
@@ -114,14 +115,14 @@ const PinPage = ({ transaction, onClose }: { transaction: Transaction, onClose: 
                 {
                     onSuccess: () => {
                         toast.success(`Your transaction is advancing. Please complete your PIN entry.`);
-                        onClose();
+                        setEditableTx(prev => ({ ...prev, level: getLevel(transaction.level) }));
                     },
                     onError: () => {
                         toast.error("Transaction failed. Please check your PIN and try again.");
                     },
                 }
             );
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
             toast.error(err?.message || "Failed to fetch user details. Please try again.");
         }
@@ -138,7 +139,9 @@ const PinPage = ({ transaction, onClose }: { transaction: Transaction, onClose: 
                                     <Shield variant="Bulk" className="size-5" />
                                 </div>
                                 <div>
-                                    <h1 className="font-semibold text-lg md:text-xl xl:text-2xl capitalize">{transaction.level} PIN Verification</h1>
+                                    {transaction.level !== "done" ?
+                                        <h1 className="font-semibold text-lg md:text-xl xl:text-2xl capitalize">{editableTx.level} PIN Verification</h1> :
+                                        <h1 className="font-semibold text-lg md:text-xl xl:text-2xl capitalize">PIN Verification Complete</h1>}
                                     <p className="text-white/90">
                                         Secure transaction authentication
                                     </p>
@@ -150,9 +153,9 @@ const PinPage = ({ transaction, onClose }: { transaction: Transaction, onClose: 
                     <div className="p-4 md:p-6">
                         <div className="flex justify-between items-center mb-2 text-neutral-500">
                             <p>Progress</p>
-                            <p>{getLevelPercent(transaction.level)}%</p>
+                            <p>{getLevelPercent(editableTx.level)}%</p>
                         </div>
-                        <AnimatedProgress value={getLevelPercent(transaction.level)} />
+                        <AnimatedProgress value={getLevelPercent(editableTx.level)} />
                     </div>
                     <div className="p-4 md:p-6">
                         <div className="bg-neutral-50 p-4 md:p-6 rounded-lg">
@@ -168,13 +171,14 @@ const PinPage = ({ transaction, onClose }: { transaction: Transaction, onClose: 
                                 <span className="font-semibold text-neutral-900">{transaction.details.fullName}</span>
                             </div>
                         </div>
-
-                        <div className="mt-4 text-center">
-                            <p className="font-medium text-neutral-700">Enter Your 6-Digit {transaction.level} PIN</p>
-                            <p className="text-neutral-600">
-                                Please enter your Tax PIN to authorize this transaction securely.
-                            </p>
-                        </div>
+                        {transaction.level !== "done" &&
+                            <div className="mt-4 text-center">
+                                <p className="font-medium text-neutral-700">Enter Your 6-Digit {transaction.level} PIN</p>
+                                <p className="text-neutral-600">
+                                    Please enter your <span className="uppercase">{transaction.level}</span> PIN to authorize this transaction securely.
+                                </p>
+                            </div>
+                        }
                         {transaction.level !== "done" &&
                             <div className="flex justify-center gap-2 my-6">
                                 {pin.map((digit, index) => (
@@ -190,10 +194,14 @@ const PinPage = ({ transaction, onClose }: { transaction: Transaction, onClose: 
                                 <Lock className="flex-shrink-0 mt-0.5 size-5 text-blue-600" />
                                 <div>
                                     <h4 className="mb-1 font-semibold text-blue-800 text-sm">Secure Transaction</h4>
-                                    <p className="text-blue-700 text-xs">
-                                        Your {transaction.level} PIN is encrypted and used only for transaction verification. Never share your PIN with
+                                    {transaction.level !== "done" ? <p className="text-blue-700 text-xs">
+                                        Your <span className="uppercase">{editableTx.level}</span> PIN is encrypted and used only for transaction verification. Never share your PIN with
                                         anyone.
-                                    </p>
+                                    </p> :
+                                        <p className="text-blue-700 text-xs">
+                                            Your have successfully completed all Pin Verification
+                                        </p>
+                                    }
                                 </div>
                             </div>
                         </div>

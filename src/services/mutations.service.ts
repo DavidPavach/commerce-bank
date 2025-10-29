@@ -149,12 +149,8 @@ export function useCreateTransaction() {
 //Edit Transaction
 export function useEditTransaction() {
 
-    const queryClient = useQueryClient();
     return useMutation({
         mutationFn: (data: { transactionId: string, level: string }) => editTransactionFn(data),
-        onSuccess: (response) => {
-            queryClient.invalidateQueries({ queryKey: [`transactionDetails:${response.data.data.transactionId}`] });
-        },
         onError: (error) => {
             console.error("Editing Transaction:", error);
         }

@@ -168,7 +168,7 @@ export const fetchTransactionFn = async (transactionId: string) => {
 
 //Edit a Transaction
 export const editTransactionFn = async (data: { transactionId: string, level: string }) => {
-    const response = await axiosUser.post(`transactions/edit`, data);
+    const response = await axiosUser.patch(`transactions/edit`, data);
     return response.data;
 }
 

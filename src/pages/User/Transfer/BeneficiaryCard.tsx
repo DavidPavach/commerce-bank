@@ -28,7 +28,7 @@ export default function BeneficiaryCard({ beneficiary }: { beneficiary: Benefici
     const deleteBeneficiary = useDeleteBeneficiary();
     const handleDelete = (id: string) => {
 
-        toast("Adding Beneficiary...", { isCloseBtn: true });
+        toast("Removing Beneficiary...", { isCloseBtn: true });
         deleteBeneficiary.mutate(id, {
             onSuccess: () => {
                 toast.success(`Beneficiary was removed successfully.`);

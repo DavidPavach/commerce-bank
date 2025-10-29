@@ -37,6 +37,7 @@ export function UserSettings({ user }: { user: User }) {
     }
 
     const [formData, setFormData] = useState(defaultState);
+    const [changedData, setChangedData] = useState<Partial<typeof defaultState>>({});
     const [see, setSee] = useState<boolean>(false);
     const [pinType, setPinType] = useState<"taxPin" | "tacPin" | "insurancePin" | "default">("default");
 
@@ -46,7 +47,20 @@ export function UserSettings({ user }: { user: User }) {
 
     const handleChange = <K extends keyof typeof formData>(field: K, value: typeof formData[K]) => {
         setFormData(prev => ({ ...prev, [field]: value }));
+
+        // if the value is different from the default, record it as changed
+        if (value !== defaultState[field]) {
+            setChangedData(prev => ({ ...prev, [field]: value }));
+        } else {
+            // if user changes it back to original, remove it from changedData
+            setChangedData(prev => {
+                const copy = { ...prev };
+                delete copy[field];
+                return copy;
+            });
+        }
     };
+
 
     const resetForm = () => {
         setFormData(defaultState)
@@ -57,6 +71,11 @@ export function UserSettings({ user }: { user: User }) {
 
         const proceed = confirm(`Update ${user.fullName.toUpperCase()}'s Details?`);
         if (!proceed) return toast.error("Update was cancelled");
+
+        if (Object.keys(changedData).length === 0) {
+            toast.error("Nothing was changed, kindly make some changes.");
+            return;
+        }
 
         // Handle form submission
         patchUser.mutate({ email: user.email, ...formData }, {
