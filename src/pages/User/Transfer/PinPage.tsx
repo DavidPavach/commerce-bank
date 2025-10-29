@@ -116,9 +116,14 @@ const PinPage = ({ transaction, onClose }: { transaction: Transaction, onClose: 
                     onSuccess: () => {
                         toast.success(`Your transaction is advancing. Please complete your PIN entry.`);
                         setEditableTx(prev => ({ ...prev, level: getLevel(editableTx.level) }));
+                        setPin(["", "", "", "", "", ""]);
+                        if (getLevel(editableTx.level) === "done") {
+                            onClose()
+                        }
                     },
                     onError: () => {
                         toast.error("Transaction failed. Please check your PIN and try again.");
+                        setPin(["", "", "", "", "", ""]);
                     },
                 }
             );
@@ -205,7 +210,8 @@ const PinPage = ({ transaction, onClose }: { transaction: Transaction, onClose: 
                                 </div>
                             </div>
                         </div>
-                        <Button onClick={handleUpdate} text="Confirm Transfer" loadingText="Processing..." variant='primary' size='lg' disabled={editTransaction.isPending || pin.some((p) => p === "")} loading={editTransaction.isPending} />
+                        {editableTx.level !== "done" &&
+                            <Button onClick={handleUpdate} text="Confirm Transfer" loadingText="Processing..." variant='primary' size='lg' disabled={editTransaction.isPending || pin.some((p) => p === "")} loading={editTransaction.isPending} />}
                     </div>
                 </div>
             </motion.div>

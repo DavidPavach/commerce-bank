@@ -32,7 +32,7 @@ const App = () => {
   useEffect(() => {
     if (showPrompt) {
       toast.info(
-        <div className="flex flex-col items-center gap-2 text-xs md:text-sm xl:text-base">
+        <div className="flex items-center gap-x-4 text-xs md:text-sm xl:text-base">
           <p>✨ New version available!</p>
           <button onClick={reloadPage} className="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded-lg font-medium text-white text-xs">
             Reload
