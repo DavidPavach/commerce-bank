@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 export function useServiceWorkerPrompt() {
 
   const [waitingWorker, setWaitingWorker] = useState<ServiceWorker | null>(null);
-  const [showPrompt, setShowPrompt] = useState(false);
+  const [showPrompt, setShowPrompt] = useState<boolean>(false);
 
   useEffect(() => {
     if ("serviceWorker" in navigator) {

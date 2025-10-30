@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { QueryClientProvider, QueryClient, MutationCache } from '@tanstack/react-query';
 import AppRoutes from './routes/AppRoutes';
 
@@ -28,13 +28,16 @@ const queryClient = new QueryClient({
 const App = () => {
 
   const { showPrompt, reloadPage } = useServiceWorkerPrompt();
+  const [shown, setShown] = useState<boolean>(false);
 
   useEffect(() => {
-    if (showPrompt) {
+    if (showPrompt && !shown) {
+      setShown(true);
       toast.info(
         <div className="flex items-center gap-x-4 text-xs md:text-sm xl:text-base">
           <p>✨ New version available!</p>
-          <button onClick={reloadPage} className="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded-lg font-medium text-white text-xs">
+          <button onClick={() => { setShown(false); reloadPage(); }}
+            className="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded-lg font-medium text-white text-xs">
             Reload
           </button>
         </div>,
@@ -44,7 +47,7 @@ const App = () => {
         }
       );
     }
-  }, [showPrompt, reloadPage]);
+  }, [showPrompt, reloadPage, shown]);
 
   return (
     <main className='text-xs md:text-sm xl:text-base'>

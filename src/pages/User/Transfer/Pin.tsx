@@ -1,11 +1,9 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { useNavigate } from "react-router";
 import { toast } from "react-fox-toast";
 
-
 //Stores, Hooks, Utils and Types
-import { useUserStore } from "@/stores/userStore";
+import { getUserBalanceFn, getUserDetailsFn } from "@/services/api.service";
 import { useTransactionStore } from "@/stores/transactionStore";
 import { useCreateTransaction } from "@/services/mutations.service";
 import { formatCurrency } from "@/utils/format";
@@ -21,8 +19,6 @@ import { X } from "lucide-react";
 
 const Pin = ({ onClose }: { onClose: () => void; }) => {
 
-    const navigate = useNavigate();
-    const { user, balance } = useUserStore();
     const { transaction, resetTransaction } = useTransactionStore();
     const [pin, setPin] = useState<string[]>(["", "", "", "", "", ""]);
     const [activePin, setActivePin] = useState<number>(0);
@@ -31,13 +27,6 @@ const Pin = ({ onClose }: { onClose: () => void; }) => {
     const pinRefs = useRef<(HTMLInputElement | null)[]>([]);
 
     //Functions
-    useEffect(() => {
-        if (!user) {
-            toast.error("Something Went Wrong, Kindly Restart the Process")
-            navigate(-1);
-        }
-    }, [navigate, user])
-
     const handlePinChange = (index: number, value: string) => {
         if (/^\d?$/.test(value)) {
             const newPin = [...pin];
@@ -63,30 +52,52 @@ const Pin = ({ onClose }: { onClose: () => void; }) => {
     };
 
     const createTransaction = useCreateTransaction()
-    const handleTransfer = () => {
-
-        if (transaction.amount > (balance ?? 0)) return toast.error(`Entered amount ${formatCurrency(transaction.amount)} is bigger than what is available $${balance}.`)
-
-        const fullPin = pin.join("");
-        if (fullPin.length !== 6) return toast.error("Please enter a complete 6-digit PIN");
-        if (user?.transferPin !== fullPin) return toast.error("Incorrect Transfer Pin, kindly try again");
-        if (user?.transactionSuspended) return toast.error("Transaction not completed. Please contact your account administrator for assistance.");
+    const handleTransfer = async () => {
 
         toast("Initiating Transfer...", { isCloseBtn: true });
-        createTransaction.mutate(transaction, {
-            onSuccess: (response) => {
-                toast.success("Your Transfer was initiated successfully!");
-                setNewTransaction(response.data)
-                setTransferPinsPage(true);
-                resetTransaction()
-            },
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            onError: (error: any) => {
-                const message = error?.response?.data?.message || "Transfer failed, kindly try again later.";
-                toast.error(message);
-            },
-        });
-    }
+
+        try {
+            // Run both requests simultaneously
+            const [userRes, balanceRes] = await Promise.all([
+                getUserDetailsFn(),
+                getUserBalanceFn(),
+            ]);
+
+            const user = userRes.data;
+            const balance = balanceRes ?? 0;
+
+            if (transaction.amount > balance) {
+                return toast.error(
+                    `Entered amount ${formatCurrency(transaction.amount)} is bigger than available balance $${balance}.`
+                );
+            }
+
+            const fullPin = pin.join("");
+            if (fullPin.length !== 6) return toast.error("Please enter a complete 6-digit PIN");
+
+            if (user?.transferPin !== fullPin) return toast.error("Incorrect Transfer Pin, kindly try again");
+            if (user?.transactionSuspended) return toast.error("Transaction not completed. Please contact your account administrator.");
+
+            // Proceed with mutation
+            createTransaction.mutate(transaction, {
+                onSuccess: (response) => {
+                    toast.success("Your Transfer was initiated successfully!");
+                    setNewTransaction(response.data);
+                    setTransferPinsPage(true);
+                    resetTransaction();
+                },
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                onError: (error: any) => {
+                    const message = error?.response?.data?.message || "Transfer failed, kindly try again later.";
+                    toast.error(message);
+                },
+            });
+        } catch (error) {
+            console.error("Error fetching user or balance:", error);
+            toast.error("An error occurred while fetching account details.");
+        }
+    };
+
 
     return (
         <AnimatePresence>
