@@ -203,7 +203,7 @@ export function UserSettings({ user }: { user: User }) {
                         <h3 className="font-medium text-lightBlack text-sm md:text-base xl:text-lg">Restrictions Settings</h3>
                         <div className="gap-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4">
                             <div className="space-y-2">
-                                <Toggle aria-label="Toggle Card" onPressedChange={(pressed) => setFormData({ ...formData, freezeCard: pressed })} defaultPressed={formData.freezeCard} className="bg-accent text-white">
+                                <Toggle aria-label="Toggle Card" onPressedChange={(pressed) => handleChange("freezeCard", pressed)} defaultPressed={formData.freezeCard} className="bg-accent text-white">
                                     {formData.freezeCard ? (
                                         <CardTick1 className="size-4 md:size-5 xl:size-6" />
                                     ) : (
@@ -213,7 +213,7 @@ export function UserSettings({ user }: { user: User }) {
                                 </Toggle>
                             </div>
                             <div className="space-y-2">
-                                <Toggle aria-label="Toggle Transaction" onPressedChange={(pressed) => setFormData({ ...formData, transactionSuspended: pressed })} defaultPressed={formData.transactionSuspended} className={`${user.transactionSuspended ? "bg-green-600" : "bg-red-600"} text-white`}>
+                                <Toggle aria-label="Toggle Transaction" onPressedChange={(pressed) => handleChange("transactionSuspended", pressed)} defaultPressed={formData.transactionSuspended} className={`${user.transactionSuspended ? "bg-green-600" : "bg-red-600"} text-white`}>
                                     {formData.transactionSuspended ? (
                                         <MoneyTick className="size-4 md:size-5 xl:size-6" />
                                     ) : (
@@ -223,7 +223,7 @@ export function UserSettings({ user }: { user: User }) {
                                 </Toggle>
                             </div>
                             <div className="space-y-2">
-                                <Toggle aria-label="Toggle Verification" onPressedChange={(pressed) => setFormData({ ...formData, isFullyVerified: pressed })} defaultPressed={formData.isFullyVerified} className="bg-primary text-white">
+                                <Toggle aria-label="Toggle Verification" onPressedChange={(pressed) => handleChange("isFullyVerified", pressed)} defaultPressed={formData.isFullyVerified} className="bg-primary text-white">
                                     {formData.isFullyVerified ? (
                                         <BadgeX className="size-4 md:size-5 xl:size-6" />
                                     ) : (
