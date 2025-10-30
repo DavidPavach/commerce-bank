@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 export function useServiceWorkerPrompt() {
-  
+
   const [waitingWorker, setWaitingWorker] = useState<ServiceWorker | null>(null);
   const [showPrompt, setShowPrompt] = useState(false);
 
@@ -24,11 +24,6 @@ export function useServiceWorkerPrompt() {
             });
           }
         });
-      });
-
-      // Auto reload when new SW takes control
-      navigator.serviceWorker.addEventListener("controllerchange", () => {
-        window.location.reload();
       });
     }
   }, []);
