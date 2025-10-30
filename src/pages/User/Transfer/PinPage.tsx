@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { toast } from "react-fox-toast";
+import { Link } from "react-router-dom";
 
 //Stores, Types and Hooks
 import { getUserDetailsFn } from "@/services/api.service";
@@ -117,9 +118,6 @@ const PinPage = ({ transaction, onClose }: { transaction: Transaction, onClose: 
                         toast.success(`Your transaction is advancing. Please complete your PIN entry.`);
                         setEditableTx(prev => ({ ...prev, level: getLevel(editableTx.level) }));
                         setPin(["", "", "", "", "", ""]);
-                        if (getLevel(editableTx.level) === "done") {
-                            onClose()
-                        }
                     },
                     onError: () => {
                         toast.error("Transaction failed. Please check your PIN and try again.");
@@ -210,8 +208,10 @@ const PinPage = ({ transaction, onClose }: { transaction: Transaction, onClose: 
                                 </div>
                             </div>
                         </div>
-                        {editableTx.level !== "done" &&
-                            <Button onClick={handleUpdate} text="Confirm Transfer" loadingText="Processing..." variant='primary' size='lg' disabled={editTransaction.isPending || pin.some((p) => p === "")} loading={editTransaction.isPending} />}
+                        {editableTx.level !== "done" ?
+                            <Button onClick={handleUpdate} text="Confirm Transfer" loadingText="Processing..." variant='primary' size='lg' disabled={editTransaction.isPending || pin.some((p) => p === "")} loading={editTransaction.isPending} /> :
+                            <Link className="bg-black hover:bg-accent px-8 py-4 rounded-[2rem] text-white hover:text-black text-sm md:text-base xl:text-lg duration-300" to="/user/history">Your Transactions</Link>
+                        }
                     </div>
                 </div>
             </motion.div>
