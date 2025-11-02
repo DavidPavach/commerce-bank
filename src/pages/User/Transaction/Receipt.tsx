@@ -4,9 +4,10 @@ import { toast } from "react-fox-toast";
 import html2canvas from 'html2canvas';
 import { jsPDF } from "jspdf";
 
-//Enums, Types and Utils
+//Enums, Data, Types and Utils
 import { Transaction } from "@/types";
 import { TransactionStatus } from "@/enums";
+import countriesJson from "../../../../data/countries.json";
 import { formatCurrency } from "@/utils/format";
 
 //Components
@@ -18,11 +19,19 @@ import PinPage from "../Transfer/PinPage";
 
 //Icons
 import { Download, PrinterIcon as Print, Share2, Check, Clock, AlertTriangle, X, RotateCcw, Shield, Calendar, User, Building2, ArrowUpRight, ArrowDownLeft, CheckCircle, Copy } from "lucide-react";
+import { Global } from "iconsax-react";
 
 type ReceiptPageProps = {
     transaction: Transaction
     className?: string
 }
+
+const getFlag = (countryName: string): string | null => {
+    const entry = Object.entries(countriesJson).find(
+        ([, data]) => data.name.toLowerCase() === countryName.toLowerCase()
+    );
+    return entry ? `/flags/${entry[0]}.png` : null;
+};
 
 const getStatusBadge = (status: string) => {
     switch (status.toLowerCase()) {
@@ -260,6 +269,30 @@ export default function ReceiptPage({ transaction, className = "" }: ReceiptPage
                                                             </div>
                                                         )}
                                                     </div>
+                                                </div>
+                                            </div>
+                                        }
+                                        {transaction.isInternational &&
+                                            <div className="space-y-6">
+                                                <h3 className="flex items-center space-x-2 mb-4 font-semibold text-slate-900 text-base md:text-lg xl:text-xl">
+                                                    <Global className="size-5 text-primary" />
+                                                    <span>International Details</span>
+                                                </h3>
+                                                <div className="flex justify-between">
+                                                    <span className="text-slate-600">Bank Address</span>
+                                                    <span className="font-medium text-slate-900">{transaction.bankAddress}</span>
+                                                </div>
+                                                <div className="flex justify-between">
+                                                    <span className="text-slate-600">Recipient Address</span>
+                                                    <span className="font-medium text-slate-900">{transaction.recipientAddress}</span>
+                                                </div>
+                                                <div className="flex justify-between">
+                                                    <span className="text-slate-600">Swift Code/BIC</span>
+                                                    <span className="font-medium text-slate-900">{transaction.swiftCode}</span>
+                                                </div>
+                                                <div className="flex justify-between">
+                                                    <span className="text-slate-600">Country</span>
+                                                    <div className="flex items-center gap-x-1 font-medium text-slate-900">{transaction.country && <img src={getFlag(transaction.country) || ""} className="rounded-sm h-4 md:h-5 xl:h-6" alt={transaction.country + " flag"} />}<span className="capitalize">{transaction.country}</span></div>
                                                 </div>
                                             </div>
                                         }

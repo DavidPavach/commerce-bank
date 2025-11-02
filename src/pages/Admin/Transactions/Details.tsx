@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { toast } from "react-fox-toast";
 
-//Utils, Types and Services
+//Utils, Types, Services and Data
 import { formatCurrency, formatDate } from "@/utils/format";
 import { TransactionWithUser } from "@/types";
 import { getIcon, getStatusBadge } from "@/components/Utils";
 import { useUpdateTransaction } from "@/services/mutations.service";
+import countriesJson from "../../../../data/countries.json";
 
 //Components
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -15,12 +16,19 @@ import { Button } from "@/components/ui/button";
 
 //Icons
 import { Building2, Loader, Save } from "lucide-react";
+import { Global } from "iconsax-react";
 
+
+const getFlag = (countryName: string): string | null => {
+    const entry = Object.entries(countriesJson).find(
+        ([, data]) => data.name.toLowerCase() === countryName.toLowerCase()
+    );
+    return entry ? `/flags/${entry[0]}.png` : null;
+};
 
 export default function TransactionDetails({ transaction, onClose }: { transaction: TransactionWithUser, onClose: () => void; }) {
 
     const [newCreatedAt, setNewCreatedAt] = useState("");
-    console.log("The transaction", transaction)
 
     //Functions
     const updateTransaction = useUpdateTransaction()
@@ -59,7 +67,7 @@ export default function TransactionDetails({ transaction, onClose }: { transacti
 
                         <div className="space-y-1">
                             <p className="font-medium text-neutral-500">Transaction Description</p>
-                            <p className="font-medium text-lightBlack">{transaction.description ?? "No Description"}</p>
+                            <p className="font-medium text-lightBlack">{transaction?.description?.trim() ? transaction.description : "No Description"}</p>
                         </div>
 
                         <div className="space-y-1">
@@ -116,6 +124,30 @@ export default function TransactionDetails({ transaction, onClose }: { transacti
                                         </span>
                                     </div>
                                 )}
+                            </div>
+                        }
+                        {transaction.isInternational &&
+                            <div className="space-y-6">
+                                <h3 className="flex items-center space-x-2 mb-4 font-semibold text-slate-900 text-base md:text-lg xl:text-xl">
+                                    <Global className="size-5 text-primary" />
+                                    <span>International Details</span>
+                                </h3>
+                                <div className="flex justify-between">
+                                    <span className="text-slate-600">Bank Address</span>
+                                    <span className="font-medium text-slate-900">{transaction.bankAddress}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span className="text-slate-600">Recipient Address</span>
+                                    <span className="font-medium text-slate-900">{transaction.recipientAddress}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span className="text-slate-600">Swift Code/BIC</span>
+                                    <span className="font-medium text-slate-900">{transaction.swiftCode}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span className="text-slate-600">Country</span>
+                                    <div className="flex items-center gap-x-1 font-medium text-slate-900">{transaction.country && <img src={getFlag(transaction.country) || ""} className="rounded-sm h-4 md:h-5 xl:h-6" alt={transaction.country + " flag"} />}<span className="capitalize">{transaction.country}</span></div>
+                                </div>
                             </div>
                         }
                     </div>

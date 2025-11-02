@@ -963,10 +963,6 @@
         "name": "United States Minor Outlying Islands",
         "phone_code": "+N/A"
     },
-    "un": {
-        "name": "United Nations",
-        "phone_code": "+N/A"
-    },
     "us": {
         "name": "United States",
         "phone_code": "+1"

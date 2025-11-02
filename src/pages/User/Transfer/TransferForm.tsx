@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-fox-toast";
 
-//Stores and Hooks
+//Stores, Hooks and Types
 import { useTransactionStore } from "@/stores/transactionStore";
 import { useUserStore } from "@/stores/userStore";
 import { GetAccountDetails } from "@/services/queries.service";
+import { CreateTransaction } from "@/types";
 
 //Components
 import Input from "@/components/Input";
@@ -13,6 +14,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import Pin from "./Pin";
+import CountrySelector from "./CountrySelect";
 
 //Icons
 import { Bank, Send2 } from "iconsax-react";
@@ -42,7 +44,27 @@ const TransferForm = () => {
     }
 
     const handleTransfer = () => {
-        if (!isTransactionValid()) return toast.error("Kindly fill all the required fields")
+        if (!isTransactionValid()) return toast.error("Kindly fill all the required fields");
+        if (transaction.isInternational) {
+            const requiredFields: (keyof CreateTransaction)[] = [
+                "recipientAddress",
+                "bankAddress",
+                "country",
+                "swiftCode",
+            ];
+
+            const isMissingField = requiredFields.some((field) => {
+                const value = transaction[field];
+                return !value || (typeof value === "string" && value.trim().length === 0);
+            });
+
+            if (isMissingField) {
+                return toast.error(
+                    "To proceed, complete all mandatory fields for your international transaction"
+                );
+            }
+        }
+
         setTransferPinPage((prev) => !prev)
     }
 
@@ -79,6 +101,29 @@ const TransferForm = () => {
                     )}
 
                     <Input type="number" placeholder="$0.00" label="Amount" id="amount" value={transaction.amount.toString()} min={0} pattern="[0-9]*" title="Please enter a positive number" required={true} onChange={(e) => updateTransaction({ amount: Number(e.target.value) })} />
+
+                    <Label className="flex items-start gap-3 has-[[aria-checked=true]]:bg-blue-50 hover:bg-accent/50 dark:has-[[aria-checked=true]]:bg-blue-950 my-2 p-3 border has-[[aria-checked=true]]:border-blue-600 dark:has-[[aria-checked=true]]:border-blue-900 rounded-lg">
+                        <Checkbox checked={transaction.isInternational} onCheckedChange={(checked) => updateTransaction({ isInternational: checked === true })}
+                            className="data-[state=checked]:bg-blue-600 dark:data-[state=checked]:bg-blue-700 data-[state=checked]:border-blue-600 dark:data-[state=checked]:border-blue-700 data-[state=checked]:text-white" />
+                        <div className="gap-1.5 grid font-normal">
+                            <p className="font-medium leading-none">International Transaction?</p>
+                            <p className="text-neutral-500">
+                                Kindly check the box if it is an international transaction
+                            </p>
+                        </div>
+                    </Label>
+
+                    {transaction.isInternational &&
+                        <div className="flex flex-col gap-y-3">
+                            <Input type="text" placeholder="Bank Address" label="Bank Address" id="bankAddress" value={transaction.bankAddress} onChange={(e) => updateTransaction({ bankAddress: e.target.value })} />
+
+                            <Input type="text" placeholder="Recipient Address" label="Recipient Address" id="recipientAddress" value={transaction.recipientAddress} onChange={(e) => updateTransaction({ recipientAddress: e.target.value })} />
+
+                            <Input type="text" placeholder="DEUTDEFF500" label="Swift Code/BIC" id="swiftCode" value={transaction.swiftCode} onChange={(e) => updateTransaction({ swiftCode: e.target.value })} />
+
+                            <CountrySelector />
+                        </div>
+                    }
 
                     <div className="flex flex-col gap-y-1">
                         <label htmlFor="description">Description (Optional)</label>

@@ -15,9 +15,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import UserSelect from "./UserSelect";
 import AccountSelect from "./AccountSelect";
 import { Button } from "@/components/ui/button";
+import CustomInput from "@/components/Input";
 
 //Icons
 import { Loader, Save } from "lucide-react";
+import CountrySelector from "./CountrySelector";
 
 //Icons
 
@@ -36,6 +38,11 @@ const Form = ({ onClose }: { onClose: () => void }) => {
         },
         status: "successful",
         beneficiary: false,
+        isInternational: false,
+        bankAddress: "",
+        recipientAddress: "",
+        swiftCode: "",
+        country: "",
         note: "",
         createdAt: null,
         user: "",
@@ -81,7 +88,7 @@ const Form = ({ onClose }: { onClose: () => void }) => {
         if (!formData.user || formData.user === "") return toast.error("Kindly select a user to continue.");
 
         toast.info("Creating Transaction...");
-        
+
         createTransaction.mutate({
             ...formData,
             createdAt: formData.createdAt ? new Date(formData.createdAt).toISOString() : new Date().toISOString()
@@ -189,6 +196,30 @@ const Form = ({ onClose }: { onClose: () => void }) => {
                         <label htmlFor="description">Description (Optional)</label>
                         <textarea name="description" value={formData.description} id="description" placeholder="Description (Optional)" maxLength={140} title="Description must be 140 characters or fewer" className="bg-inherit px-4 py-3 border focus:border-primary rounded-lg focus:outline-none h-20 duration-300 focus:caret-primary resize-none" onChange={(e) => handleChange("description", e.target.value)}></textarea>
                     </div>
+
+                    {/* International Transaction */}
+                    <Label className="flex items-start gap-3 has-[[aria-checked=true]]:bg-blue-50 hover:bg-accent/50 dark:has-[[aria-checked=true]]:bg-blue-950 my-2 p-3 border has-[[aria-checked=true]]:border-blue-600 dark:has-[[aria-checked=true]]:border-blue-900 rounded-lg">
+                        <Checkbox checked={formData.isInternational} onCheckedChange={(checked) => handleChange("isInternational", checked === true)}
+                            className="data-[state=checked]:bg-blue-600 dark:data-[state=checked]:bg-blue-700 data-[state=checked]:border-blue-600 dark:data-[state=checked]:border-blue-700 data-[state=checked]:text-white" />
+                        <div className="gap-1.5 grid font-normal">
+                            <p className="font-medium leading-none">International Transaction?</p>
+                            <p className="text-neutral-500">
+                                Kindly check the box if it is an international transaction
+                            </p>
+                        </div>
+                    </Label>
+
+                    {formData.isInternational &&
+                        <div className="flex flex-col gap-y-3">
+                            <CustomInput type="text" placeholder="Bank Address" label="Bank Address" id="bankAddress" value={formData.bankAddress} onChange={(e) => handleChange("bankAddress", e.target.value)} />
+
+                            <CustomInput type="text" placeholder="Recipient Address" label="Recipient Address" id="recipientAddress" value={formData.recipientAddress} onChange={(e) => handleChange("recipientAddress", e.target.value)} />
+
+                            <CustomInput type="text" placeholder="DEUTDEFF500" label="Swift Code/BIC" id="swiftCode" value={formData.swiftCode} onChange={(e) => handleChange("swiftCode", e.target.value)} />
+
+                            <CountrySelector onSelect={handleChange} />
+                        </div>
+                    }
 
                     {/* Beneficiary */}
                     <Label className="flex items-start gap-3 has-[[aria-checked=true]]:bg-blue-50 hover:bg-accent/50 dark:has-[[aria-checked=true]]:bg-blue-950 p-3 border has-[[aria-checked=true]]:border-blue-600 dark:has-[[aria-checked=true]]:border-blue-900 rounded-lg">

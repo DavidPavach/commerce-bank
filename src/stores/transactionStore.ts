@@ -30,6 +30,11 @@ const defaultTransaction: CreateTransaction = {
     bankName: "",
     otherDetails: "",
   },
+  isInternational: false,
+  bankAddress: "",
+  recipientAddress: "",
+  swiftCode: "",
+  country: "",
   beneficiary: false,
   note: "",
 };

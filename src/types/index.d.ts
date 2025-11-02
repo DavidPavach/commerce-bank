@@ -18,6 +18,11 @@ export type Transaction = {
         balanceAfterTransaction: number | null;
     };
     level: string;
+    isInternational?: boolean,
+    bankAddress?: string,
+    recipientAddress?: string,
+    swiftCode?: string,
+    country?: string,
     status: TransactionStatus | string;
     transactionId: string;
     initiatedBy: "user" | "admin" | "system" | string;
@@ -37,6 +42,11 @@ export type CreateTransaction = {
         bankName: string;
         otherDetails?: string
     },
+    isInternational?: boolean,
+    bankAddress?: string,
+    recipientAddress?: string,
+    swiftCode?: string,
+    country?: string,
     beneficiary?: boolean;
     note?: string;
 }
