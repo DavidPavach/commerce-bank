@@ -74,9 +74,7 @@ const Pin = ({ onClose }: { onClose: () => void; }) => {
 
             const fullPin = pin.join("");
             if (fullPin.length !== 6) return toast.error("Please enter a complete 6-digit PIN");
-
             if (user?.transferPin !== fullPin) return toast.error("Incorrect Transfer Pin, kindly try again");
-            if (user?.transactionSuspended) return toast.error("Transaction not completed. Please contact your account administrator.");
 
             // Proceed with mutation
             createTransaction.mutate(transaction, {

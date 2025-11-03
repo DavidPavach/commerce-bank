@@ -13,6 +13,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import UserInfo from "@/components/UserInfo";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import Input from "@/components/Input";
+import CountrySelector from "./CountrySelector";
 
 //Icons
 import { Building2, Loader, Save } from "lucide-react";
@@ -28,13 +32,50 @@ const getFlag = (countryName: string): string | null => {
 
 export default function TransactionDetails({ transaction, onClose }: { transaction: TransactionWithUser, onClose: () => void; }) {
 
-    const [newCreatedAt, setNewCreatedAt] = useState("");
+    const defaultState = {
+        createdAt: "",
+        isInternational: false,
+        bankAddress: "",
+        recipientAddress: "",
+        swiftCode: "",
+        country: ""
+    }
+    const [formData, setFormData] = useState(defaultState);
 
     //Functions
+    const handleChange = (key: keyof typeof defaultState | string, value: string | boolean) => {
+        setFormData({ ...formData, [key]: value })
+    }
+
     const updateTransaction = useUpdateTransaction()
     const handleUpdate = () => {
 
-        updateTransaction.mutate({ transactionId: transaction._id, createdAt: new Date(newCreatedAt).toISOString() }, {
+        const finalData = { transactionId: transaction._id, ...formData }
+        if (formData.createdAt.trim()) {
+            finalData.createdAt = new Date(formData.createdAt).toISOString()
+        }
+
+        if (formData.isInternational) {
+            const requiredFields: (keyof typeof formData)[] = [
+                "recipientAddress",
+                "bankAddress",
+                "country",
+                "swiftCode",
+            ];
+
+            const isMissingField = requiredFields.some((field) => {
+                const value = transaction[field];
+                return !value || (typeof value === "string" && value.trim().length === 0);
+            });
+
+            if (isMissingField) {
+                return toast.error(
+                    "To proceed, complete all mandatory fields for your international transaction"
+                );
+            }
+        }
+
+        updateTransaction.mutate(finalData, {
             onSuccess: (response) => {
                 toast.success(response.message || "The transaction was updated successfully!");
             },
@@ -152,12 +193,35 @@ export default function TransactionDetails({ transaction, onClose }: { transacti
                         }
                     </div>
                     <div className="mt-4 py-4 border-neutral-200 border-t">
-                        <p className="my-4">Update Transaction Date and Time</p>
-                        <div className="flex flex-col gap-y-1 mb-4">
+                        <p className="my-4">Update Transaction</p>
+                        {/* International Transaction */}
+                        <Label className="flex items-start gap-3 has-[[aria-checked=true]]:bg-blue-50 hover:bg-accent/50 dark:has-[[aria-checked=true]]:bg-blue-950 my-2 p-3 border has-[[aria-checked=true]]:border-blue-600 dark:has-[[aria-checked=true]]:border-blue-900 rounded-lg">
+                            <Checkbox checked={formData.isInternational} onCheckedChange={(checked) => handleChange("isInternational", checked === true)}
+                                className="data-[state=checked]:bg-blue-600 dark:data-[state=checked]:bg-blue-700 data-[state=checked]:border-blue-600 dark:data-[state=checked]:border-blue-700 data-[state=checked]:text-white" />
+                            <div className="gap-1.5 grid font-normal">
+                                <p className="font-medium leading-none">International Transaction?</p>
+                                <p className="text-neutral-500">
+                                    Kindly check the box if it is an international transaction
+                                </p>
+                            </div>
+                        </Label>
+
+                        {formData.isInternational &&
+                            <div className="flex flex-col gap-y-3">
+                                <Input type="text" placeholder="Bank Address" label="Bank Address" id="bankAddress" value={formData.bankAddress} onChange={(e) => handleChange("bankAddress", e.target.value)} />
+
+                                <Input type="text" placeholder="Recipient Address" label="Recipient Address" id="recipientAddress" value={formData.recipientAddress} onChange={(e) => handleChange("recipientAddress", e.target.value)} />
+
+                                <Input type="text" placeholder="DEUTDEFF500" label="Swift Code/BIC" id="swiftCode" value={formData.swiftCode} onChange={(e) => handleChange("swiftCode", e.target.value)} />
+
+                                <CountrySelector onSelect={handleChange} />
+                            </div>
+                        }
+                        <div className="flex flex-col gap-y-1 my-4">
                             <label className="block font-medium text-[11px] md:text-xs xl:text-sm">
                                 Date and Time
                             </label>
-                            <input type="datetime-local" value={newCreatedAt} onChange={(e) => setNewCreatedAt(e.target.value)} className="p-2 border rounded w-full" />
+                            <input type="datetime-local" value={formData.createdAt} onChange={(e) => handleChange("createdAt", e.target.value)} className="p-2 border rounded w-full" />
                         </div>
                         <Button onClick={handleUpdate} disabled={updateTransaction.isPending} className="bg-primary hover:bg-primary/90 py-3 text-white">
                             {updateTransaction.isPending ? <Loader className="mr-2 size-5 animate-spin" /> : <Save className="mr-2 size-5" />}

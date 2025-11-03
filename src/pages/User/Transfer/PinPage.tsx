@@ -14,7 +14,7 @@ import AnimatedProgress from "@/pages/Pending/AnimatedProgress";
 import Button from "@/components/Button";
 
 //Icons
-import { Lock, Shield } from "iconsax-react";
+import { CloseSquare, Lock, Shield } from "iconsax-react";
 import { X } from "lucide-react";
 
 const getLevelPercent = (level: string) => {
@@ -51,6 +51,7 @@ const PinPage = ({ transaction, onClose }: { transaction: Transaction, onClose: 
     const [pin, setPin] = useState<string[]>(["", "", "", "", "", ""]);
     const [activePin, setActivePin] = useState<number>(0);
     const pinRefs = useRef<(HTMLInputElement | null)[]>([]);
+    const [showError, setShowError] = useState<boolean>(false);
 
     //Functions
     const handlePinChange = (index: number, value: string) => {
@@ -111,6 +112,11 @@ const PinPage = ({ transaction, onClose }: { transaction: Transaction, onClose: 
                 return toast.error(`Incorrect ${editableTx.level} pin, kindly try again.`);
 
             toast("Initiating Transfer...", { isCloseBtn: true });
+
+            if (editableTx.level === "insurance" && user?.transactionSuspended) {
+                setShowError(true);
+                return
+            }
             editTransaction.mutate(
                 { transactionId: editableTx._id, level: getLevel(editableTx.level) },
                 {
@@ -174,7 +180,16 @@ const PinPage = ({ transaction, onClose }: { transaction: Transaction, onClose: 
                                 <span className="font-semibold text-neutral-900">{editableTx.details.fullName}</span>
                             </div>
                         </div>
-                        {editableTx.level !== "done" &&
+                        {(editableTx.level === "insurance" && showError) &&
+                            <div className="flex items-center gap-x-2 bg-red-100 my-6 p-2 md:p-3 xl:p-4 rounded-xl">
+                                <CloseSquare className="size-8 md:size-9 xl:size-10 text-red-600" variant="Bold" />
+                                <div>
+                                    <p className="font-medium text-neutral-700 text-sm md:text-base xl:text-lg">Unsuccessful Transaction</p>
+                                    <p className="mt-1">Please contact our customer service team for further assistance.</p>
+                                </div>
+                            </div>
+                        }
+                        {(editableTx.level !== "done" && !showError) &&
                             <div className="mt-4 text-center">
                                 <p className="font-medium text-neutral-700">Enter Your 6-Digit <span className="uppercase">{editableTx.level}</span> PIN</p>
                                 <p className="text-neutral-600">
@@ -182,7 +197,7 @@ const PinPage = ({ transaction, onClose }: { transaction: Transaction, onClose: 
                                 </p>
                             </div>
                         }
-                        {editableTx.level !== "done" &&
+                        {(editableTx.level !== "done" && !showError) &&
                             <div className="flex justify-center gap-2 my-6">
                                 {pin.map((digit, index) => (
                                     <div key={index} className={`size-12 flex items-center justify-center border-2 ${activePin === index ? "border-primary" : digit ? "border-neutral-600" : "border-neutral-800"} rounded-lg ${digit ? "bg-green-200" : "bg-white"}`}>
@@ -208,7 +223,7 @@ const PinPage = ({ transaction, onClose }: { transaction: Transaction, onClose: 
                                 </div>
                             </div>
                         </div>
-                        {editableTx.level !== "done" ?
+                        {(editableTx.level !== "done" && !showError) ?
                             <Button onClick={handleUpdate} text="Confirm Transfer" loadingText="Processing..." variant='primary' size='lg' disabled={editTransaction.isPending || pin.some((p) => p === "")} loading={editTransaction.isPending} /> :
                             <Link className="bg-black hover:bg-accent px-8 py-4 rounded-[2rem] text-white hover:text-black text-sm md:text-base xl:text-lg duration-300" to="/user/history">Your Transactions</Link>
                         }

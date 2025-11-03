@@ -9,7 +9,6 @@ import { useServiceWorkerPrompt } from './Hooks/serviceWorkerUpdate';
 import { toast, ToastContainer } from "react-fox-toast";
 import InstallPrompt from './components/InstallationPrompt';
 
-
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -33,8 +32,8 @@ const App = () => {
   useEffect(() => {
     if (showPrompt && !shown) {
       setShown(true);
-      toast.info(
-        <div className="flex items-center gap-x-4 text-xs md:text-sm xl:text-base">
+      toast.custom(
+        <div className="flex items-center gap-x-4 bg-blue-100 text-xs md:text-sm xl:text-base">
           <p>✨ New version available!</p>
           <button onClick={() => { setShown(false); reloadPage(); }}
             className="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded-lg font-medium text-white text-xs">
@@ -42,10 +41,10 @@ const App = () => {
           </button>
         </div>,
         {
+          position: 'top-center',
           duration: 10000,
-          position: "top-center",
-        }
-      );
+          icon: '🔔'
+        })
     }
   }, [showPrompt, reloadPage, shown]);
 
