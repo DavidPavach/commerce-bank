@@ -220,7 +220,7 @@ export default function TransactionDetails({ transaction, onClose }: { transacti
 
                                 <Input type="text" placeholder="DEUTDEFF500" label="Swift Code/BIC" id="swiftCode" value={formData.swiftCode} onChange={(e) => handleChange("swiftCode", e.target.value)} />
 
-                                <Input type="text" placeholder="123456789" label="Routing Number" id="routingNumber" value={formData.swiftCode} onChange={(e) => handleChange("routingNumber", e.target.value)} />
+                                <Input type="text" placeholder="123456789" label="Routing Number" id="routingNumber" value={formData.routingNumber} onChange={(e) => handleChange("routingNumber", e.target.value)} />
                                 
                                 <CountrySelector onSelect={handleChange} />
                             </div>
