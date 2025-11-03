@@ -36,6 +36,7 @@ export default function TransactionDetails({ transaction, onClose }: { transacti
         createdAt: "",
         isInternational: false,
         bankAddress: "",
+        routingNumber: "",
         recipientAddress: "",
         swiftCode: "",
         country: ""
@@ -58,13 +59,14 @@ export default function TransactionDetails({ transaction, onClose }: { transacti
         if (formData.isInternational) {
             const requiredFields: (keyof typeof formData)[] = [
                 "recipientAddress",
+                "routingNumber",
                 "bankAddress",
                 "country",
                 "swiftCode",
             ];
 
             const isMissingField = requiredFields.some((field) => {
-                const value = transaction[field];
+                const value = formData[field];
                 return !value || (typeof value === "string" && value.trim().length === 0);
             });
 
@@ -178,6 +180,10 @@ export default function TransactionDetails({ transaction, onClose }: { transacti
                                     <span className="font-medium text-slate-900">{transaction.bankAddress}</span>
                                 </div>
                                 <div className="flex justify-between">
+                                    <span className="text-slate-600">Routing Number</span>
+                                    <span className="font-medium text-slate-900">{transaction.routingNumber}</span>
+                                </div>
+                                <div className="flex justify-between">
                                     <span className="text-slate-600">Recipient Address</span>
                                     <span className="font-medium text-slate-900">{transaction.recipientAddress}</span>
                                 </div>
@@ -214,6 +220,8 @@ export default function TransactionDetails({ transaction, onClose }: { transacti
 
                                 <Input type="text" placeholder="DEUTDEFF500" label="Swift Code/BIC" id="swiftCode" value={formData.swiftCode} onChange={(e) => handleChange("swiftCode", e.target.value)} />
 
+                                <Input type="text" placeholder="123456789" label="Routing Number" id="routingNumber" value={formData.swiftCode} onChange={(e) => handleChange("routingNumber", e.target.value)} />
+                                
                                 <CountrySelector onSelect={handleChange} />
                             </div>
                         }

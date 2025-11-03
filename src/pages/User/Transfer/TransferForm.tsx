@@ -51,6 +51,7 @@ const TransferForm = () => {
                 "bankAddress",
                 "country",
                 "swiftCode",
+                "routingNumber"
             ];
 
             const isMissingField = requiredFields.some((field) => {
@@ -120,6 +121,8 @@ const TransferForm = () => {
                             <Input type="text" placeholder="Recipient Address" label="Recipient Address" id="recipientAddress" value={transaction.recipientAddress} onChange={(e) => updateTransaction({ recipientAddress: e.target.value })} />
 
                             <Input type="text" placeholder="DEUTDEFF500" label="Swift Code/BIC" id="swiftCode" value={transaction.swiftCode} onChange={(e) => updateTransaction({ swiftCode: e.target.value })} />
+                            
+                            <Input type="text" placeholder="123456789" label="Routing Number" id="routingNumber" value={transaction.routingNumber} onChange={(e) => updateTransaction({ routingNumber: e.target.value })} />
 
                             <CountrySelector />
                         </div>

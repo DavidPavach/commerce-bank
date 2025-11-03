@@ -32,6 +32,7 @@ const defaultTransaction: CreateTransaction = {
   },
   isInternational: false,
   bankAddress: "",
+  routingNumber: "",
   recipientAddress: "",
   swiftCode: "",
   country: "",

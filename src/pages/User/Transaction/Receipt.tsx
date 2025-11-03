@@ -291,6 +291,10 @@ export default function ReceiptPage({ transaction, className = "" }: ReceiptPage
                                                     <span className="font-medium text-slate-900">{transaction.swiftCode}</span>
                                                 </div>
                                                 <div className="flex justify-between">
+                                                    <span className="text-slate-600">Routing Number</span>
+                                                    <span className="font-medium text-slate-900">{transaction.routingNumber}</span>
+                                                </div>
+                                                <div className="flex justify-between">
                                                     <span className="text-slate-600">Country</span>
                                                     <div className="flex items-center gap-x-1 font-medium text-slate-900">{transaction.country && <img src={getFlag(transaction.country) || ""} className="rounded-sm h-4 md:h-5 xl:h-6" alt={transaction.country + " flag"} />}<span className="capitalize">{transaction.country}</span></div>
                                                 </div>

@@ -20,6 +20,7 @@ export type Transaction = {
     level: string;
     isInternational?: boolean,
     bankAddress?: string,
+    routingNumber?: string,
     recipientAddress?: string,
     swiftCode?: string,
     country?: string,
@@ -44,6 +45,7 @@ export type CreateTransaction = {
     },
     isInternational?: boolean,
     bankAddress?: string,
+    routingNumber?: string,
     recipientAddress?: string,
     swiftCode?: string,
     country?: string,

@@ -40,6 +40,7 @@ const Form = ({ onClose }: { onClose: () => void }) => {
         beneficiary: false,
         isInternational: false,
         bankAddress: "",
+        routingNumber: "",
         recipientAddress: "",
         swiftCode: "",
         country: "",
@@ -89,6 +90,7 @@ const Form = ({ onClose }: { onClose: () => void }) => {
         if (formData.isInternational) {
             const requiredFields: (keyof typeof formData)[] = [
                 "recipientAddress",
+                "routingNumber",
                 "bankAddress",
                 "country",
                 "swiftCode",
@@ -236,6 +238,8 @@ const Form = ({ onClose }: { onClose: () => void }) => {
 
                             <CustomInput type="text" placeholder="DEUTDEFF500" label="Swift Code/BIC" id="swiftCode" value={formData.swiftCode} onChange={(e) => handleChange("swiftCode", e.target.value)} />
 
+                            <CustomInput type="text" placeholder="123456789" label="Routing Number" id="routingNumber" value={formData.routingNumber} onChange={(e) => handleChange("routingNumber", e.target.value)} />
+                            
                             <CountrySelector onSelect={handleChange} />
                         </div>
                     }
