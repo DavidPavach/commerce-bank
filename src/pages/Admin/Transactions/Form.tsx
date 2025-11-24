@@ -87,27 +87,6 @@ const Form = ({ onClose }: { onClose: () => void }) => {
     const handleTransaction = () => {
 
         if (!formData.user.trim()) return toast.error("Kindly select a user to continue.");
-        if (formData.isInternational) {
-            const requiredFields: (keyof typeof formData)[] = [
-                "recipientAddress",
-                "routingNumber",
-                "bankAddress",
-                "country",
-                "swiftCode",
-            ];
-
-            const isMissingField = requiredFields.some((field) => {
-                const value = formData[field];
-                return !value || (typeof value === "string" && value.trim().length === 0);
-            });
-
-            if (isMissingField) {
-                return toast.error(
-                    "To proceed, complete all mandatory fields for your international transaction"
-                );
-            }
-        }
-
         toast.info("Creating Transaction...");
 
         createTransaction.mutate({

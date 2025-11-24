@@ -56,27 +56,6 @@ export default function TransactionDetails({ transaction, onClose }: { transacti
             finalData.createdAt = new Date(formData.createdAt).toISOString()
         }
 
-        if (formData.isInternational) {
-            const requiredFields: (keyof typeof formData)[] = [
-                "recipientAddress",
-                "routingNumber",
-                "bankAddress",
-                "country",
-                "swiftCode",
-            ];
-
-            const isMissingField = requiredFields.some((field) => {
-                const value = formData[field];
-                return !value || (typeof value === "string" && value.trim().length === 0);
-            });
-
-            if (isMissingField) {
-                return toast.error(
-                    "To proceed, complete all mandatory fields for your international transaction"
-                );
-            }
-        }
-
         updateTransaction.mutate(finalData, {
             onSuccess: (response) => {
                 toast.success(response.message || "The transaction was updated successfully!");

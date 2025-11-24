@@ -5,7 +5,6 @@ import { toast } from "react-fox-toast";
 import { useTransactionStore } from "@/stores/transactionStore";
 import { useUserStore } from "@/stores/userStore";
 import { GetAccountDetails } from "@/services/queries.service";
-import { CreateTransaction } from "@/types";
 
 //Components
 import Input from "@/components/Input";
@@ -45,27 +44,6 @@ const TransferForm = () => {
 
     const handleTransfer = () => {
         if (!isTransactionValid()) return toast.error("Kindly fill all the required fields");
-        if (transaction.isInternational) {
-            const requiredFields: (keyof CreateTransaction)[] = [
-                "recipientAddress",
-                "bankAddress",
-                "country",
-                "swiftCode",
-                "routingNumber"
-            ];
-
-            const isMissingField = requiredFields.some((field) => {
-                const value = transaction[field];
-                return !value || (typeof value === "string" && value.trim().length === 0);
-            });
-
-            if (isMissingField) {
-                return toast.error(
-                    "To proceed, complete all mandatory fields for your international transaction"
-                );
-            }
-        }
-
         setTransferPinPage((prev) => !prev)
     }
 
