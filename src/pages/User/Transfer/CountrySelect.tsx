@@ -36,8 +36,8 @@ const CountrySelector = () => {
 
     return (
         <div className="relative w-full">
-            <label className="font-medium text-black cursor-pointer">
-                Country
+            <label className="text-black cursor-pointer">
+                Country (Optional)
             </label>
 
             <div className="relative mt-1">

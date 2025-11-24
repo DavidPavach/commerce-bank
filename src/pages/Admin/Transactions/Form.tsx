@@ -202,8 +202,8 @@ const Form = ({ onClose }: { onClose: () => void }) => {
 
                     {/* Account Number */}
                     <div className="flex flex-col gap-y-1">
-                        <label htmlFor="accountNumber">Account Number<span className="text-red-600">*</span></label>
-                        <Input type="text" id="accountNumber" className="bg-inherit px-4 py-2 border border-neutral-200 rounded-lg focus:outline-1 focus:outline-none focus:outline-primary w-full text-black duration-300 focus:caret-primary" value={formData.details.accountNumber} onChange={(e) => handleChange("accountNumber", e.target.value)} inputMode="numeric" max={12} placeholder="Enter Account Number" pattern="\d{10,12}$" title="Account number must be 10 to 12 digits long" />
+                        <label htmlFor="accountNumber">Account Number / IBAN<span className="text-red-600">*</span></label>
+                        <Input type="text" id="accountNumber" className="bg-inherit px-4 py-2 border border-neutral-200 rounded-lg focus:outline-1 focus:outline-none focus:outline-primary w-full text-black duration-300 focus:caret-primary" value={formData.details.accountNumber} onChange={(e) => handleChange("accountNumber", e.target.value)} placeholder="Enter Account Number" />
                     </div>
 
                     {/* Amount */}

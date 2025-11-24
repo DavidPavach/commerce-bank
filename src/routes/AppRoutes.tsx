@@ -36,6 +36,7 @@ import Card from '@/pages/User/Card';
 import Deposit from '@/pages/User/Deposit';
 import Support from '@/pages/User/Support';
 import Suspend from '@/pages/User/Suspend';
+import Logout from '@/pages/User/Logout';
 
 // Admin Pages
 import Operations from '@/pages/Operations';
@@ -108,6 +109,7 @@ const AppRoutes = () => {
                     <Route path="deposit" element={<Deposit />} />
                     <Route path="support" element={<Support />} />
                     <Route path="suspend" element={<Suspend />} />
+                    <Route path="logout" element={<Logout />} />
                 </Route>
 
                 {/* Admin Authentication */}

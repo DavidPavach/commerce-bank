@@ -10,7 +10,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
 import { BellIcon } from "./BellIcon";
 
 // Icons
-import { Home2, ArrowSwapVertical, Profile, Headphone, Card, MoneyRecive, DeviceMessage } from "iconsax-react";
+import { Home2, ArrowSwapVertical, Profile, Headphone, Card, MoneyRecive, DeviceMessage, LogoutCurve } from "iconsax-react";
 
 const mainNavItems = [
     { id: "home", label: "Home", icon: Home2, href: "/user/dashboard" },
@@ -19,6 +19,7 @@ const mainNavItems = [
     { id: "support", label: "Support", icon: Headphone, href: "/user/support" },
     { id: "loan", label: "Loan", icon: MoneyRecive, href: "/user/loan" },
     { id: "cards", label: "Cards", icon: Card, href: "/user/cards" },
+    { id: "logout", label: "Logout", icon: LogoutCurve, href: "/user/logout"  },
 ];
 
 const Navbar = () => {
@@ -47,8 +48,8 @@ const Navbar = () => {
                 )}
             </div>
 
-            <main className="flex items-center gap-x-5">
-                <div className="hidden lg:flex gap-x-3 bg-neutral-100 p-2 px-4 border border-neutral-200 rounded-3xl text-black">
+            <main className="flex items-center gap-x-2">
+                <div className="hidden lg:flex gap-x-2 bg-neutral-100 p-2 px-4 border border-neutral-200 rounded-3xl text-black">
                     {mainNavItems.map((item) => {
                         const isActive = location.pathname === item.href;
                         const Icon = item.icon;
@@ -63,7 +64,7 @@ const Navbar = () => {
                     })}
                 </div>
 
-                <section className="flex items-center gap-x-3">
+                <section className="flex items-center gap-x-2">
                     <div className="place-content-center grid bg-neutral-100 rounded-full size-10 md:size-12 xl:size-14">
                         <BellIcon />
                     </div>

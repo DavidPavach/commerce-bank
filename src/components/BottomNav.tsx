@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
 //Icons
-import { Home2, ArrowSwapVertical, Profile, Add, Headphone, Card, MoneyRecive, CloseCircle, Bank } from "iconsax-react";
+import { Home2, ArrowSwapVertical, Profile, Add, Headphone, Card, MoneyRecive, CloseCircle, Bank, LogoutCurve } from "iconsax-react";
 
 const mainNavItems = [
     { id: "home", label: "Home", icon: Home2, href: "/user/dashboard" },
@@ -16,6 +16,7 @@ const plusMenuItems = [
     { id: "savings", label: "Savings", icon: Bank, href: "/user/savings" },
     { id: "loan", label: "Loan", icon: MoneyRecive, href: "/user/loan" },
     { id: "cards", label: "Cards", icon: Card, href: "/user/cards" },
+    { id: "logout", label: "Logout", icon: LogoutCurve, href: "/user/logout" },
 ]
 
 export default function BottomNavigation() {
