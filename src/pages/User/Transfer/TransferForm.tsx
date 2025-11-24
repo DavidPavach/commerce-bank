@@ -75,10 +75,7 @@ const TransferForm = () => {
             <main className="text-neutral-900">
                 <h1 className="font-semibold text-base md:text-lg xl:text-xl">Transfer Details</h1>
                 <div className="flex flex-col gap-y-3 mt-4">
-                    <Input type="text" placeholder="GB29 NWBK 6016 1331 9268 19" label="Account Number / IBAN" id="accountNumber" value={transaction.details.accountNumber} inputMode="numeric" max={12} required={true} onChange={(e) => {
-                        updateDetails({ accountNumber: e.target.value });
-                        setManualEntry(true);
-                    }} />
+                    <Input type="text" placeholder="GB29 NWBK 6016 1331 9268 19" label="Account Number / IBAN" id="accountNumber" value={transaction.details.accountNumber} required={true} onChange={(e) => { updateDetails({ accountNumber: e.target.value }); setManualEntry(true) }} />
 
                     {(isFetching || isLoading) && <Loader className="mx-auto my-4 text-blue-600 animate-spin" />}
 
@@ -121,7 +118,7 @@ const TransferForm = () => {
                             <Input type="text" placeholder="Recipient Address" label="Recipient Address (Optional)" id="recipientAddress" value={transaction.recipientAddress} onChange={(e) => updateTransaction({ recipientAddress: e.target.value })} />
 
                             <Input type="text" placeholder="DEUTDEFF500" label="Swift Code/BIC (Optional)" id="swiftCode" value={transaction.swiftCode} onChange={(e) => updateTransaction({ swiftCode: e.target.value })} />
-                            
+
                             <Input type="text" placeholder="123456789" label="Routing Number (Optional)" id="routingNumber" value={transaction.routingNumber} onChange={(e) => updateTransaction({ routingNumber: e.target.value })} />
 
                             <CountrySelector />
