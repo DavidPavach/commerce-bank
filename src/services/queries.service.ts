@@ -74,7 +74,7 @@ export function GetAccountDetails(manualEntry: boolean, accountNumber: string) {
     return useQuery({
         queryKey: ['accountDetails'],
         queryFn: () => checkAccountFn(accountNumber),
-        enabled: manualEntry && accountNumber.trim().length === 10,
+        enabled: manualEntry && accountNumber.trim().length >= 8,
     })
 }
 
